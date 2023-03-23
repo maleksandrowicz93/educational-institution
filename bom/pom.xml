@@ -12,12 +12,18 @@
     <packaging>pom</packaging>
 
     <properties>
+        <commonsvalidator.version>1.7</commonsvalidator.version>
         <groovy.version>4.0.8</groovy.version>
         <spockframework.version>2.3-groovy-4.0</spockframework.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>${commonsvalidator.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy</artifactId>

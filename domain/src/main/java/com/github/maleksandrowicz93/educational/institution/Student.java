@@ -1,9 +1,16 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import lombok.AccessLevel;
+import com.github.maleksandrowicz93.educational.institution.common.Entity;
+import com.github.maleksandrowicz93.educational.institution.enums.EnrollmentState;
+import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
+import com.github.maleksandrowicz93.educational.institution.vo.PersonalData;
+import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
+import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 import lombok.Builder;
 
-@Builder(access = AccessLevel.PRIVATE)
+import static lombok.AccessLevel.PRIVATE;
+
+@Builder(access = PRIVATE)
 class Student implements Entity<StudentSnapshot> {
 
     StudentId id;

@@ -1,11 +1,19 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import lombok.AccessLevel;
+import com.github.maleksandrowicz93.educational.institution.common.Entity;
+import com.github.maleksandrowicz93.educational.institution.enums.EmploymentState;
+import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
+import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
+import com.github.maleksandrowicz93.educational.institution.vo.PersonalData;
+import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
+import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import lombok.Builder;
 
 import java.util.Set;
 
-@Builder(access = AccessLevel.PRIVATE)
+import static lombok.AccessLevel.PRIVATE;
+
+@Builder(access = PRIVATE)
 class Professor implements Entity<ProfessorSnapshot> {
 
     ProfessorId id;

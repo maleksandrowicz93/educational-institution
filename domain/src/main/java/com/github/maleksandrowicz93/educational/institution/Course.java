@@ -1,15 +1,24 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import lombok.AccessLevel;
+import com.github.maleksandrowicz93.educational.institution.common.Entity;
+import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
+import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
+import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
+import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
+import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
+import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
+import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
 import lombok.Builder;
 
 import java.util.Set;
 
-@Builder(access = AccessLevel.PRIVATE)
+import static lombok.AccessLevel.PACKAGE;
+
+@Builder(access = PACKAGE)
 class Course implements Entity<CourseSnapshot> {
 
     CourseId id;
-    Name name;
+    String name;
     FacultyId facultyId;
     ProfessorId professorId;
     Set<FieldOfStudyId> fieldsOfStudy;
@@ -24,7 +33,7 @@ class Course implements Entity<CourseSnapshot> {
                 .professorId(snapshot.professorId())
                 .fieldsOfStudy(snapshot.fieldsOfStudy())
                 .students(snapshot.students())
-                .state(snapshot.sate())
+                .state(snapshot.state())
                 .build();
     }
 
@@ -37,7 +46,7 @@ class Course implements Entity<CourseSnapshot> {
                 .professorId(professorId)
                 .fieldsOfStudy(fieldsOfStudy)
                 .students(students)
-                .sate(state)
+                .state(state)
                 .build();
     }
 }

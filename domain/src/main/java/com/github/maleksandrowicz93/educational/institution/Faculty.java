@@ -1,17 +1,22 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import lombok.AccessLevel;
+import com.github.maleksandrowicz93.educational.institution.common.Entity;
+import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
+import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import lombok.Builder;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
-@Builder(access = AccessLevel.PRIVATE)
+import static java.util.stream.Collectors.toSet;
+import static lombok.AccessLevel.PRIVATE;
+
+@Builder(access = PRIVATE)
 class Faculty implements Entity<FacultySnapshot> {
 
     FacultyId id;
-    Name name;
-    Set<FieldOfStudy> fieldsOfStudy;
+    String name;
+    FieldOfStudy mainFieldOfStudy;
+    Set<FieldOfStudy> secondaryFieldsOfStudy;
     Set<Professor> professors;
     Set<Course> courses;
     Set<Student> students;
@@ -20,18 +25,19 @@ class Faculty implements Entity<FacultySnapshot> {
         return builder()
                 .id(snapshot.id())
                 .name(snapshot.name())
-                .fieldsOfStudy(snapshot.fieldsOfStudy().stream()
+                .mainFieldOfStudy(FieldOfStudy.from(snapshot.mainFieldOfStudy()))
+                .secondaryFieldsOfStudy(snapshot.secondaryFieldsOfStudy().stream()
                         .map(FieldOfStudy::from)
-                        .collect(Collectors.toSet()))
+                        .collect(toSet()))
                 .professors(snapshot.professors().stream()
                         .map(Professor::from)
-                        .collect(Collectors.toSet()))
+                        .collect(toSet()))
                 .courses(snapshot.courses().stream()
                         .map(Course::from)
-                        .collect(Collectors.toSet()))
+                        .collect(toSet()))
                 .students(snapshot.students().stream()
                         .map(Student::from)
-                        .collect(Collectors.toSet()))
+                        .collect(toSet()))
                 .build();
     }
 
@@ -40,18 +46,19 @@ class Faculty implements Entity<FacultySnapshot> {
         return FacultySnapshot.builder()
                 .id(id)
                 .name(name)
-                .fieldsOfStudy(fieldsOfStudy.stream()
+                .mainFieldOfStudy(mainFieldOfStudy.createSnapshot())
+                .secondaryFieldsOfStudy(secondaryFieldsOfStudy.stream()
                         .map(FieldOfStudy::createSnapshot)
-                        .collect(Collectors.toSet()))
+                        .collect(toSet()))
                 .professors(professors.stream()
                         .map(Professor::createSnapshot)
-                        .collect(Collectors.toSet()))
+                        .collect(toSet()))
                 .courses(courses.stream()
                         .map(Course::createSnapshot)
-                        .collect(Collectors.toSet()))
+                        .collect(toSet()))
                 .students(students.stream()
                         .map(Student::createSnapshot)
-                        .collect(Collectors.toSet()))
+                        .collect(toSet()))
                 .build();
     }
 }

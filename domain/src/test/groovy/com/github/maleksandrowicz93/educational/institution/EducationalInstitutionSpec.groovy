@@ -151,7 +151,7 @@ class EducationalInstitutionSpec extends Specification {
 
     def "course with enough number of enrolled students should not be closed"() {
         given: "Educational Institution with the course within a faculty"
-        and: "enough number of students are enrolled for the course"
+        and: "enough value of students are enrolled for the course"
         when: "professor closes the course"
         then: "the course should not be closed"
     }
