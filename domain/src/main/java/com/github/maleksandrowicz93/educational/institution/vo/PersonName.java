@@ -1,22 +1,14 @@
 package com.github.maleksandrowicz93.educational.institution.vo;
 
-import com.github.maleksandrowicz93.educational.institution.exception.InvalidPersonNameException;
 import lombok.Builder;
-import org.apache.commons.lang3.StringUtils;
+import lombok.NonNull;
 
 @Builder
 public record PersonName(
-        String firstName,
-        String secondName,
-        String lastName
+        @NonNull BasicPersonName basicPersonName,
+        String secondName
 ) {
-    public PersonName {
-        if (StringUtils.isBlank(firstName) || StringUtils.isBlank(lastName)) {
-            throw new InvalidPersonNameException();
-        }
-    }
-
-    PersonName(String firstName, String lastName) {
-        this(firstName, null, lastName);
+    PersonName(@NonNull BasicPersonName basicPersonName) {
+        this(basicPersonName, null);
     }
 }

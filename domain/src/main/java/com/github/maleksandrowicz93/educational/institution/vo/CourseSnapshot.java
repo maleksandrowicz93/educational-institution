@@ -3,6 +3,7 @@ package com.github.maleksandrowicz93.educational.institution.vo;
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import lombok.Builder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Builder
@@ -15,4 +16,12 @@ public record CourseSnapshot(
         Set<StudentId> students,
         CourseState state
 ) {
+    public CourseSnapshot {
+        if (fieldsOfStudy == null) {
+            fieldsOfStudy = new HashSet<>();
+        }
+        if (students == null) {
+            students = new HashSet<>();
+        }
+    }
 }

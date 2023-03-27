@@ -2,6 +2,7 @@ package com.github.maleksandrowicz93.educational.institution.vo;
 
 import lombok.Builder;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Set;
 
@@ -12,4 +13,9 @@ public record CourseProposition(
         @NonNull Set<FieldOfStudySnapshot> fieldsOfStudy,
         @NonNull Threshold maximumNumberOfStudents
 ) {
+    public CourseProposition {
+        if (StringUtils.isBlank(name)) {
+            throw new IllegalArgumentException("Course name cannot be blank.");
+        }
+    }
 }

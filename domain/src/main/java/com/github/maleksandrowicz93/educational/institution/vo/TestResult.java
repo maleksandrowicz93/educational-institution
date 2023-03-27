@@ -8,7 +8,7 @@ public record TestResult(
 ) {
     public TestResult {
         if (percentage < 0 || percentage > 100) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Percentage score should be between 0 and 100.");
         }
     }
 }
