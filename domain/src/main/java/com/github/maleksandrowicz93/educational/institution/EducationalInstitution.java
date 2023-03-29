@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.enums.EnrollmentState;
+import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseEnrollmentApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseOvertakingApplication;
@@ -13,16 +13,13 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
-import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyName;
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
-import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHiringThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
-import com.github.maleksandrowicz93.educational.institution.vo.TestResult;
 import lombok.Builder;
 
 import java.util.Optional;
@@ -38,14 +35,16 @@ class EducationalInstitution implements EducationalInstitutionAggregate {
     EducationalInstitutionId id;
     EducationalInstitutionSetup setup;
     Set<Faculty> faculties;
+    EventsPublisher eventsPublisher;
 
-    static EducationalInstitution from(EducationalInstitutionSnapshot snapshot) {
+    static EducationalInstitution from(EducationalInstitutionSnapshot snapshot, EventsPublisher eventsPublisher) {
         return builder()
                 .id(snapshot.id())
                 .setup(snapshot.setup())
                 .faculties(snapshot.faculties().stream()
                         .map(Faculty::from)
                         .collect(toSet()))
+                .eventsPublisher(eventsPublisher)
                 .build();
     }
 
@@ -59,10 +58,18 @@ class EducationalInstitution implements EducationalInstitutionAggregate {
                         .collect(toSet()))
                 .build();
     }
-    
+
     @Override
     public FacultySnapshot createFaculty(FacultySetup facultySetup) {
         return null;
+    }
+
+    private static FieldOfStudySnapshot createFieldOfStudySnapshot(FacultyId facultyId, String name) {
+        return FieldOfStudySnapshot.builder()
+                .id(new FieldOfStudyId(UUID.randomUUID()))
+                .name(name)
+                .facultyId(facultyId)
+                .build();
     }
 
     @Override
