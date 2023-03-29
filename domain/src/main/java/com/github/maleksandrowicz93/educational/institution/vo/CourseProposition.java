@@ -10,7 +10,8 @@ import java.util.Set;
 public record CourseProposition(
         @NonNull String name,
         @NonNull ProfessorId professorId,
-        @NonNull Set<FieldOfStudySnapshot> fieldsOfStudy,
+        @NonNull FacultyId facultyId,
+        @NonNull Set<FieldOfStudyId> fieldsOfStudy,
         @NonNull Threshold maximumNumberOfStudents
 ) {
     public CourseProposition {

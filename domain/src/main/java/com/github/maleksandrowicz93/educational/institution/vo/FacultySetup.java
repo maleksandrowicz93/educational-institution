@@ -8,11 +8,12 @@ import java.util.Set;
 
 @Builder
 public record FacultySetup(
-        @NonNull String facultyName,
-        @NonNull Set<FieldOfStudySnapshot> fieldsOfStudy
+        @NonNull String name,
+        @NonNull FieldOfStudyName mainFieldOfStudyName,
+        @NonNull Set<FieldOfStudyName> secondaryFieldsOfStudyNames
 ) {
     public FacultySetup {
-        if (StringUtils.isBlank(facultyName)) {
+        if (StringUtils.isBlank(name)) {
             throw new IllegalArgumentException("Faculty name cannot be blank.");
         }
     }

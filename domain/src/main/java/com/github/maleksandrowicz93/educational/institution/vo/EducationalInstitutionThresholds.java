@@ -5,15 +5,10 @@ import lombok.NonNull;
 
 @Builder
 public record EducationalInstitutionThresholds(
-        @NonNull Threshold minimumKnownFieldsOfStudy,
-        @NonNull Threshold minimumYearsOfExperience,
-        @NonNull Threshold minimumMainFieldsOfStudyExamScore,
-        @NonNull Threshold minimumSecondaryFieldsOfStudyExamScore,
-        @NonNull Threshold minimumCourseFieldsOfStudyAmount,
-        @NonNull Threshold maximumCourseFieldsOfStudyAmount,
-        @NonNull Threshold maximumLedCourses,
-        @NonNull Threshold maximumFacultyCourses,
-        @NonNull Threshold maximumCoursesAmountMatchingGivenFieldsOfStudy,
-        @NonNull Threshold minimumFieldsOfStudyAmountMakingCoursesMatched
+        @NonNull ProfessorHiringThresholds professorHiringThresholds,
+        @NonNull StudentEnrollmentThresholds studentEnrollmentThresholds,
+        @NonNull CourseCreationThresholds courseCreationThresholds,
+        @NonNull ProfessorAvailabilityThresholds professorAvailabilityThresholds,
+        @NonNull CourseManagementThresholds courseManagementThresholds
 ) {
 }
