@@ -33,7 +33,7 @@ import static java.util.stream.Collectors.toSet
 
 class EducationalInstitutionUtils {
 
-    static def BASIC_THRESHOLD = new Threshold(2)
+    private static def BASIC_THRESHOLD = new Threshold(2)
 
     private EducationalInstitutionUtils() {}
 
@@ -102,11 +102,11 @@ class EducationalInstitutionUtils {
                 .facultyId(facultyId)
                 .yearsOfExperience(new YearsOfExperience(yearsOfExperience))
                 .fieldsOfStudy(fieldsOfStudy)
-                .personalData(personalData())
+                .personalData(fakePersonalData())
                 .build()
     }
 
-    static def personalData() {
+    static def fakePersonalData() {
         PersonalData.builder()
                 .personalIdentification(PersonalIdentification.builder()
                         .country(Locale.ITALY)
@@ -131,7 +131,7 @@ class EducationalInstitutionUtils {
     static def studentApplication(FacultySnapshot faculty, int mainTestResult, int secondaryTestResult) {
         StudentApplication.builder()
                 .facultyId(faculty.id())
-                .personalData(personalData())
+                .personalData(fakePersonalData())
                 .mainTestResult(new TestResult(mainTestResult, faculty.mainFieldOfStudy().id()))
                 .secondaryTestsResults(faculty.secondaryFieldsOfStudy().stream()
                         .map { field -> new TestResult(secondaryTestResult, field.id()) }

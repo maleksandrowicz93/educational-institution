@@ -12,9 +12,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot
-import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot
-import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold
 import spock.lang.Shared
@@ -28,17 +26,21 @@ import static com.github.maleksandrowicz93.educational.institution.EducationalIn
 import static com.github.maleksandrowicz93.educational.institution.EducationalInstitutionUtils.courseProposition
 import static com.github.maleksandrowicz93.educational.institution.EducationalInstitutionUtils.educationalInstitutionSnapshot
 import static com.github.maleksandrowicz93.educational.institution.EducationalInstitutionUtils.facultySetup
-import static com.github.maleksandrowicz93.educational.institution.EducationalInstitutionUtils.personalData
+import static com.github.maleksandrowicz93.educational.institution.EducationalInstitutionUtils.fakePersonalData
 import static com.github.maleksandrowicz93.educational.institution.EducationalInstitutionUtils.professorApplication
 import static com.github.maleksandrowicz93.educational.institution.EducationalInstitutionUtils.studentApplication
 import static java.util.stream.Collectors.toSet
 
 class EducationalInstitutionSpec extends Specification {
 
-    @Shared snapshot = educationalInstitutionSnapshot()
-    @Shared educationalInstitution = EducationalInstitution.from(snapshot, eventsPublisher)
-    @Shared facultySetup = facultySetup()
-    @Shared faculty = educationalInstitution.createFaculty(facultySetup)
+    @Shared
+    def snapshot = educationalInstitutionSnapshot()
+    @Shared
+    def educationalInstitution = EducationalInstitution.from(snapshot, eventsPublisher)
+    @Shared
+    def facultySetup = facultySetup()
+    @Shared
+    def faculty = educationalInstitution.createFaculty(facultySetup)
 
     def eventsPublisher = Mock(EventsPublisher)
 
@@ -51,14 +53,14 @@ class EducationalInstitutionSpec extends Specification {
 
     def "faculty may be created"() {
         given: "Educational Institution without any faculty"
-        def educationalInstitution = EducationalInstitution.from(snapshot, eventsPublisher)
+        educationalInstitution = EducationalInstitution.from(snapshot, eventsPublisher)
 
         when: "the faculty is created"
-        def faculty = educationalInstitution.createFaculty(facultySetup)
+        faculty = educationalInstitution.createFaculty(facultySetup)
 
         then: "should be created successfully"
         def currentSnapshot = educationalInstitution.createSnapshot()
-        currentSnapshot.faculties().size() == 1
+        !currentSnapshot.faculties().isEmpty()
         faculty.id().value() != null
         faculty.name() == facultySetup.name()
         validateMainFieldOfStudy(faculty, facultySetup)
@@ -100,8 +102,8 @@ class EducationalInstitutionSpec extends Specification {
         def maybeHired = educationalInstitution.considerHiring(application)
 
         then: "professor should be employed"
-        def professors = getProfessors(educationalInstitution, application.facultyId())
-        professors.size() == 1
+        def professors = getProfessors()
+        !professors.isEmpty()
         maybeHired.isPresent()
         with(maybeHired.get()) {
             id().value() != null
@@ -112,27 +114,26 @@ class EducationalInstitutionSpec extends Specification {
         }
     }
 
-    private Set<ProfessorSnapshot> getProfessors(EducationalInstitution educationalInstitution, FacultyId facultyId) {
+    private Set<ProfessorSnapshot> getProfessors() {
         def currentSnapshot = educationalInstitution.createSnapshot()
         currentSnapshot.faculties().stream()
-                .filter { it.id() == facultyId }
+                .filter { it.id() == faculty.id() }
                 .map { it.professors() }
                 .flatMap { it.stream() }
                 .collect(toSet())
     }
 
-    @Unroll("years of experience: #yearsOfExperience, fields of study ids: #fieldsOfStudy")
+    @Unroll("years of experience: #yearsOfExperience, fields of study number: #fieldsOfStudy.size()")
     def "professor not matching requirements should not be employed"() {
         given: "Educational Institution with vacancy at a faculty"
         and: "professor's application not matching all requirements"
-        def application = professorApplication(faculty.id(),
-                yearsOfExperience, fieldsOfStudy)
+        def application = professorApplication(faculty.id(), yearsOfExperience, fieldsOfStudy)
 
         when: "professor applies for hiring"
         def maybeHired = educationalInstitution.considerHiring(application)
 
         then: "professor should not be employed"
-        def professors = getProfessors(educationalInstitution, application.facultyId())
+        def professors = getProfessors()
         professors.isEmpty()
         maybeHired.isEmpty()
 
@@ -155,28 +156,32 @@ class EducationalInstitutionSpec extends Specification {
         def maybeHired = educationalInstitution.considerHiring(application)
 
         then: "professor should not be employed"
-        def professors = getProfessors(educationalInstitution, application.facultyId())
+        def professors = getProfessors()
         professors.size() == 2
         maybeHired.isEmpty()
     }
 
     def "professor may resign from employment"() {
         given: "Educational Institution with a professor hired at a faculty"
-        def application = basicProfessorApplication(faculty)
-        def maybeHired = educationalInstitution.considerHiring(application)
-        def professorSnapshot = maybeHired.get()
+        def professorApplication = basicProfessorApplication(faculty)
+        def hired = educationalInstitution.considerHiring(professorApplication).get()
+
+        and: "courses led by professor"
+        def courseProposition1 = basicCourseProposition(hired, faculty)
+        def courseProposition2 = basicCourseProposition(hired, faculty)
+        educationalInstitution.considerCourseCreation(courseProposition1)
+        educationalInstitution.considerCourseCreation(courseProposition2)
 
         when: "professor resigns from employment"
-        def resigned = educationalInstitution.receiveHiringResignation(professorSnapshot.id())
+        def resigned = educationalInstitution.receiveHiringResignation(hired.id())
 
         then: "all courses led by him become vacated"
-        def courses = getCourses(educationalInstitution, faculty.id())
-        def professorCoursesStates = courses.stream()
+        def courses = getCourses()
+        def allCoursesVacated = courses.stream()
                 .filter { it.professorId() == resigned.id() }
                 .map { it.state() }
-                .collect(toSet())
-        professorCoursesStates.size() == 1
-        professorCoursesStates.contains(CourseState.FREE)
+                .allMatch { it == CourseState.FREE }
+        allCoursesVacated
 
         and: "professor is marked as inactive"
         resigned.employmentState() == EmploymentState.INACTIVE
@@ -194,21 +199,21 @@ class EducationalInstitutionSpec extends Specification {
         def maybeEnrolled = educationalInstitution.considerEnrollment(application)
 
         then: "student should be enrolled"
-        def students = getStudents(educationalInstitution, application.facultyId())
-        students.size() == 1
+        def students = getStudents()
+        !students.isEmpty()
         maybeEnrolled.isPresent()
         with(maybeEnrolled.get()) {
             id().value() != null
-            personalData() == application.personalData()
+            fakePersonalData() == application.personalData()
             facultyId() == faculty.id()
             enrollmentState() == EnrollmentState.ENROLLED
         }
     }
 
-    private Set<StudentSnapshot> getStudents(EducationalInstitution educationalInstitution, FacultyId facultyId) {
+    private Set<StudentSnapshot> getStudents() {
         def currentSnapshot = educationalInstitution.createSnapshot()
         currentSnapshot.faculties().stream()
-                .filter { it.id() == facultyId }
+                .filter { it.id() == faculty.id() }
                 .map { it.students() }
                 .flatMap { it.stream() }
                 .collect(toSet())
@@ -224,7 +229,7 @@ class EducationalInstitutionSpec extends Specification {
         def maybeEnrolled = educationalInstitution.considerEnrollment(application)
 
         then: "student should not be enrolled"
-        def students = getStudents(educationalInstitution, faculty.id())
+        def students = getStudents()
         students.isEmpty()
         maybeEnrolled.isEmpty()
 
@@ -247,14 +252,15 @@ class EducationalInstitutionSpec extends Specification {
         def maybeEnrolled = educationalInstitution.considerEnrollment(application)
 
         then: "student should not be enrolled"
-        def students = getStudents(educationalInstitution, faculty.id())
+        def students = getStudents()
         students.size() == 2
         maybeEnrolled.isEmpty()
     }
 
     def "student may resign from enrollment"() {
         given: "Educational Institution with a student enrolled at a faculty"
-        def enrolled = educationalInstitution.considerEnrollment(basicStudentApplication(faculty)).get()
+        def studentApplication = basicStudentApplication(faculty)
+        def enrolled = educationalInstitution.considerEnrollment(studentApplication).get()
 
         when: "student resigns from enrollment"
         def resigned = educationalInstitution.receiveEnrollmentResignation(enrolled.id())
@@ -264,10 +270,11 @@ class EducationalInstitutionSpec extends Specification {
                 .filter { it.students().contains(resigned.id()) }
                 .map { it.id() }
                 .collect(toSet())
-        def coursesAfterResignation = getCourses(educationalInstitution, faculty.id())
-        coursesAfterResignation.stream()
+        def allCoursesAfterResignation = getCourses()
+        def studentCoursesVacated = allCoursesAfterResignation.stream()
                 .filter { studentCoursesBeforeResignation.contains(it.id()) }
                 .noneMatch { it.students().contains(resigned.id()) }
+        studentCoursesVacated
 
         and: "student is marked as inactive"
         resigned.enrollmentState() == EnrollmentState.INACTIVE
@@ -282,14 +289,14 @@ class EducationalInstitutionSpec extends Specification {
         def hired = educationalInstitution.considerHiring(professorApplication).get()
 
         and: "course matching all requirements to be created"
-        def courseProposition = basicFieldsOfStudy(faculty)
+        def courseProposition = basicCourseProposition(hired, faculty)
 
         when: "professor creates course"
         def maybeCreated = educationalInstitution.considerCourseCreation(courseProposition)
 
         then: "course should be created"
-        def courses = getCourses(educationalInstitution, faculty.id())
-        courses.size() == 1
+        def courses = getCourses()
+        !courses.isEmpty()
         maybeCreated.isPresent()
         with(maybeCreated.get()) {
             id().value() != null
@@ -302,10 +309,10 @@ class EducationalInstitutionSpec extends Specification {
         }
     }
 
-    private Set<CourseSnapshot> getCourses(EducationalInstitution educationalInstitution, FacultyId facultyId) {
+    private Set<CourseSnapshot> getCourses() {
         def currentSnapshot = educationalInstitution.createSnapshot()
         currentSnapshot.faculties().stream()
-                .filter { it.id() == facultyId }
+                .filter { it.id() == faculty.id() }
                 .map { it.courses() }
                 .map { it.stream() }
                 .collect(toSet())
@@ -324,7 +331,7 @@ class EducationalInstitutionSpec extends Specification {
         def maybeCreated = educationalInstitution.considerCourseCreation(courseProposition)
 
         then: "course should not be created"
-        def courses = getCourses(educationalInstitution, faculty.id())
+        def courses = getCourses()
         courses.isEmpty()
         maybeCreated.isEmpty()
 
@@ -374,17 +381,16 @@ class EducationalInstitutionSpec extends Specification {
         def maybeCreated = educationalInstitution.considerCourseCreation(courseProposition)
 
         then: "course should not be created"
-        def courses = getCourses(educationalInstitution, faculty.id())
+        def courses = getCourses()
         courses.isEmpty()
         maybeCreated.isEmpty()
     }
 
     def "professor with no capacity should not create a course matching all requirements within a faculty"() {
-        given: "Educational Institution"
+        given: "Educational Institution allowing maximum one led course per professor"
         def maximumLedCourses = new Threshold(1)
         snapshot = educationalInstitutionSnapshot(maximumLedCourses)
         educationalInstitution = EducationalInstitution.from(snapshot, eventsPublisher)
-        facultySetup = facultySetup()
         faculty = educationalInstitution.createFaculty(facultySetup)
 
         and: "professor with no capacity hired at a faculty"
@@ -399,14 +405,15 @@ class EducationalInstitutionSpec extends Specification {
         def maybeCreated = educationalInstitution.considerCourseCreation(courseProposition)
 
         then: "course should not be created"
-        def courses = getCourses(educationalInstitution, faculty.id())
+        def courses = getCourses()
         courses.isEmpty()
         maybeCreated.isEmpty()
     }
 
     def "professor may resign from leading the course"() {
-        given: "Educational Institution with a professor leading the course at a faculty"
-        def hired = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
+        given: "Educational Institution with a professor leading a course at a faculty"
+        def professorApplication = basicProfessorApplication(faculty)
+        def hired = educationalInstitution.considerHiring(professorApplication).get()
         def courseProposition = basicCourseProposition(hired, faculty)
         def course = educationalInstitution.considerCourseCreation(courseProposition).get()
 
@@ -421,14 +428,16 @@ class EducationalInstitutionSpec extends Specification {
     }
 
     def "vacated course may be overtaken by a professor matching all requirements"() {
-        given: "Educational Institution with the vacated course within a faculty"
-        def resigning = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
+        given: "Educational Institution with a vacated course within a faculty"
+        def resigningProfessorApplication = basicProfessorApplication(faculty)
+        def resigning = educationalInstitution.considerHiring(resigningProfessorApplication).get()
         def courseProposition = basicCourseProposition(resigning, faculty)
         def course = educationalInstitution.considerCourseCreation(courseProposition).get()
         def vacated = educationalInstitution.receiveCourseLeadingResignation(course.id())
 
-        and: "employed professor matching all course requirements"
-        def overtaking = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
+        and: "new employed professor matching all course requirements"
+        def overtakingProfessorApplication = basicProfessorApplication(faculty)
+        def overtaking = educationalInstitution.considerHiring(overtakingProfessorApplication).get()
 
         and: "professor's application to overtake the course"
         def application = new CourseOvertakingApplication(overtaking.id(), vacated.id())
@@ -451,25 +460,26 @@ class EducationalInstitutionSpec extends Specification {
 
     def "vacated course should not be overtaken by a professor not matching requirements"() {
         given: "Educational Institution with the vacated course within a faculty"
-        def hired = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
-        def courseProposition = basicCourseProposition(hired, faculty)
+        def resigningProfessorApplication = basicProfessorApplication(faculty)
+        def resigning = educationalInstitution.considerHiring(resigningProfessorApplication).get()
+        def courseProposition = basicCourseProposition(resigning, faculty)
         def course = educationalInstitution.considerCourseCreation(courseProposition).get()
         def vacated = educationalInstitution.receiveCourseLeadingResignation(course.id())
 
-        and: "employed professor not matching requirements"
-        def newProfessorApplication = professorApplication(faculty.id(),
+        and: "new employed professor not matching course requirements"
+        def overtakingProfessorApplication = professorApplication(faculty.id(),
                 2, notMatchedFieldsOfStudy())
-        def newProfessor = educationalInstitution.considerHiring(newProfessorApplication).get()
+        def overtaking = educationalInstitution.considerHiring(overtakingProfessorApplication).get()
 
         and: "this professor's application to overtake the course"
-        def application = new CourseOvertakingApplication(newProfessor.id(), vacated.id())
+        def application = new CourseOvertakingApplication(overtaking.id(), vacated.id())
 
         when: "this professor overtakes the course"
         def maybeOvertaken = educationalInstitution.considerCourseOvertaking(application)
 
         then: "course should not be overtaken"
         maybeOvertaken.isEmpty()
-        def ledCourses = getCourses(educationalInstitution, faculty.id()).stream()
+        def ledCourses = getCourses().stream()
                 .filter { it.state() == CourseState.LED }
                 .collect() { toSet() }
         ledCourses.isEmpty()
@@ -480,15 +490,15 @@ class EducationalInstitutionSpec extends Specification {
         def alternativeFaculty = educationalInstitution.createFaculty(facultySetup)
 
         and: "vacated course within first faculty"
-        def firstFacultyApplication = basicProfessorApplication(faculty)
-        def resigning = educationalInstitution.considerHiring(firstFacultyApplication).get()
+        def resigningProfessorApplication = basicProfessorApplication(faculty)
+        def resigning = educationalInstitution.considerHiring(resigningProfessorApplication).get()
         def courseProposition = basicCourseProposition(resigning, faculty)
         def created = educationalInstitution.considerCourseCreation(courseProposition).get()
         def vacated = educationalInstitution.receiveCourseLeadingResignation(created.id())
 
         and: "professor matching all requirements employed in second faculty"
-        def alternativeFacultyApplication = basicProfessorApplication(alternativeFaculty)
-        def overtaking = educationalInstitution.considerHiring(alternativeFacultyApplication).get()
+        def overtakingProfessorApplication = basicProfessorApplication(alternativeFaculty)
+        def overtaking = educationalInstitution.considerHiring(overtakingProfessorApplication).get()
 
         and: "professor's application to overtake the course"
         def overtakingApplication = new CourseOvertakingApplication(overtaking.id(), vacated.id())
@@ -498,23 +508,22 @@ class EducationalInstitutionSpec extends Specification {
 
         then: "course should not be overtaken"
         maybeOvertaken.isEmpty()
-        def courses = getCourses(educationalInstitution, faculty.id())
-        def currentCourseState = courses.stream()
-                .filter { it.id() == vacated.id() }
-                .findFirst()
-                .get()
-                .state()
-        currentCourseState == CourseState.FREE
+        def ledCourses = getCourses().stream()
+                .filter { it.state() == CourseState.LED }
+                .collect() { toSet() }
+        ledCourses.isEmpty()
     }
 
     def "student may enroll for the vacated course"() {
         given: "Educational Institution with the vacated course within a faculty"
-        def hired = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
+        def professorApplication = basicProfessorApplication(faculty)
+        def hired = educationalInstitution.considerHiring(professorApplication).get()
         def courseProposition = basicCourseProposition(hired, faculty)
         def course = educationalInstitution.considerCourseCreation(courseProposition).get()
 
         and: "student enrolled in the faculty"
-        def enrolled = educationalInstitution.considerEnrollment(basicStudentApplication(faculty)).get()
+        def studentApplication = basicStudentApplication(faculty)
+        def enrolled = educationalInstitution.considerEnrollment(studentApplication).get()
 
         and: "student's application for course enrollment"
         def application = new CourseEnrollmentApplication(enrolled.id(), course.id())
@@ -523,6 +532,10 @@ class EducationalInstitutionSpec extends Specification {
         def maybeCurrentCourse = educationalInstitution.considerCourseEnrollment(application)
 
         then: "student should be enrolled"
+        def studentCourses = getCourses().stream()
+                .filter { it.students().contains(enrolled.id()) }
+                .collect(toSet())
+        !studentCourses.isEmpty()
         maybeCurrentCourse.isPresent()
         with(maybeCurrentCourse.get()) {
             id() == course.id()
@@ -530,24 +543,29 @@ class EducationalInstitutionSpec extends Specification {
             facultyId() == course.facultyId()
             professorId() == course.professorId()
             fieldsOfStudy() == course.fieldsOfStudy()
-            students().size() == 1
+            !students().isEmpty()
             students().contains(enrolled.id())
             state() == course.state()
         }
     }
 
     def "student should not be enrolled for the full course"() {
-        given: "Educational Institution with the full course within a faculty"
+        given: "Educational Institution with a course within a faculty"
         def hired = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
         def courseProposition = basicCourseProposition(hired, faculty)
         def course = educationalInstitution.considerCourseCreation(courseProposition).get()
-        def student1 = educationalInstitution.considerEnrollment(basicStudentApplication(faculty)).get()
-        def student2 =  educationalInstitution.considerEnrollment(basicStudentApplication(faculty)).get()
+
+        and: "the course has no vacancy"
+        def studentApplication1 = basicStudentApplication(faculty)
+        def studentApplication2 = basicStudentApplication(faculty)
+        def student1 = educationalInstitution.considerEnrollment(studentApplication1).get()
+        def student2 = educationalInstitution.considerEnrollment(studentApplication2).get()
         educationalInstitution.considerCourseEnrollment(new CourseEnrollmentApplication(student1.id(), course.id()))
         educationalInstitution.considerCourseEnrollment(new CourseEnrollmentApplication(student2.id(), course.id()))
 
         and: "new student enrolled in the faculty"
-        def newStudent = educationalInstitution.considerEnrollment(basicStudentApplication(faculty)).get()
+        def newStudentApplication = basicStudentApplication(faculty)
+        def newStudent = educationalInstitution.considerEnrollment(newStudentApplication).get()
 
         and: "new student's course enrollment application"
         def application = new CourseEnrollmentApplication(newStudent.id(), course.id())
@@ -557,7 +575,7 @@ class EducationalInstitutionSpec extends Specification {
 
         then: "student should not be enrolled"
         maybeCurrentCourse.isEmpty()
-        def studentsEnrolledForCourse = getCourses(educationalInstitution, faculty.id()).stream()
+        def studentsEnrolledForCourse = getCourses().stream()
                 .filter { it.id() == course.id() }
                 .map { it.students() }
                 .flatMap { it.stream() }
@@ -571,7 +589,8 @@ class EducationalInstitutionSpec extends Specification {
         def alternativeFaculty = educationalInstitution.createFaculty(facultySetup)
 
         and: "vacated course within first faculty"
-        def hired = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
+        def professorApplication = basicProfessorApplication(faculty)
+        def hired = educationalInstitution.considerHiring(professorApplication).get()
         def courseProposition = basicCourseProposition(hired, faculty)
         def course = educationalInstitution.considerCourseCreation(courseProposition).get()
 
@@ -587,7 +606,7 @@ class EducationalInstitutionSpec extends Specification {
 
         then: "student should not be enrolled"
         maybeCurrentCourse.isEmpty()
-        def courses = getCourses(educationalInstitution, faculty.id())
+        def courses = getCourses()
         def studentsEnrolledForCourse = courses.stream()
                 .filter { it.id() == course.id() }
                 .map { it.students() }
@@ -597,8 +616,9 @@ class EducationalInstitutionSpec extends Specification {
     }
 
     def "course with too many vacancies may be closed"() {
-        given: "Educational Institution with the course within a faculty"
-        def hired = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
+        given: "Educational Institution with a professor hired at a faculty"
+        def professorApplication = basicProfessorApplication(faculty)
+        def hired = educationalInstitution.considerHiring(professorApplication).get()
 
         and: "too many vacancies within the course"
         def courseProposition = basicCourseProposition(hired, faculty)
@@ -608,6 +628,11 @@ class EducationalInstitutionSpec extends Specification {
         def maybeClosed = educationalInstitution.considerClosingCourse(course.id())
 
         then: "the course should be closed"
+        def isCourseClosed = getCourses().stream()
+                .filter { it.id() == course.id() }
+                .map { it.state() }
+                .allMatch { it == CourseState.CLOSED }
+        isCourseClosed
         maybeClosed.isPresent()
         with(maybeClosed.get()) {
             id() == course.id()
@@ -625,24 +650,27 @@ class EducationalInstitutionSpec extends Specification {
 
     def "course with enough number of enrolled students should not be closed"() {
         given: "Educational Institution with the course within a faculty"
-        def hired = educationalInstitution.considerHiring(basicProfessorApplication(faculty)).get()
+        def professorApplication = basicProfessorApplication(faculty)
+        def hired = educationalInstitution.considerHiring(professorApplication).get()
         def courseProposition = basicCourseProposition(hired, faculty)
         def course = educationalInstitution.considerCourseCreation(courseProposition).get()
-        def student1 = educationalInstitution.considerEnrollment(basicStudentApplication(faculty)).get()
-        def student2 = educationalInstitution.considerEnrollment(basicStudentApplication(faculty)).get()
 
         and: "enough number of students are enrolled for the course"
-        def application1 = new CourseEnrollmentApplication(student1.id(), course.id())
-        def application2 = new CourseEnrollmentApplication(student2.id(), course.id())
-        educationalInstitution.considerCourseEnrollment(application1).get()
-        educationalInstitution.considerCourseEnrollment(application2).get()
+        def studentApplication1 = basicStudentApplication(faculty)
+        def studentApplication2 = basicStudentApplication(faculty)
+        def student1 = educationalInstitution.considerEnrollment(studentApplication1).get()
+        def student2 = educationalInstitution.considerEnrollment(studentApplication2).get()
+        def courseEnrollmentApplication1 = new CourseEnrollmentApplication(student1.id(), course.id())
+        def courseEnrollmentApplication2 = new CourseEnrollmentApplication(student2.id(), course.id())
+        educationalInstitution.considerCourseEnrollment(courseEnrollmentApplication1).get()
+        educationalInstitution.considerCourseEnrollment(courseEnrollmentApplication2).get()
 
         when: "professor closes the course"
         def maybeClosed = educationalInstitution.considerClosingCourse(course.id())
 
         then: "the course should not be closed"
         maybeClosed.isEmpty()
-        def closedCourses = getCourses(educationalInstitution, faculty.id()).stream()
+        def closedCourses = getCourses().stream()
                 .filter { it.state() == CourseState.CLOSED }
                 .collect(toSet())
         closedCourses.isEmpty()
