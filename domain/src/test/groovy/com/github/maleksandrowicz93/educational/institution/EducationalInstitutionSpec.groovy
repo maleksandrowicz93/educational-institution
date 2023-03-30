@@ -311,11 +311,11 @@ class EducationalInstitutionSpec extends Specification {
         currentSnapshot.faculties().stream()
                 .filter { it.id() == faculty.id() }
                 .map { it.courses() }
-                .map { it.stream() }
+                .flatMap { it.stream() }
                 .collect(toSet())
     }
 
-    @Unroll("fields of study: #fieldsOfStudy")
+    @Unroll("fields of study number: #fieldsOfStudy.size()")
     def "professor with capacity should not create a course not matching requirements within a faculty"() {
         given: "Educational Institution with a professor with capacity hired at a faculty"
         def professorApplication = basicProfessorApplication(faculty)
@@ -347,10 +347,10 @@ class EducationalInstitutionSpec extends Specification {
     }
 
     private def tooManyFieldsOfStudy() {
-        def basicFieldsOfStudyArray = basicFieldsOfStudy(faculty)
-                .toArray(new FieldOfStudyId[0]) as FieldOfStudyId[]
-        def additionalFieldOfStudy = faculty.mainFieldOfStudy().id()
-        Set.of(basicFieldsOfStudyArray, additionalFieldOfStudy)
+        def tooManyFieldsOfStudy = new HashSet()
+        tooManyFieldsOfStudy.addAll(basicFieldsOfStudy(faculty))
+        tooManyFieldsOfStudy.add(faculty.mainFieldOfStudy().id())
+        tooManyFieldsOfStudy
     }
 
     private def notMatchedFieldsOfStudy() {
@@ -379,7 +379,7 @@ class EducationalInstitutionSpec extends Specification {
 
         then: "course should not be created"
         def courses = getCourses()
-        courses.isEmpty()
+        courses.size() == 2
         maybeCreated.isEmpty()
     }
 
@@ -393,17 +393,18 @@ class EducationalInstitutionSpec extends Specification {
         and: "professor with no capacity hired at a faculty"
         def professorApplication = basicProfessorApplication(faculty)
         def hired = educationalInstitution.considerHiring(professorApplication).get()
-        educationalInstitution.considerCourseCreation(basicCourseProposition(hired, faculty))
+        def courseProposition = basicCourseProposition(hired, faculty)
+        def existingCourse = educationalInstitution.considerCourseCreation(courseProposition).get()
 
         and: "course matching all requirements to be created"
-        def courseProposition = basicCourseProposition(hired, faculty)
+        def newCourseProposition = basicCourseProposition(hired, faculty)
 
         when: "professor creates course"
-        def maybeCreated = educationalInstitution.considerCourseCreation(courseProposition)
+        def maybeCreated = educationalInstitution.considerCourseCreation(newCourseProposition)
 
         then: "course should not be created"
         def courses = getCourses()
-        courses.isEmpty()
+        courses.contains(existingCourse)
         maybeCreated.isEmpty()
     }
 

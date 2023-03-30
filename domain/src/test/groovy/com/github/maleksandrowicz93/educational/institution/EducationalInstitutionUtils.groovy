@@ -79,9 +79,10 @@ class EducationalInstitutionUtils {
         FacultySetup.builder()
                 .name("Mechanical")
                 .mainFieldOfStudyName(new FieldOfStudyName("Mechanics and Construction of Machines"))
-                .secondaryFieldsOfStudyNames(Set.of(new FieldOfStudyName("Mechatronics"),
-                        new FieldOfStudyName("Automation and Robotics"),
-                        new FieldOfStudyName("Management and Production Engineering")))
+                .secondaryFieldsOfStudyNames(Set.of(
+                        new FieldOfStudyName("Mechatronics"),
+                        new FieldOfStudyName("Automation and Robotics")
+                ))
                 .build()
     }
 
