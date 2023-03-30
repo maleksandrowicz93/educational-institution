@@ -6,14 +6,11 @@ import com.github.maleksandrowicz93.educational.institution.enums.EmploymentStat
 import com.github.maleksandrowicz93.educational.institution.enums.EnrollmentState
 import com.github.maleksandrowicz93.educational.institution.vo.CourseEnrollmentApplication
 import com.github.maleksandrowicz93.educational.institution.vo.CourseOvertakingApplication
-import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot
-import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot
-import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold
 import spock.lang.Shared
 import spock.lang.Specification
@@ -114,7 +111,7 @@ class EducationalInstitutionSpec extends Specification {
         }
     }
 
-    private Set<ProfessorSnapshot> getProfessors() {
+    private def getProfessors() {
         def currentSnapshot = educationalInstitution.createSnapshot()
         currentSnapshot.faculties().stream()
                 .filter { it.id() == faculty.id() }
@@ -210,7 +207,7 @@ class EducationalInstitutionSpec extends Specification {
         }
     }
 
-    private Set<StudentSnapshot> getStudents() {
+    private def getStudents() {
         def currentSnapshot = educationalInstitution.createSnapshot()
         currentSnapshot.faculties().stream()
                 .filter { it.id() == faculty.id() }
@@ -309,7 +306,7 @@ class EducationalInstitutionSpec extends Specification {
         }
     }
 
-    private Set<CourseSnapshot> getCourses() {
+    private def getCourses() {
         def currentSnapshot = educationalInstitution.createSnapshot()
         currentSnapshot.faculties().stream()
                 .filter { it.id() == faculty.id() }
@@ -342,21 +339,21 @@ class EducationalInstitutionSpec extends Specification {
         notMatchedFieldsOfStudy() as Set<FieldOfStudyId> | _
     }
 
-    def tooFewFieldsOfStudy() {
+    private def tooFewFieldsOfStudy() {
         def basicFieldOfStudy = basicFieldsOfStudy(faculty).stream()
                 .findFirst()
                 .get()
         Set.of(basicFieldOfStudy)
     }
 
-    def tooManyFieldsOfStudy() {
+    private def tooManyFieldsOfStudy() {
         def basicFieldsOfStudyArray = basicFieldsOfStudy(faculty)
                 .toArray(new FieldOfStudyId[0]) as FieldOfStudyId[]
         def additionalFieldOfStudy = faculty.mainFieldOfStudy().id()
         Set.of(basicFieldsOfStudyArray, additionalFieldOfStudy)
     }
 
-    def notMatchedFieldsOfStudy() {
+    private def notMatchedFieldsOfStudy() {
         def basicFieldOfStudy = basicFieldsOfStudy(faculty).stream()
                 .findFirst()
                 .get()
