@@ -8,12 +8,14 @@ import java.util.Set;
 @Builder
 public record FacultySnapshot(
         FacultyId id,
+        EducationalInstitutionId educationalInstitutionId,
         String name,
+        FacultyManagementThresholds facultyManagementThresholds,
         FieldOfStudySnapshot mainFieldOfStudy,
         Set<FieldOfStudySnapshot> secondaryFieldsOfStudy,
         Set<ProfessorSnapshot> professors,
-        Set<CourseSnapshot> courses,
-        Set<StudentSnapshot> students
+        Set<StudentSnapshot> students,
+        Set<CourseId> courses
 ) {
     public FacultySnapshot {
         if (secondaryFieldsOfStudy == null) {

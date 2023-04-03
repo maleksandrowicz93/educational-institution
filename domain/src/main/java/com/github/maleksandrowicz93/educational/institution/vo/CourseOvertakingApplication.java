@@ -5,7 +5,7 @@ import lombok.NonNull;
 
 @Builder
 public record CourseOvertakingApplication(
-        @NonNull ProfessorId professorId,
-        @NonNull CourseId courseId
+        @NonNull ProfessorSnapshot applyingProfessor,
+        @NonNull CourseSnapshot courseToBeOvertaken
 ) {
 }

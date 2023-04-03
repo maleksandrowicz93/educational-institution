@@ -7,6 +7,7 @@ import lombok.NonNull;
 public record CourseCreationThresholds(
         @NonNull Threshold minimumCourseFieldsOfStudy,
         @NonNull Threshold maximumCourseFieldsOfStudy,
-        @NonNull Threshold maximumFacultyCourses
+        @NonNull Threshold maximumFacultyCourses,
+        @NonNull Threshold maximumProfessorCourses
 ) {
 }

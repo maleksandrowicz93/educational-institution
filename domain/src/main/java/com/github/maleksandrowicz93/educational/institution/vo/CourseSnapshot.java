@@ -11,10 +11,11 @@ public record CourseSnapshot(
         CourseId id,
         String name,
         FacultyId facultyId,
-        ProfessorId professorId,
-        Set<FieldOfStudyId> fieldsOfStudy,
-        Set<StudentId> students,
-        CourseState state
+        CourseManagementThresholds courseManagementThresholds,
+        Set<FieldOfStudySnapshot> fieldsOfStudy,
+        ProfessorSnapshot professor,
+        CourseState state,
+        Set<StudentSnapshot> students
 ) {
     public CourseSnapshot {
         if (fieldsOfStudy == null) {

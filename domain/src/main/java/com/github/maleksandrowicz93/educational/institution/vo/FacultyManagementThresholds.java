@@ -4,11 +4,9 @@ import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-public record EducationalInstitutionThresholds(
+public record FacultyManagementThresholds(
         @NonNull ProfessorHiringThresholds professorHiringThresholds,
         @NonNull StudentEnrollmentThresholds studentEnrollmentThresholds,
-        @NonNull CourseCreationThresholds courseCreationThresholds,
-        @NonNull ProfessorAvailabilityThresholds professorAvailabilityThresholds,
-        @NonNull CourseManagementThresholds courseManagementThresholds
+        @NonNull CourseCreationThresholds courseCreationThresholds
 ) {
 }

@@ -9,8 +9,10 @@ import java.util.Set;
 @Builder
 public record FacultySetup(
         @NonNull String name,
+        @NonNull EducationalInstitutionId educationalInstitutionId,
         @NonNull FieldOfStudyName mainFieldOfStudyName,
-        @NonNull Set<FieldOfStudyName> secondaryFieldsOfStudyNames
+        @NonNull Set<FieldOfStudyName> secondaryFieldsOfStudyNames,
+        @NonNull FacultyManagementThresholds facultyManagementThresholds
 ) {
     public FacultySetup {
         if (StringUtils.isBlank(name)) {

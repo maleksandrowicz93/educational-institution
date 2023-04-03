@@ -10,13 +10,17 @@ import java.util.Set;
 public record ProfessorSnapshot(
         ProfessorId id,
         PersonalData personalData,
-        Set<FieldOfStudyId> fieldsOfStudy,
         FacultyId facultyId,
+        Set<FieldOfStudyId> fieldsOfStudy,
+        Set<CourseId> ledCourses,
         EmploymentState employmentState
 ) {
     public ProfessorSnapshot {
         if (fieldsOfStudy == null) {
             fieldsOfStudy = new HashSet<>();
+        }
+        if (ledCourses == null) {
+            ledCourses = new HashSet<>();
         }
     }
 }

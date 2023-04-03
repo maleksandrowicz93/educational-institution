@@ -5,7 +5,9 @@ import lombok.NonNull;
 
 @Builder
 public record CourseManagementThresholds(
-        @NonNull Threshold minimumQuantityOfMaximumEnrollments,
-        @NonNull Threshold minimumEnrollmentsCourseCannotBeClosed
+        @NonNull Threshold maximumNumberOfEnrolledStudents,
+        @NonNull Threshold minimumEnrollmentsCourseCannotBeClosed,
+        @NonNull Threshold maximumProfessorCourses
+
 ) {
 }

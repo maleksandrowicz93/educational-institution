@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public record EducationalInstitutionSetup(
         @NonNull String name,
-        @NonNull EducationalInstitutionThresholds thresholds
+        @NonNull FacultyManagementThresholds thresholds
 ) {
     public EducationalInstitutionSetup {
         if (StringUtils.isBlank(name)) {

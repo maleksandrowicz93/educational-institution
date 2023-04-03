@@ -8,8 +8,8 @@ import java.util.Set;
 @Builder
 public record EducationalInstitutionSnapshot(
         EducationalInstitutionId id,
-        EducationalInstitutionSetup setup,
-        Set<FacultySnapshot> faculties
+        String name,
+        Set<FacultyId> faculties
 ) {
     public EducationalInstitutionSnapshot {
         if (faculties == null) {
