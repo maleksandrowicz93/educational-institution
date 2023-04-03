@@ -2,14 +2,11 @@ package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.vo.BasicPersonName
 import com.github.maleksandrowicz93.educational.institution.vo.CourseCreationThresholds
-import com.github.maleksandrowicz93.educational.institution.vo.CourseManagementThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionId
-import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionSetup
-import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionSnapshot
-import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.Email
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
+import com.github.maleksandrowicz93.educational.institution.vo.FacultyManagementThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId
@@ -20,7 +17,6 @@ import com.github.maleksandrowicz93.educational.institution.vo.PersonalData
 import com.github.maleksandrowicz93.educational.institution.vo.PersonalIdentification
 import com.github.maleksandrowicz93.educational.institution.vo.PhoneNumber
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication
-import com.github.maleksandrowicz93.educational.institution.vo.ProfessorAvailabilityThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHiringThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication
@@ -31,58 +27,39 @@ import com.github.maleksandrowicz93.educational.institution.vo.YearsOfExperience
 
 import static java.util.stream.Collectors.toSet
 
-class EducationalInstitutionUtils {
+class FacultyUtils {
 
     private static def BASIC_THRESHOLD = new Threshold(2)
 
-    private EducationalInstitutionUtils() {}
+    private FacultyUtils() {}
 
-    static def educationalInstitutionSnapshot() {
-        educationalInstitutionSnapshot(BASIC_THRESHOLD)
-    }
-
-    static def educationalInstitutionSnapshot(Threshold maximumLedCourses) {
-        EducationalInstitutionSnapshot.builder()
-                .id(new EducationalInstitutionId(UUID.randomUUID()))
-                .setup(EducationalInstitutionSetup.builder()
-                        .name("Wroclaw University of Technology")
-                        .thresholds(EducationalInstitutionThresholds.builder()
-                                .professorHiringThresholds(ProfessorHiringThresholds.builder()
-                                        .minimumYearsOfExperience(BASIC_THRESHOLD)
-                                        .minimumKnownFieldsOfStudy(BASIC_THRESHOLD)
-                                        .maximumVacancies(BASIC_THRESHOLD)
-                                        .build())
-                                .studentEnrollmentThresholds(StudentEnrollmentThresholds.builder()
-                                        .minimumMainFieldOfStudyExamScore(BASIC_THRESHOLD)
-                                        .minimumSecondaryFieldsOfStudyExamsScore(BASIC_THRESHOLD)
-                                        .maximumVacancies(BASIC_THRESHOLD)
-                                        .build())
-                                .professorAvailabilityThresholds(ProfessorAvailabilityThresholds.builder()
-                                        .maximumLedCourses(maximumLedCourses)
-                                        .build())
-                                .courseCreationThresholds(CourseCreationThresholds.builder()
-                                        .minimumCourseFieldsOfStudy(BASIC_THRESHOLD)
-                                        .maximumCourseFieldsOfStudy(BASIC_THRESHOLD)
-                                        .maximumFacultyCourses(BASIC_THRESHOLD)
-                                        .build())
-                                .courseManagementThresholds(CourseManagementThresholds.builder()
-                                        .minimumQuantityOfMaximumEnrollments(BASIC_THRESHOLD)
-                                        .minimumEnrollmentsCourseCannotBeClosed(BASIC_THRESHOLD)
-                                        .build())
-                                .build())
-                        .build())
-                .faculties(Set.of())
-                .build()
-    }
-
-    static def facultySetup() {
+    static def facultySetup(EducationalInstitutionId educationalInstitutionId) {
         FacultySetup.builder()
                 .name("Mechanical")
+                .educationalInstitutionId(educationalInstitutionId)
                 .mainFieldOfStudyName(new FieldOfStudyName("Mechanics and Construction of Machines"))
                 .secondaryFieldsOfStudyNames(Set.of(
                         new FieldOfStudyName("Mechatronics"),
                         new FieldOfStudyName("Automation and Robotics")
                 ))
+                .facultyManagementThresholds(FacultyManagementThresholds.builder()
+                        .professorHiringThresholds(ProfessorHiringThresholds.builder()
+                                .minimumYearsOfExperience(BASIC_THRESHOLD)
+                                .minimumKnownFieldsOfStudy(BASIC_THRESHOLD)
+                                .maximumVacancies(BASIC_THRESHOLD)
+                                .build())
+                        .studentEnrollmentThresholds(StudentEnrollmentThresholds.builder()
+                                .minimumMainFieldOfStudyExamScore(BASIC_THRESHOLD)
+                                .minimumSecondaryFieldsOfStudyExamsScore(BASIC_THRESHOLD)
+                                .maximumVacancies(BASIC_THRESHOLD)
+                                .build())
+                        .courseCreationThresholds(CourseCreationThresholds.builder()
+                                .minimumCourseFieldsOfStudy(BASIC_THRESHOLD)
+                                .maximumCourseFieldsOfStudy(BASIC_THRESHOLD)
+                                .maximumFacultyCourses(BASIC_THRESHOLD)
+                                .maximumProfessorCourses(BASIC_THRESHOLD)
+                                .build())
+                        .build())
                 .build()
     }
 
