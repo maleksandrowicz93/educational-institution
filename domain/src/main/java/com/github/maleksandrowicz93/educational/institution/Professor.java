@@ -2,6 +2,7 @@ package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.common.Entity;
 import com.github.maleksandrowicz93.educational.institution.enums.EmploymentState;
+import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
 import com.github.maleksandrowicz93.educational.institution.vo.PersonalData;
@@ -18,16 +19,18 @@ class Professor implements Entity<ProfessorSnapshot> {
 
     ProfessorId id;
     PersonalData personalData;
-    Set<FieldOfStudyId> fieldsOfStudy;
     FacultyId facultyId;
+    Set<FieldOfStudyId> fieldsOfStudy;
+    Set<CourseId> ledCourses;
     EmploymentState employmentState;
 
     static Professor from(ProfessorSnapshot snapshot) {
         return builder()
                 .id(snapshot.id())
                 .personalData(snapshot.personalData())
-                .fieldsOfStudy(snapshot.fieldsOfStudy())
                 .facultyId(snapshot.facultyId())
+                .fieldsOfStudy(snapshot.fieldsOfStudy())
+                .ledCourses(snapshot.ledCourses())
                 .employmentState(snapshot.employmentState())
                 .build();
     }
@@ -37,8 +40,9 @@ class Professor implements Entity<ProfessorSnapshot> {
         return ProfessorSnapshot.builder()
                 .id(id)
                 .personalData(personalData)
-                .fieldsOfStudy(fieldsOfStudy)
                 .facultyId(facultyId)
+                .fieldsOfStudy(fieldsOfStudy)
+                .ledCourses(ledCourses)
                 .employmentState(employmentState)
                 .build();
     }
