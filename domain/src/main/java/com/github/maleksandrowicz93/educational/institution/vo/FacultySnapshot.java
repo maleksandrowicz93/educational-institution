@@ -1,11 +1,12 @@
 package com.github.maleksandrowicz93.educational.institution.vo;
 
 import lombok.Builder;
+import lombok.Singular;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Builder
+@Builder(toBuilder = true)
 public record FacultySnapshot(
         FacultyId id,
         EducationalInstitutionId educationalInstitutionId,
@@ -13,8 +14,8 @@ public record FacultySnapshot(
         FacultyManagementThresholds facultyManagementThresholds,
         FieldOfStudySnapshot mainFieldOfStudy,
         Set<FieldOfStudySnapshot> secondaryFieldsOfStudy,
-        Set<ProfessorSnapshot> professors,
-        Set<StudentSnapshot> students,
+        @Singular Set<ProfessorSnapshot> professors,
+        @Singular Set<StudentSnapshot> students,
         Set<CourseId> courses
 ) {
     public FacultySnapshot {

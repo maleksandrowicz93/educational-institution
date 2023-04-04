@@ -11,7 +11,7 @@ public record CourseProposition(
         @NonNull String name,
         @NonNull ProfessorId professorId,
         @NonNull FacultyId facultyId,
-        @NonNull Set<FieldOfStudyId> fieldsOfStudy,
+        @NonNull Set<FieldOfStudySnapshot> fieldsOfStudy,
         @NonNull Threshold maximumNumberOfStudents
 ) {
     public CourseProposition {

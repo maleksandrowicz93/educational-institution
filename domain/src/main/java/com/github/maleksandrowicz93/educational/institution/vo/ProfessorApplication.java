@@ -9,7 +9,7 @@ import java.util.Set;
 public record ProfessorApplication(
         @NonNull PersonalData personalData,
         @NonNull YearsOfExperience yearsOfExperience,
-        @NonNull Set<FieldOfStudyId> fieldsOfStudy,
+        @NonNull Set<FieldOfStudySnapshot> fieldsOfStudy,
         @NonNull FacultyId facultyId
 ) {
 }

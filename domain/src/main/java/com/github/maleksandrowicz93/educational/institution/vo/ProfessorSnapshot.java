@@ -6,12 +6,12 @@ import lombok.Builder;
 import java.util.HashSet;
 import java.util.Set;
 
-@Builder
+@Builder(toBuilder = true)
 public record ProfessorSnapshot(
         ProfessorId id,
         PersonalData personalData,
         FacultyId facultyId,
-        Set<FieldOfStudyId> fieldsOfStudy,
+        Set<FieldOfStudySnapshot> fieldsOfStudy,
         Set<CourseId> ledCourses,
         EmploymentState employmentState
 ) {
