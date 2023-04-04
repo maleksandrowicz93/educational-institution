@@ -9,7 +9,8 @@ import lombok.experimental.FieldDefaults;
 public enum CourseEnrollmentResultReason implements ResultReason {
 
     SUCCESS("Success."),
-    NO_VACANCY("No vacancy at the course.");
+    NO_VACANCY("No vacancy at the course."),
+    INVALID_FACULTY("The course is from other faculty.");
 
     String text;
 

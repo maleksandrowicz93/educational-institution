@@ -1,15 +1,15 @@
 package com.github.maleksandrowicz93.educational.institution.results;
 
 import com.github.maleksandrowicz93.educational.institution.common.Result;
-import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
+import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 import lombok.Builder;
 import lombok.Singular;
 
 import java.util.Map;
 
-public class CourseEnrollmentResult extends Result<CourseSnapshot, CourseEnrollmentResultReason> {
+public class CourseEnrollmentResult extends Result<StudentSnapshot, CourseEnrollmentResultReason> {
 
-    public CourseEnrollmentResult(CourseSnapshot value) {
+    public CourseEnrollmentResult(StudentSnapshot value) {
         super(value);
     }
 
