@@ -7,24 +7,22 @@ import com.github.maleksandrowicz93.educational.institution.results.CourseCreati
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResultReason
 import com.github.maleksandrowicz93.educational.institution.results.HiringResultReason
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId
-import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static FacultyUtils.basicCourseProposition
-import static FacultyUtils.basicProfessorApplication
-import static FacultyUtils.basicStudentApplication
-import static FacultyUtils.courseProposition
-import static FacultyUtils.fakePersonalData
-import static FacultyUtils.professorApplication
-import static FacultyUtils.studentApplication
-import static com.github.maleksandrowicz93.educational.institution.FacultyUtils.MAIN_FIELD_OF_STUDY
-import static com.github.maleksandrowicz93.educational.institution.FacultyUtils.SECONDARY_FIELDS_OF_STUDY
-import static com.github.maleksandrowicz93.educational.institution.FacultyUtils.fieldOfStudy
-import static com.github.maleksandrowicz93.educational.institution.FacultyUtils.newFaculty
-import static com.github.maleksandrowicz93.educational.institution.FacultyUtils.professor
-import static com.github.maleksandrowicz93.educational.institution.FacultyUtils.student
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicCourseProposition
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicProfessorApplication
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicStudentApplication
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.courseProposition
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.professorApplication
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.studentApplication
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newFaculty
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newProfessor
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newStudent
+import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.MAIN_FIELD_OF_STUDY
+import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.SECONDARY_FIELDS_OF_STUDY
+import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.fieldsOfStudyFromNames
 import static java.util.stream.Collectors.toSet
 
 class FacultySpec extends Specification {
@@ -62,7 +60,7 @@ class FacultySpec extends Specification {
         def faculty = Faculty.from(snapshot)
 
         and: "professor's application not matching all requirements"
-        def fieldsOfStudy = buildFieldsOfStudyFrom(fieldsOfStudyNames, snapshot.id())
+        def fieldsOfStudy = fieldsOfStudyFromNames(fieldsOfStudyNames, snapshot.id())
         def application = professorApplication(snapshot.id(), yearsOfExperience, fieldsOfStudy)
 
         when: "professor applies for hiring"
@@ -81,18 +79,12 @@ class FacultySpec extends Specification {
         1                 | Set.of(MAIN_FIELD_OF_STUDY) | HiringResultReason.TOO_LITTLE_EXPERIENCE
     }
 
-    private def buildFieldsOfStudyFrom(Set<String> fieldsOfStudyNames, FacultyId facultyId) {
-        fieldsOfStudyNames.stream()
-                .map { fieldOfStudy(it, facultyId) }
-                .collect(toSet())
-    }
-
     def "professor should not be employed when no vacancy at faculty"() {
         given: "faculty with no vacancy"
         def newFaculty = newFaculty()
         def snapshot = newFaculty.toBuilder()
-                .professor(professor(newFaculty.id()))
-                .professor(professor(newFaculty.id()))
+                .professor(newProfessor(newFaculty.id()))
+                .professor(newProfessor(newFaculty.id()))
                 .build()
         def faculty = Faculty.from(snapshot)
 
@@ -113,7 +105,7 @@ class FacultySpec extends Specification {
         given: "faculty with hired professor leading 2 courses"
         def newFaculty = newFaculty()
         def courses = Set.of(new CourseId(UUID.randomUUID()), new CourseId(UUID.randomUUID()))
-        def hired = professor(newFaculty.id()).toBuilder()
+        def hired = newProfessor(newFaculty.id()).toBuilder()
                 .ledCourses(courses)
                 .build()
         def snapshot = newFaculty.toBuilder()
@@ -158,7 +150,7 @@ class FacultySpec extends Specification {
         with(maybeEnrolled.get()) {
             students.contains(it)
             id().value() != null
-            fakePersonalData() == application.personalData()
+            personalData() == application.personalData()
             facultyId() == snapshot.id()
             enrollmentState() == EnrollmentState.ENROLLED
         }
@@ -193,8 +185,8 @@ class FacultySpec extends Specification {
         given: "faculty with no vacancy"
         def newFaculty = newFaculty()
         def snapshot = newFaculty.toBuilder()
-                .student(student(newFaculty.id()))
-                .student(student(newFaculty.id()))
+                .student(newStudent(newFaculty.id()))
+                .student(newStudent(newFaculty.id()))
                 .build()
         def faculty = Faculty.from(snapshot)
 
@@ -215,7 +207,7 @@ class FacultySpec extends Specification {
         given: "faculty with a student enrolled for 2 courses"
         def newFaculty = newFaculty()
         def courses = Set.of(new CourseId(UUID.randomUUID()), new CourseId(UUID.randomUUID()))
-        def student = student(newFaculty.id()).toBuilder()
+        def student = newStudent(newFaculty.id()).toBuilder()
                 .courses(courses)
                 .build()
         def snapshot = newFaculty.toBuilder()
@@ -245,7 +237,7 @@ class FacultySpec extends Specification {
     def "professor with capacity may create a course matching all requirements within a faculty"() {
         given: "faculty with hired professor with capacity"
         def newFaculty = newFaculty()
-        def hired = professor(newFaculty.id())
+        def hired = newProfessor(newFaculty.id())
         def snapshot = newFaculty.toBuilder()
                 .professor(hired)
                 .build()
@@ -277,14 +269,14 @@ class FacultySpec extends Specification {
     def "professor with capacity should not create a course not matching requirements within a faculty"() {
         given: "faculty with hired professor with capacity"
         def newFaculty = newFaculty()
-        def hired = professor(newFaculty.id())
+        def hired = newProfessor(newFaculty.id())
         def snapshot = newFaculty.toBuilder()
                 .professor(hired)
                 .build()
         def faculty = Faculty.from(snapshot)
 
         and: "course not matching requirements to be created"
-        def fieldsOfStudy = buildFieldsOfStudyFrom(fieldsOfStudyNames, snapshot.id())
+        def fieldsOfStudy = fieldsOfStudyFromNames(fieldsOfStudyNames, snapshot.id())
         def courseProposition = courseProposition(hired, fieldsOfStudy)
 
         when: "professor creates course"
@@ -321,7 +313,7 @@ class FacultySpec extends Specification {
         given: "faculty with hired professor leading all faculty courses"
         def newFaculty = newFaculty()
         def courses = Set.of(new CourseId(UUID.randomUUID()), new CourseId(UUID.randomUUID()))
-        def busyProfessor = professor(newFaculty.id()).toBuilder()
+        def busyProfessor = newProfessor(newFaculty.id()).toBuilder()
                 .ledCourses(courses)
                 .build()
         def snapshotBuilder = newFaculty.toBuilder()
@@ -329,7 +321,7 @@ class FacultySpec extends Specification {
                 .courses(courses)
 
         and: "another hired professor with capacity"
-        def freeProfessor = professor(newFaculty.id())
+        def freeProfessor = newProfessor(newFaculty.id())
         def snapshot = snapshotBuilder
                 .professor(freeProfessor)
                 .build()
@@ -356,7 +348,7 @@ class FacultySpec extends Specification {
 
         and: "professor with no capacity hired at a faculty"
         def courses = Set.of(new CourseId(UUID.randomUUID()))
-        def hired = professor(newFaculty.id()).toBuilder()
+        def hired = newProfessor(newFaculty.id()).toBuilder()
                 .ledCourses(courses)
                 .build()
         def snapshot = snapshotBuilder

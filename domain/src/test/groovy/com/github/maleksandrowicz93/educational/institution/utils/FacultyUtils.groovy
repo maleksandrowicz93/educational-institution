@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution
+package com.github.maleksandrowicz93.educational.institution.utils
 
 import com.github.maleksandrowicz93.educational.institution.enums.EmploymentState
 import com.github.maleksandrowicz93.educational.institution.enums.EnrollmentState
@@ -11,7 +11,6 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyManagementThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
-import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyName
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.NationalIdentificationNumber
@@ -31,13 +30,12 @@ import com.github.maleksandrowicz93.educational.institution.vo.TestResult
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold
 import com.github.maleksandrowicz93.educational.institution.vo.YearsOfExperience
 
+import static FieldOfStudyUtils.fieldOfStudy
 import static java.util.stream.Collectors.toSet
 
 class FacultyUtils {
 
     static final def FACULTY_NAME = "Mechanical"
-    static final def MAIN_FIELD_OF_STUDY = "Mechanics and Construction of Machines"
-    static final def SECONDARY_FIELDS_OF_STUDY = Set.of("Mechatronics", "Automation and Robotics")
     static final def BASIC_THRESHOLD = new Threshold(2)
 
     private FacultyUtils() {}
@@ -74,11 +72,11 @@ class FacultyUtils {
     }
 
     private static def mainFieldOfStudyName() {
-        return new FieldOfStudyName(MAIN_FIELD_OF_STUDY);
+        return new FieldOfStudyName(FieldOfStudyUtils.MAIN_FIELD_OF_STUDY);
     }
 
     private static def secondaryFieldsOfStudyNames() {
-        SECONDARY_FIELDS_OF_STUDY.stream()
+        FieldOfStudyUtils.SECONDARY_FIELDS_OF_STUDY.stream()
                 .map { new FieldOfStudyName(it) }
                 .collect(toSet())
     }
@@ -94,7 +92,7 @@ class FacultyUtils {
                 .name(FACULTY_NAME)
                 .educationalInstitutionId(new EducationalInstitutionId(UUID.randomUUID()))
                 .facultyManagementThresholds(facultyManagementThresholds(maximumLedCourses))
-                .mainFieldOfStudy(fieldOfStudy(MAIN_FIELD_OF_STUDY, facultyId))
+                .mainFieldOfStudy(fieldOfStudy(FieldOfStudyUtils.MAIN_FIELD_OF_STUDY, facultyId))
                 .secondaryFieldsOfStudy(secondaryFieldsOfStudy(facultyId))
                 .professors(Set.of())
                 .students(Set.of())
@@ -102,27 +100,13 @@ class FacultyUtils {
                 .build()
     }
 
-    static def fieldOfStudy(String fieldOfStudyName, FacultyId facultyId) {
-        FieldOfStudySnapshot.builder()
-                .id(new FieldOfStudyId(UUID.randomUUID()))
-                .name(fieldOfStudyName)
-                .facultyId(facultyId)
-                .build()
-    }
-
     private static def secondaryFieldsOfStudy(FacultyId facultyId) {
-        SECONDARY_FIELDS_OF_STUDY.stream()
+        FieldOfStudyUtils.SECONDARY_FIELDS_OF_STUDY.stream()
                 .map { fieldOfStudy(it, facultyId) }
                 .collect(toSet())
     }
 
-    static def basicFieldsOfStudy(FacultyId facultyId) {
-        secondaryFieldsOfStudy(facultyId).stream()
-                .map { it.id() }
-                .collect(toSet())
-    }
-
-    static def professor(FacultyId facultyId) {
+    static def newProfessor(FacultyId facultyId) {
         ProfessorSnapshot.builder()
                 .id(new ProfessorId(UUID.randomUUID()))
                 .personalData(fakePersonalData())
@@ -152,7 +136,7 @@ class FacultyUtils {
                 .build()
     }
 
-    static def fakePersonalData() {
+    private static def fakePersonalData() {
         PersonalData.builder()
                 .personalIdentification(PersonalIdentification.builder()
                         .country(Locale.ITALY)
@@ -170,7 +154,7 @@ class FacultyUtils {
                 .build()
     }
 
-    static def student(FacultyId facultyId) {
+    static def newStudent(FacultyId facultyId) {
         StudentSnapshot.builder()
                 .id(new StudentId(UUID.randomUUID()))
                 .personalData(fakePersonalData())

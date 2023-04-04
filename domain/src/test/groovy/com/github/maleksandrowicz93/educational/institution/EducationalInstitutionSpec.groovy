@@ -8,7 +8,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot
 import spock.lang.Specification
 
-import static FacultyUtils.facultySetup
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.facultySetup
 import static java.util.stream.Collectors.toSet
 
 class EducationalInstitutionSpec extends Specification {
