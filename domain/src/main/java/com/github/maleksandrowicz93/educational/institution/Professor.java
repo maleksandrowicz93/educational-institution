@@ -12,6 +12,7 @@ import lombok.Builder;
 
 import java.util.Set;
 
+import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
@@ -20,7 +21,7 @@ class Professor implements Entity<ProfessorSnapshot> {
     ProfessorId id;
     PersonalData personalData;
     FacultyId facultyId;
-    Set<FieldOfStudyId> fieldsOfStudy;
+    Set<FieldOfStudy> fieldsOfStudy;
     Set<CourseId> ledCourses;
     EmploymentState employmentState;
 
@@ -29,7 +30,9 @@ class Professor implements Entity<ProfessorSnapshot> {
                 .id(snapshot.id())
                 .personalData(snapshot.personalData())
                 .facultyId(snapshot.facultyId())
-                .fieldsOfStudy(snapshot.fieldsOfStudy())
+                .fieldsOfStudy(snapshot.fieldsOfStudy().stream()
+                        .map(FieldOfStudy::from)
+                        .collect(toSet()))
                 .ledCourses(snapshot.ledCourses())
                 .employmentState(snapshot.employmentState())
                 .build();
@@ -41,7 +44,9 @@ class Professor implements Entity<ProfessorSnapshot> {
                 .id(id)
                 .personalData(personalData)
                 .facultyId(facultyId)
-                .fieldsOfStudy(fieldsOfStudy)
+                .fieldsOfStudy(fieldsOfStudy.stream()
+                        .map(FieldOfStudy::createSnapshot)
+                        .collect(toSet()))
                 .ledCourses(ledCourses)
                 .employmentState(employmentState)
                 .build();
