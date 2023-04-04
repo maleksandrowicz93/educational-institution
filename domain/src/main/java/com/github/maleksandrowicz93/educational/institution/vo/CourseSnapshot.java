@@ -2,11 +2,12 @@ package com.github.maleksandrowicz93.educational.institution.vo;
 
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import lombok.Builder;
+import lombok.Singular;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Builder
+@Builder(toBuilder = true)
 public record CourseSnapshot(
         CourseId id,
         String name,
@@ -15,7 +16,7 @@ public record CourseSnapshot(
         Set<FieldOfStudySnapshot> fieldsOfStudy,
         ProfessorSnapshot professor,
         CourseState state,
-        Set<StudentSnapshot> students
+        @Singular Set<StudentSnapshot> students
 ) {
     public CourseSnapshot {
         if (fieldsOfStudy == null) {
