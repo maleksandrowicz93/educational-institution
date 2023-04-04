@@ -26,4 +26,24 @@ class FieldOfStudyUtils {
                 .facultyId(facultyId)
                 .build()
     }
+
+    static def tooFewFieldsOfStudy() {
+        Set.of(MAIN_FIELD_OF_STUDY)
+    }
+
+    static def tooManyFieldsOfStudy() {
+        def fieldsOfStudyNames = new HashSet<>(SECONDARY_FIELDS_OF_STUDY)
+        fieldsOfStudyNames.add(MAIN_FIELD_OF_STUDY)
+        fieldsOfStudyNames
+    }
+
+    static def notMatchedFieldsOfStudy() {
+        Set.of(MAIN_FIELD_OF_STUDY, "Management and Production Engineering")
+    }
+
+    static def secondaryFieldsOfStudy(FacultyId facultyId) {
+        SECONDARY_FIELDS_OF_STUDY.stream()
+                .map { fieldOfStudy(it, facultyId) }
+                .collect(toSet())
+    }
 }

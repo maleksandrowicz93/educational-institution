@@ -11,18 +11,23 @@ import com.github.maleksandrowicz93.educational.institution.vo.Threshold
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.basicProfessorApplication
+import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.basicStudentApplication
+import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.newProfessor
+import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.newStudent
+import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.professorApplication
+import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.professorLeadingCourses
+import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.studentApplication
+import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.studentEnrolledForCourses
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicCourseProposition
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicProfessorApplication
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicStudentApplication
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.courseProposition
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.professorApplication
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.studentApplication
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newFaculty
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newProfessor
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newStudent
 import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.MAIN_FIELD_OF_STUDY
 import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.SECONDARY_FIELDS_OF_STUDY
 import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.fieldsOfStudyFromNames
+import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.notMatchedFieldsOfStudy
+import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.tooFewFieldsOfStudy
+import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.tooManyFieldsOfStudy
 import static java.util.stream.Collectors.toSet
 
 class FacultySpec extends Specification {
@@ -105,9 +110,7 @@ class FacultySpec extends Specification {
         given: "faculty with hired professor leading 2 courses"
         def newFaculty = newFaculty()
         def courses = Set.of(new CourseId(UUID.randomUUID()), new CourseId(UUID.randomUUID()))
-        def hired = newProfessor(newFaculty.id()).toBuilder()
-                .ledCourses(courses)
-                .build()
+        def hired = professorLeadingCourses(newFaculty.id(), courses)
         def snapshot = newFaculty.toBuilder()
                 .professor(hired)
                 .courses(courses)
@@ -169,7 +172,7 @@ class FacultySpec extends Specification {
         def enrollmentResult = faculty.considerEnrollment(application)
 
         then: "student should not be enrolled"
-        def students = faculty.createSnapshot().students();
+        def students = faculty.createSnapshot().students()
         students.isEmpty()
         enrollmentResult.value().isEmpty()
         enrollmentResult.resultReason() == resultReason
@@ -197,7 +200,7 @@ class FacultySpec extends Specification {
         def enrollmentResult = faculty.considerEnrollment(application)
 
         then: "student should not be enrolled"
-        def students = faculty.createSnapshot().students();
+        def students = faculty.createSnapshot().students()
         students.isEmpty()
         enrollmentResult.value().isEmpty()
         enrollmentResult.resultReason() == EnrollmentResultReason.NO_VACANCY
@@ -207,9 +210,7 @@ class FacultySpec extends Specification {
         given: "faculty with a student enrolled for 2 courses"
         def newFaculty = newFaculty()
         def courses = Set.of(new CourseId(UUID.randomUUID()), new CourseId(UUID.randomUUID()))
-        def student = newStudent(newFaculty.id()).toBuilder()
-                .courses(courses)
-                .build()
+        def student = studentEnrolledForCourses(newFaculty.id(), courses)
         def snapshot = newFaculty.toBuilder()
                 .student(student)
                 .courses(courses)
@@ -295,27 +296,11 @@ class FacultySpec extends Specification {
         notMatchedFieldsOfStudy() | CourseCreationResultReason.PROFESSOR_FIELDS_OF_STUDY_NOT_MATCHED
     }
 
-    private def tooFewFieldsOfStudy() {
-        Set.of(MAIN_FIELD_OF_STUDY)
-    }
-
-    private def tooManyFieldsOfStudy() {
-        def fieldsOfStudyNames = new HashSet<>(SECONDARY_FIELDS_OF_STUDY)
-        fieldsOfStudyNames.add(MAIN_FIELD_OF_STUDY)
-        fieldsOfStudyNames
-    }
-
-    private def notMatchedFieldsOfStudy() {
-        Set.of(MAIN_FIELD_OF_STUDY, "Management and Production Engineering")
-    }
-
     def "professor with capacity should not create a course matching all requirements within a full faculty"() {
         given: "faculty with hired professor leading all faculty courses"
         def newFaculty = newFaculty()
         def courses = Set.of(new CourseId(UUID.randomUUID()), new CourseId(UUID.randomUUID()))
-        def busyProfessor = newProfessor(newFaculty.id()).toBuilder()
-                .ledCourses(courses)
-                .build()
+        def busyProfessor = professorLeadingCourses(newFaculty.id(), courses)
         def snapshotBuilder = newFaculty.toBuilder()
                 .professor(busyProfessor)
                 .courses(courses)
@@ -342,15 +327,13 @@ class FacultySpec extends Specification {
 
     def "professor with no capacity should not create a course matching all requirements within a faculty"() {
         given: "Educational Institution allowing maximum one led course per professor"
-        def maximumLedCourses = new Threshold(1)
-        def newFaculty = newFaculty(maximumLedCourses)
+        def maximumProfessorCourses = new Threshold(1)
+        def newFaculty = newFaculty(maximumProfessorCourses)
         def snapshotBuilder = newFaculty.toBuilder()
 
         and: "professor with no capacity hired at a faculty"
         def courses = Set.of(new CourseId(UUID.randomUUID()))
-        def hired = newProfessor(newFaculty.id()).toBuilder()
-                .ledCourses(courses)
-                .build()
+        def hired = professorLeadingCourses(newFaculty.id(), courses)
         def snapshot = snapshotBuilder
                 .professor(hired)
                 .courses(courses)
