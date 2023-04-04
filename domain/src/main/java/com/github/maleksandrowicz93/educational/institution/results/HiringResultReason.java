@@ -8,10 +8,10 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public enum HiringResultReason implements ResultReason {
 
-    SUCCESS(""),
-    NOT_MATCHED_FIELDS_OF_STUDY(""),
-    TOO_LITTLE_EXPERIENCE(""),
-    NO_VACANCY("");
+    SUCCESS("Success."),
+    FIELDS_OF_STUDY_NOT_MATCHED("Field of study not matched."),
+    TOO_LITTLE_EXPERIENCE("Too little experience."),
+    NO_VACANCY("No vacancy at faculty.");
 
     String text;
 

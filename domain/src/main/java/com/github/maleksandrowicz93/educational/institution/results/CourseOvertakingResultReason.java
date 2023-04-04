@@ -8,7 +8,9 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public enum CourseOvertakingResultReason implements ResultReason {
 
-    SUCCESS("");
+    SUCCESS("Success."),
+    PROFESSOR_FIELDS_OF_STUDY_NOT_MATCHED("Professor's fields of study not matched."),
+    NO_PROFESSOR_CAPACITY("Professor does not have capacity for overtaking the course.");
 
     String text;
 

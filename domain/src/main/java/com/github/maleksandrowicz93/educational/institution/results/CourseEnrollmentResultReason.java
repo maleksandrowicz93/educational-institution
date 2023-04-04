@@ -8,7 +8,8 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public enum CourseEnrollmentResultReason implements ResultReason {
 
-    SUCCESS("");
+    SUCCESS("Success."),
+    NO_VACANCY("No vacancy at the course.");
 
     String text;
 

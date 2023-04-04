@@ -8,7 +8,12 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public enum CourseCreationResultReason implements ResultReason {
 
-    SUCCESS("");
+    SUCCESS("Success."),
+    TOO_FEW_FIELDS_OF_STUDY("Too few fields of study."),
+    TOO_MANY_FIELDS_OF_STUDY("Too many fields of study"),
+    PROFESSOR_FIELDS_OF_STUDY_NOT_MATCHED("Professor's fields of study not matched."),
+    NO_PROFESSOR_CAPACITY("Professor does not have capacity for leading the course."),
+    NO_CAPACITY_AT_FACULTY("Faculty is full of courses.");
 
     String text;
 
