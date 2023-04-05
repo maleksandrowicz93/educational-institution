@@ -13,7 +13,8 @@ public enum CourseCreationResultReason implements ResultReason {
     TOO_MANY_FIELDS_OF_STUDY("Too many fields of study"),
     PROFESSOR_FIELDS_OF_STUDY_NOT_MATCHED("Professor's fields of study not matched."),
     NO_PROFESSOR_CAPACITY("Professor does not have capacity for leading the course."),
-    NO_CAPACITY_AT_FACULTY("Faculty is full of courses.");
+    NO_CAPACITY_AT_FACULTY("Faculty is full of courses."),
+    INCORRECT_FACULTY_ID("Incorrect faculty id");
 
     String text;
 

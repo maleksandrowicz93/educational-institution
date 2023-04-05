@@ -6,11 +6,11 @@ import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
-public enum CourseClosingResultReason implements ResultReason {
+public enum EnrollmentResignationResultReason implements ResultReason {
 
-    SUCCESS("Success,"),
-    TOO_MANY_STUDENTS("Too many students to close the course."),
-    INCORRECT_COURSE_ID("Incorrect course id");
+    SUCCESS("Success."),
+    INCORRECT_STUDENT_ID("Incorrect student id."),
+    INCORRECT_FAULTY_ID("Incorrect faculty id.");
 
     String text;
 
