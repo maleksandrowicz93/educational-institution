@@ -4,9 +4,12 @@ import com.github.maleksandrowicz93.educational.institution.enums.CourseState
 import com.github.maleksandrowicz93.educational.institution.enums.EmploymentState
 import com.github.maleksandrowicz93.educational.institution.enums.EnrollmentState
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResultReason
+import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResultReason
+import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResultReason
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResultReason
 import com.github.maleksandrowicz93.educational.institution.results.HiringResultReason
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId
+import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -118,9 +121,13 @@ class FacultySpec extends Specification {
         def faculty = Faculty.from(snapshot)
 
         when: "professor resigns from employment"
-        def resigned = faculty.receiveHiringResignation(hired.id())
+        def employmentResignationResult = faculty.receiveHiringResignation(hired.id())
 
-        then: "all courses led by him become vacated"
+        then: "employment resignation should be received correctly"
+        def maybeResigned = employmentResignationResult.value()
+        maybeResigned.get()
+
+        and: "all courses led by him become vacated"
         def currentSnapshot = faculty.createSnapshot()
         def ledCourses = currentSnapshot.professors().stream()
                 .map { it.ledCourses() }
@@ -129,10 +136,32 @@ class FacultySpec extends Specification {
         ledCourses.isEmpty()
 
         and: "professor is marked as inactive"
-        resigned.employmentState() == EmploymentState.INACTIVE
+        maybeResigned.get().employmentState() == EmploymentState.INACTIVE
+    }
 
-        and: "external system should be notified"
-        1 * eventsPublisher.publish(_)
+    def "professor cannot resign from employment at other faculty"() {
+        given: "faculty with hired professor leading 2 courses"
+        def newFaculty = newFaculty()
+        def courses = Set.of(new CourseId(UUID.randomUUID()), new CourseId(UUID.randomUUID()))
+        def hired = professorLeadingCourses(newFaculty.id(), courses)
+        def snapshot = newFaculty.toBuilder()
+                .professor(hired)
+                .courses(courses)
+                .build()
+        def faculty = Faculty.from(snapshot)
+
+        and: "professor employed at other faculty"
+        def otherProfessor = newProfessor(new FacultyId(UUID.randomUUID()))
+
+        when: "professor resigns from employment foreign faculty"
+        def employmentResignationResult = faculty.receiveHiringResignation(otherProfessor.id())
+
+        then: "employment resignation should fail"
+        employmentResignationResult.value().isEmpty()
+        employmentResignationResult.resultReason() == EmploymentResignationResultReason.INCORRECT_STUDENT_ID
+
+        and: "faculty should stay the same"
+        faculty.createSnapshot() == snapshot
     }
 
     def "student matching all requirements may be enrolled"() {
@@ -218,9 +247,13 @@ class FacultySpec extends Specification {
         def faculty = Faculty.from(snapshot)
 
         when: "student resigns from enrollment"
-        def resigned = faculty.receiveEnrollmentResignation(student.id())
+        def enrollmentResignationResult = faculty.receiveEnrollmentResignation(student.id())
 
-        then: "all courses student is enrolled for become vacated"
+        then: "enrollment resignation should be received correctly"
+        def maybeResigned = enrollmentResignationResult.value()
+        maybeResigned.isPresent()
+
+        and: "all courses student is enrolled for become vacated"
         def currentSnapshot = faculty.createSnapshot()
         def coursesStudentIsEnrolledFor = currentSnapshot.students().stream()
                 .map { it.courses() }
@@ -229,10 +262,32 @@ class FacultySpec extends Specification {
         coursesStudentIsEnrolledFor.isEmpty()
 
         and: "student is marked as inactive"
-        resigned.enrollmentState() == EnrollmentState.INACTIVE
+        maybeResigned.get().enrollmentState() == EnrollmentState.INACTIVE
+    }
 
-        and: "external system should be notified"
-        1 * eventsPublisher.publish(_)
+    def "student cannot resign from enrollment at other faculty"() {
+        given: "faculty with a student enrolled for 2 courses"
+        def newFaculty = newFaculty()
+        def courses = Set.of(new CourseId(UUID.randomUUID()), new CourseId(UUID.randomUUID()))
+        def student = studentEnrolledForCourses(newFaculty.id(), courses)
+        def snapshot = newFaculty.toBuilder()
+                .student(student)
+                .courses(courses)
+                .build()
+        def faculty = Faculty.from(snapshot)
+
+        and: "student enrolled at other faculty"
+        def otherStudent = newStudent(new FacultyId(UUID.randomUUID()))
+
+        when: "student resigns from enrollment"
+        def enrollmentResignationResult = faculty.receiveEnrollmentResignation(otherStudent.id())
+
+        then: "enrollment resignation should fail"
+        enrollmentResignationResult.value().isEmpty()
+        enrollmentResignationResult.resultReason() == EnrollmentResignationResultReason.INCORRECT_STUDENT_ID
+
+        and: "faculty should stay the same"
+        faculty.createSnapshot() == snapshot
     }
 
     def "professor with capacity may create a course matching all requirements within a faculty"() {
