@@ -9,7 +9,6 @@ import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnaps
 import spock.lang.Specification
 
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.facultySetup
-import static java.util.stream.Collectors.toSet
 
 class EducationalInstitutionSpec extends Specification {
 
@@ -70,9 +69,7 @@ class EducationalInstitutionSpec extends Specification {
     ) {
         assert fieldOfStudySnapshot.id().value() != null
         assert fieldOfStudySnapshot.facultyId() == facultyId
-        assert facultySetup.secondaryFieldsOfStudyNames().stream()
-                .map { it.value() }
-                .collect(toSet())
-                .contains(fieldOfStudySnapshot.name())
+        assert facultySetup.secondaryFieldsOfStudyNames()
+                .any { it.value() == fieldOfStudySnapshot.name() }
     }
 }

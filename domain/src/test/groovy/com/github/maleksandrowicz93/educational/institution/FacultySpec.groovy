@@ -67,7 +67,7 @@ class FacultySpec extends Specification {
         def snapshot = newFaculty()
         def faculty = Faculty.from(snapshot)
 
-        and: "professor's application not matching all requirements"
+        and: "professor's application with too little experience or too little fields of study number"
         def fieldsOfStudy = fieldsOfStudyFromNames(fieldsOfStudyNames, snapshot.id())
         def application = professorApplication(snapshot.id(), yearsOfExperience, fieldsOfStudy)
 
