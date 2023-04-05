@@ -2,6 +2,8 @@ package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.common.Aggregate;
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
+import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
+import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResult;
 import com.github.maleksandrowicz93.educational.institution.results.HiringResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;
@@ -17,11 +19,11 @@ interface FacultyAggregate extends Aggregate<FacultySnapshot> {
 
     HiringResult considerHiring(ProfessorApplication professorApplication);
 
-    ProfessorSnapshot receiveHiringResignation(ProfessorId professorId);
+    EmploymentResignationResult receiveHiringResignation(ProfessorId professorId);
 
     EnrollmentResult considerEnrollment(StudentApplication studentApplication);
 
-    StudentSnapshot receiveEnrollmentResignation(StudentId studentId);
+    EnrollmentResignationResult receiveEnrollmentResignation(StudentId studentId);
 
     CourseCreationResult considerCourseCreation(CourseProposition courseProposition);
 }

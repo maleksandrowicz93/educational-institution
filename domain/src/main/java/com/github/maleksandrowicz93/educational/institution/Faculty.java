@@ -2,6 +2,8 @@ package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
+import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
+import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResult;
 import com.github.maleksandrowicz93.educational.institution.results.HiringResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
@@ -12,10 +14,8 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultyManagement
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
-import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
-import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 import lombok.Builder;
 
 import java.util.Set;
@@ -84,7 +84,7 @@ class Faculty implements FacultyAggregate {
     }
 
     @Override
-    public ProfessorSnapshot receiveHiringResignation(ProfessorId professorId) {
+    public EmploymentResignationResult receiveHiringResignation(ProfessorId professorId) {
         return null;
     }
 
@@ -94,7 +94,7 @@ class Faculty implements FacultyAggregate {
     }
 
     @Override
-    public StudentSnapshot receiveEnrollmentResignation(StudentId studentId) {
+    public EnrollmentResignationResult receiveEnrollmentResignation(StudentId studentId) {
         return null;
     }
 
