@@ -12,11 +12,11 @@ import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold
 
 import static FieldOfStudyUtils.fieldOfStudy
-import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.getMAIN_FIELD_OF_STUDY
-import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.getSECONDARY_FIELDS_OF_STUDY
+import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.MAIN_FIELD_OF_STUDY
+import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.SECONDARY_FIELDS_OF_STUDY
 import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.secondaryFieldsOfStudy
+import static com.github.maleksandrowicz93.educational.institution.utils.ThresholdsUtils.BASIC_THRESHOLD
 import static com.github.maleksandrowicz93.educational.institution.utils.ThresholdsUtils.facultyManagementThresholds
-import static com.github.maleksandrowicz93.educational.institution.utils.ThresholdsUtils.getBASIC_THRESHOLD
 import static java.util.stream.Collectors.toSet
 
 class FacultyUtils {
@@ -31,7 +31,7 @@ class FacultyUtils {
                 .educationalInstitutionId(educationalInstitutionId)
                 .mainFieldOfStudyName(mainFieldOfStudyName())
                 .secondaryFieldsOfStudyNames(secondaryFieldsOfStudyNames())
-                .facultyManagementThresholds(facultyManagementThresholds(BASIC_THRESHOLD))
+                .facultyManagementThresholds(facultyManagementThresholds())
                 .build()
     }
 
