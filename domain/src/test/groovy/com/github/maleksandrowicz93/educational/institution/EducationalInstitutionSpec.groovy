@@ -1,20 +1,21 @@
 package com.github.maleksandrowicz93.educational.institution
 
+
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionId
-import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionSnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot
 import spock.lang.Specification
 
+import static com.github.maleksandrowicz93.educational.institution.utils.EducationalInstitutionUtils.newEducationalInstitution
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.facultySetup
 
 class EducationalInstitutionSpec extends Specification {
 
     def "faculty may be created"() {
         given: "Educational Institution without any faculty"
-        def snapshot = educationalInstitutionSnapshot()
+        def snapshot = newEducationalInstitution()
         def educationalInstitution = EducationalInstitution.from(snapshot)
 
         and: "faculty to be created"
@@ -27,14 +28,6 @@ class EducationalInstitutionSpec extends Specification {
         def currentSnapshot = educationalInstitution.createSnapshot()
         currentSnapshot.faculties().contains(faculty.id())
         validateFaculty(faculty, facultySetup, currentSnapshot.id())
-    }
-
-    private def educationalInstitutionSnapshot() {
-        EducationalInstitutionSnapshot.builder()
-                .id(new EducationalInstitutionId(UUID.randomUUID()))
-                .name("Wroclaw University of Technology")
-                .faculties(Set.of())
-                .build()
     }
 
     private void validateFaculty(

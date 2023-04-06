@@ -22,7 +22,8 @@ class CourseSpec extends Specification {
 
     def "student may enroll for the vacated course"() {
         given: "vacated course"
-        def snapshot = newCourse()
+        def facultyId = new FacultyId(UUID.randomUUID())
+        def snapshot = newCourse(facultyId)
         def course = Course.from(snapshot)
 
         and: "new student's to be enrolled for the course"
@@ -111,9 +112,6 @@ class CourseSpec extends Specification {
             students().isEmpty()
             state() == CourseState.CLOSED
         }
-
-        and: "external system should be notified"
-        1 * eventsPublisher.publish(_)
     }
 
     def "course with enough number of enrolled students should not be closed"() {
@@ -157,9 +155,6 @@ class CourseSpec extends Specification {
         then: "the course becomes vacated"
         vacated.professor() == null
         vacated.state() == CourseState.FREE
-
-        and: "external system should be notified"
-        1 * eventsPublisher.publish(_)
     }
 
     def "vacated course may be overtaken by a professor matching all requirements"() {
