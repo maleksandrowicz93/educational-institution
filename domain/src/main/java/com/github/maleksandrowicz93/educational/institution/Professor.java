@@ -4,7 +4,6 @@ import com.github.maleksandrowicz93.educational.institution.common.Entity;
 import com.github.maleksandrowicz93.educational.institution.enums.EmploymentState;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
-import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
 import com.github.maleksandrowicz93.educational.institution.vo.PersonalData;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
@@ -16,7 +15,7 @@ import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
-class Professor implements Entity<ProfessorSnapshot> {
+class Professor implements Entity<ProfessorSnapshot, ProfessorId> {
 
     ProfessorId id;
     PersonalData personalData;

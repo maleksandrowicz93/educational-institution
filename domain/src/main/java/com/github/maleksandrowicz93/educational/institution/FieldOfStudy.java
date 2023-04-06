@@ -9,7 +9,7 @@ import lombok.Builder;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
-class FieldOfStudy implements Entity<FieldOfStudySnapshot> {
+class FieldOfStudy implements Entity<FieldOfStudySnapshot, FieldOfStudyId> {
 
     FieldOfStudyId id;
     String name;

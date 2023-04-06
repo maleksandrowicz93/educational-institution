@@ -14,7 +14,7 @@ import java.util.Set;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
-class Student implements Entity<StudentSnapshot> {
+class Student implements Entity<StudentSnapshot, StudentId> {
 
     StudentId id;
     PersonalData personalData;

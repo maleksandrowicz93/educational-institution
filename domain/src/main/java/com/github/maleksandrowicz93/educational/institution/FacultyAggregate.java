@@ -7,6 +7,7 @@ import com.github.maleksandrowicz93.educational.institution.results.EnrollmentRe
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResult;
 import com.github.maleksandrowicz93.educational.institution.results.HiringResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;
+import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
@@ -15,7 +16,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.StudentApplicatio
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 
-interface FacultyAggregate extends Aggregate<FacultySnapshot> {
+interface FacultyAggregate extends Aggregate<FacultySnapshot, FacultyId> {
 
     HiringResult considerHiring(ProfessorApplication professorApplication);
 
