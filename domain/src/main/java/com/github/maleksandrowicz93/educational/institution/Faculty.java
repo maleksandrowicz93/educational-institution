@@ -1,6 +1,5 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
 import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;
@@ -35,7 +34,6 @@ class Faculty implements FacultyAggregate {
     Set<Professor> professors;
     Set<Student> students;
     Set<CourseId> courses;
-    EventsPublisher eventsPublisher;
 
     static Faculty from(FacultySnapshot snapshot) {
         return builder()
