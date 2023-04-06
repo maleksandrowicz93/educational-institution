@@ -23,7 +23,7 @@ class CourseSpec extends Specification {
     def "student may enroll for the vacated course"() {
         given: "vacated course"
         def facultyId = new FacultyId(UUID.randomUUID())
-        def snapshot = newCourse(facultyId)
+        def snapshot = newCourse()
         def course = Course.from(snapshot)
 
         and: "new student's to be enrolled for the course"

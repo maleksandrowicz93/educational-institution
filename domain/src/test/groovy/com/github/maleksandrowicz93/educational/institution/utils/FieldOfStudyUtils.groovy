@@ -2,11 +2,8 @@ package com.github.maleksandrowicz93.educational.institution.utils
 
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId
-import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyName
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot
 
-import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.getMAIN_FIELD_OF_STUDY
-import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.getSECONDARY_FIELDS_OF_STUDY
 import static java.util.stream.Collectors.toSet
 
 class FieldOfStudyUtils {

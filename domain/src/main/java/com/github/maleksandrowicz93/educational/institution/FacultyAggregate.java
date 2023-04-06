@@ -11,10 +11,8 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
-import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
-import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 
 interface FacultyAggregate extends Aggregate<FacultySnapshot, FacultyId> {
 
