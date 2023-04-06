@@ -3,22 +3,15 @@ package com.github.maleksandrowicz93.educational.institution
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResultReason
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId
+import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.newProfessor
-import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.newProfessor
-import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.newProfessor
 import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.professorLeadingCourses
-import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.professorLeadingCourses
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicCourseProposition
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicCourseProposition
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.basicCourseProposition
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.courseProposition
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newFaculty
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newFaculty
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newFaculty
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.newFaculty
 import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.fieldsOfStudyFromNames
 import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.notMatchedFieldsOfStudy
@@ -143,5 +136,26 @@ class CourseCreatorSpec extends Specification {
         currentCourses == courses
         courseCreationResult.value().isEmpty()
         courseCreationResult.resultReason() == CourseCreationResultReason.NO_PROFESSOR_CAPACITY
+    }
+
+    def "professor with should not create a course within faculty he is not hired at"() {
+        given: "faculty with no professor"
+        def snapshot = newFaculty()
+        def courseCreator = CourseCreatorModel.from(snapshot)
+
+        and: "professor hired at other faculty"
+        def professor = newProfessor(new FacultyId(UUID.randomUUID()))
+
+        and: "course proposition of this professor to be created at faculty with no hired professor"
+        def courseProposition = basicCourseProposition(professor, snapshot.id())
+
+        when: "professor creates course"
+        def courseCreationResult = courseCreator.considerCourseCreation(courseProposition)
+
+        then: "course should not be created"
+        def currentCourses = courseCreator.createSnapshot().courses()
+        currentCourses.isEmpty()
+        courseCreationResult.value().isEmpty()
+        courseCreationResult.resultReason() == CourseCreationResultReason.INCORRECT_PROFESSOR_ID
     }
 }
