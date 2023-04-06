@@ -1,20 +1,10 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
-import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
-import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;
-import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResult;
-import com.github.maleksandrowicz93.educational.institution.results.HiringResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
-import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyManagementThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
-import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
-import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
-import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication;
-import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
 import lombok.Builder;
 
 import java.util.Set;
@@ -74,30 +64,5 @@ class Faculty implements FacultyAggregate {
                         .collect(toSet()))
                 .courses(courses)
                 .build();
-    }
-
-    @Override
-    public HiringResult considerHiring(ProfessorApplication professorApplication) {
-        return null;
-    }
-
-    @Override
-    public EmploymentResignationResult receiveHiringResignation(ProfessorId professorId) {
-        return null;
-    }
-
-    @Override
-    public EnrollmentResult considerEnrollment(StudentApplication studentApplication) {
-        return null;
-    }
-
-    @Override
-    public EnrollmentResignationResult receiveEnrollmentResignation(StudentId studentId) {
-        return null;
-    }
-
-    @Override
-    public CourseCreationResult considerCourseCreation(CourseProposition courseProposition) {
-        return null;
     }
 }

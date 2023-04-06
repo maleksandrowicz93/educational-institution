@@ -7,7 +7,7 @@ import lombok.Singular;
 import java.util.HashSet;
 import java.util.Set;
 
-@Builder
+@Builder(toBuilder = true)
 public record EducationalInstitutionSnapshot(
         EducationalInstitutionId id,
         String name,

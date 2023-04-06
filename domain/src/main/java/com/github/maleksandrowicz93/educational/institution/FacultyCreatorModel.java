@@ -3,6 +3,8 @@ package com.github.maleksandrowicz93.educational.institution;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionId;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
+import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
+import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import lombok.Builder;
 
 import java.util.Set;
@@ -10,26 +12,29 @@ import java.util.Set;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
-class EducationalInstitution implements EducationalInstitutionAggregate {
+class FacultyCreatorModel implements FacultyCreator {
 
-    EducationalInstitutionId id;
-    String name;
+    final EducationalInstitutionSnapshot source;
+    final EducationalInstitutionId id;
     Set<FacultyId> faculties;
 
-    static EducationalInstitution from(EducationalInstitutionSnapshot snapshot) {
+    static FacultyCreator from(EducationalInstitutionSnapshot source) {
         return builder()
-                .id(snapshot.id())
-                .name(snapshot.name())
-                .faculties(snapshot.faculties())
+                .source(source)
+                .id(source.id())
+                .faculties(source.faculties())
                 .build();
     }
 
     @Override
     public EducationalInstitutionSnapshot createSnapshot() {
-        return EducationalInstitutionSnapshot.builder()
-                .id(id)
-                .name(name)
+        return source.toBuilder()
                 .faculties(faculties)
                 .build();
+    }
+
+    @Override
+    public FacultySnapshot createFaculty(FacultySetup facultySetup) {
+        return null;
     }
 }

@@ -15,14 +15,4 @@ import com.github.maleksandrowicz93.educational.institution.vo.StudentApplicatio
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
 
 interface FacultyAggregate extends Aggregate<FacultySnapshot, FacultyId> {
-
-    HiringResult considerHiring(ProfessorApplication professorApplication);
-
-    EmploymentResignationResult receiveHiringResignation(ProfessorId professorId);
-
-    EnrollmentResult considerEnrollment(StudentApplication studentApplication);
-
-    EnrollmentResignationResult receiveEnrollmentResignation(StudentId studentId);
-
-    CourseCreationResult considerCourseCreation(CourseProposition courseProposition);
 }

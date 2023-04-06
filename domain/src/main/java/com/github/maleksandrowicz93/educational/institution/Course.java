@@ -63,24 +63,4 @@ class Course implements CourseAggregate {
                         .collect(toSet()))
                 .build();
     }
-
-    @Override
-    public CourseEnrollmentResult considerCourseEnrollment(StudentSnapshot student) {
-        return null;
-    }
-
-    @Override
-    public CourseClosingResult considerClosingCourse() {
-        return null;
-    }
-
-    @Override
-    public CourseSnapshot receiveCourseLeadingResignation() {
-        return null;
-    }
-
-    @Override
-    public CourseOvertakingResult considerCourseOvertaking(ProfessorSnapshot professor) {
-        return null;
-    }
 }
