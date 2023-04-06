@@ -12,6 +12,7 @@ public class SimpleEventsPublisher implements EventsPublisher {
         events.add(event);
     }
 
+    @Override
     public List<DomainEvent> events() {
         return List.copyOf(events);
     }

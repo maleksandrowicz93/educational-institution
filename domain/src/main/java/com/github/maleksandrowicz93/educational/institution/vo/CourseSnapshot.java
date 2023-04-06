@@ -1,5 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.vo;
 
+import com.github.maleksandrowicz93.educational.institution.common.Snapshot;
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import lombok.Builder;
 import lombok.Singular;
@@ -13,11 +14,11 @@ public record CourseSnapshot(
         String name,
         FacultyId facultyId,
         CourseManagementThresholds courseManagementThresholds,
-        Set<FieldOfStudySnapshot> fieldsOfStudy,
+        @Singular("fieldOfStudy") Set<FieldOfStudySnapshot> fieldsOfStudy,
         ProfessorSnapshot professor,
         CourseState state,
         @Singular Set<StudentSnapshot> students
-) {
+) implements Snapshot<CourseId> {
     public CourseSnapshot {
         if (fieldsOfStudy == null) {
             fieldsOfStudy = new HashSet<>();

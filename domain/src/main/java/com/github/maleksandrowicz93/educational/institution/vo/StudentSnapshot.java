@@ -1,5 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.vo;
 
+import com.github.maleksandrowicz93.educational.institution.common.Snapshot;
 import com.github.maleksandrowicz93.educational.institution.enums.EnrollmentState;
 import lombok.Builder;
 import lombok.Singular;
@@ -13,5 +14,5 @@ public record StudentSnapshot(
         FacultyId facultyId,
         @Singular Set<CourseId> courses,
         EnrollmentState enrollmentState
-) {
+) implements Snapshot<StudentId> {
 }
