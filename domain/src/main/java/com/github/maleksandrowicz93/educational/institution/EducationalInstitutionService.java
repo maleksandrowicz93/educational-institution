@@ -1,6 +1,9 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
+import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository;
+import com.github.maleksandrowicz93.educational.institution.repository.EducationalInstitutionRepository;
+import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository;
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResult;
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
 import com.github.maleksandrowicz93.educational.institution.results.CourseLeadingResignationResult;
@@ -12,7 +15,11 @@ import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(makeFinal = true)
+@RequiredArgsConstructor
 class EducationalInstitutionService implements EducationalInstitutionDomainService {
 
     EducationalInstitutionRepository educationalInstitutionRepository;
@@ -20,10 +27,13 @@ class EducationalInstitutionService implements EducationalInstitutionDomainServi
     CourseRepository courseRepository;
     EventsPublisher eventsPublisher;
 
+    //START
+
     @Override
     public FacultyCreationResult createFaculty(FacultySetup facultySetup) {
         return null;
     }
+
 
     @Override
     public CourseCreationResult createCourse(CourseProposition courseProposition) {
