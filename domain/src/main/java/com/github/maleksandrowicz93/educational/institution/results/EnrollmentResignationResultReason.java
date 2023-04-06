@@ -10,7 +10,7 @@ public enum EnrollmentResignationResultReason implements ResultReason {
 
     SUCCESS("Success."),
     INCORRECT_STUDENT_ID("Incorrect student id."),
-    INCORRECT_FAULTY_ID("Incorrect faculty id.");
+    INCORRECT_FACULTY_ID("Incorrect faculty id.");
 
     String text;
 
