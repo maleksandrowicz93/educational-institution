@@ -11,21 +11,21 @@ import spock.lang.Specification
 import static com.github.maleksandrowicz93.educational.institution.utils.EducationalInstitutionUtils.newEducationalInstitution
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.facultySetup
 
-class EducationalInstitutionSpec extends Specification {
+class FacultyCreatorSpec extends Specification {
 
     def "faculty may be created"() {
         given: "Educational Institution without any faculty"
         def snapshot = newEducationalInstitution()
-        def educationalInstitution = EducationalInstitution.from(snapshot)
+        def facultyCreator = FacultyCreatorModel.from(snapshot)
 
         and: "faculty to be created"
         def facultySetup = facultySetup(snapshot.id())
 
         when: "the faculty is created"
-        def faculty = educationalInstitution.createFaculty(facultySetup)
+        def faculty = facultyCreator.createFaculty(facultySetup)
 
         then: "should be created successfully"
-        def currentSnapshot = educationalInstitution.createSnapshot()
+        def currentSnapshot = facultyCreator.createSnapshot()
         currentSnapshot.faculties().contains(faculty.id())
         validateFaculty(faculty, facultySetup, currentSnapshot.id())
     }
