@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.CourseEnrollmentsRegistryAggregate;
+import com.github.maleksandrowicz93.educational.institution.api.infrastructure.CourseEnrollmentsRegistryAggregate;
 import com.github.maleksandrowicz93.educational.institution.results.CourseEnrollmentResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;

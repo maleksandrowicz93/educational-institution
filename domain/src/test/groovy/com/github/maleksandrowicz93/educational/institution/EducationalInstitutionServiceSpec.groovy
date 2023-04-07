@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution
 
-import com.github.maleksandrowicz93.educational.institution.api.EducationalInstitutionDomainService
+import com.github.maleksandrowicz93.educational.institution.api.business.EducationalInstitutionDomainService
 import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher
 import com.github.maleksandrowicz93.educational.institution.common.SimpleEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState

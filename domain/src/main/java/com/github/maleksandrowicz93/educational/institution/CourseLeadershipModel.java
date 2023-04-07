@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.CourseLeadershipAggregate;
+import com.github.maleksandrowicz93.educational.institution.api.infrastructure.CourseLeadershipAggregate;
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import com.github.maleksandrowicz93.educational.institution.results.CourseOvertakingResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
