@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution
 
-import com.github.maleksandrowicz93.educational.institution.api.business.CourseCreationService
+import com.github.maleksandrowicz93.educational.institution.api.domain.service.CourseCreationService
 import com.github.maleksandrowicz93.educational.institution.reposiotry.CourseSimpleRepository
 import com.github.maleksandrowicz93.educational.institution.reposiotry.FacultySimpleRepository
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository

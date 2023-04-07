@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.api.infrastructure;
 
-import com.github.maleksandrowicz93.educational.institution.api.business.CourseCreator;
+import com.github.maleksandrowicz93.educational.institution.api.domain.core.CourseCreator;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder

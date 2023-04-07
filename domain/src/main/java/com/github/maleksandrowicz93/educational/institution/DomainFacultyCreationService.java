@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.business.FacultyCreationService;
+import com.github.maleksandrowicz93.educational.institution.api.domain.service.FacultyCreationService;
 import com.github.maleksandrowicz93.educational.institution.repository.EducationalInstitutionRepository;
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository;
 import com.github.maleksandrowicz93.educational.institution.results.FacultyCreationResult;

@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution
 
-import com.github.maleksandrowicz93.educational.institution.api.business.FacultyCreationService
+import com.github.maleksandrowicz93.educational.institution.api.domain.service.FacultyCreationService
 import com.github.maleksandrowicz93.educational.institution.reposiotry.EducationalInstitutionSimpleRepository
 import com.github.maleksandrowicz93.educational.institution.reposiotry.FacultySimpleRepository
 import com.github.maleksandrowicz93.educational.institution.repository.EducationalInstitutionRepository
@@ -10,7 +10,6 @@ import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstit
 import spock.lang.Specification
 
 import static com.github.maleksandrowicz93.educational.institution.utils.EducationalInstitutionUtils.newEducationalInstitution
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.facultySetup
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.facultySetup
 
 class FacultyCreationServiceSpec extends Specification {

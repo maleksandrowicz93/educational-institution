@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.api.infrastructure;
 
-import com.github.maleksandrowicz93.educational.institution.api.business.HiringOffice;
+import com.github.maleksandrowicz93.educational.institution.api.domain.core.HiringOffice;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder

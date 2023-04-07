@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.api.business;
+package com.github.maleksandrowicz93.educational.institution.api.domain.core;
 
 import com.github.maleksandrowicz93.educational.institution.results.CourseEnrollmentResult;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;

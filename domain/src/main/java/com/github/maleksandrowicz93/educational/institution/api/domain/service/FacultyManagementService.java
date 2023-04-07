@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.api.business;
+package com.github.maleksandrowicz93.educational.institution.api.domain.service;
 
 import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;

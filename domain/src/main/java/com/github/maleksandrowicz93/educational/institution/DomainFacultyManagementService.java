@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.business.FacultyManagementService;
+import com.github.maleksandrowicz93.educational.institution.api.domain.service.FacultyManagementService;
 import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository;
 import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;

@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.business.CourseManagementService;
+import com.github.maleksandrowicz93.educational.institution.api.domain.service.CourseManagementService;
 import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository;
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResult;
