@@ -5,7 +5,7 @@ import com.github.maleksandrowicz93.educational.institution.results.EnrollmentRe
 import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
 
-interface DeanOffice extends FacultyAggregate {
+interface DeanOffice {
 
     EnrollmentResult considerEnrollment(StudentApplication studentApplication);
 

@@ -4,7 +4,7 @@ import com.github.maleksandrowicz93.educational.institution.results.CourseOverta
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 
-interface CourseLeadership extends CourseAggregate {
+interface CourseLeadership {
 
     CourseSnapshot receiveCourseLeadingResignation();
 

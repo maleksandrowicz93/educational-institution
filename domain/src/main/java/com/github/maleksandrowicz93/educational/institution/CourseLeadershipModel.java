@@ -6,17 +6,15 @@ import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold;
-import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static lombok.AccessLevel.PRIVATE;
 
-@Builder(access = PRIVATE)
-class CourseLeadershipModel implements CourseLeadership {
+@SuperBuilder
+class CourseLeadershipModel extends CourseLeadershipAggregate {
 
-    final CourseSnapshot source;
     final CourseId courseId;
     final Threshold maximumProfessorCourses;
     final Set<FieldOfStudy> fieldsOfStudy;
@@ -24,7 +22,7 @@ class CourseLeadershipModel implements CourseLeadership {
     Professor professor;
     CourseState state;
 
-    static CourseLeadership from(CourseSnapshot source) {
+    static CourseLeadershipAggregate from(CourseSnapshot source) {
         return builder()
                 .source(source)
                 .courseId(source.id())
@@ -39,7 +37,7 @@ class CourseLeadershipModel implements CourseLeadership {
 
     @Override
     public CourseSnapshot createSnapshot() {
-        return source.toBuilder()
+        return source().toBuilder()
                 .professor(professor.createSnapshot())
                 .state(state)
                 .build();

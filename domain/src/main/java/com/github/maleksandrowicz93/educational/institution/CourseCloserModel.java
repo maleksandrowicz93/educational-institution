@@ -5,21 +5,18 @@ import com.github.maleksandrowicz93.educational.institution.results.CourseClosin
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold;
-import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
-import static lombok.AccessLevel.PRIVATE;
+@SuperBuilder
+class CourseCloserModel extends CourseCloserAggregate {
 
-@Builder(access = PRIVATE)
-class CourseCloserModel implements CourseCloser {
-
-    final CourseSnapshot source;
     final CourseId courseId;
     final Threshold minimumEnrollmentsCourseCannotBeClosed;
 
     Professor professor;
     CourseState state;
 
-    static CourseCloser from(CourseSnapshot source) {
+    static CourseCloserAggregate from(CourseSnapshot source) {
         return builder()
                 .source(source)
                 .courseId(source.id())
@@ -32,7 +29,7 @@ class CourseCloserModel implements CourseCloser {
 
     @Override
     public CourseSnapshot createSnapshot() {
-        return source.toBuilder()
+        return source().toBuilder()
                 .professor(professor.createSnapshot())
                 .state(state)
                 .build();

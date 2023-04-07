@@ -5,7 +5,7 @@ import com.github.maleksandrowicz93.educational.institution.results.HiringResult
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 
-interface HiringOffice extends FacultyAggregate {
+interface HiringOffice {
 
     HiringResult considerHiring(ProfessorApplication professorApplication);
 

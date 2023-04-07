@@ -5,20 +5,17 @@ import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstit
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
-import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
-import static lombok.AccessLevel.PRIVATE;
+@SuperBuilder
+class FacultyCreatorModel extends FacultyCreatorAggregate {
 
-@Builder(access = PRIVATE)
-class FacultyCreatorModel implements FacultyCreator {
-
-    final EducationalInstitutionSnapshot source;
     final EducationalInstitutionId id;
     Set<FacultyId> faculties;
 
-    static FacultyCreator from(EducationalInstitutionSnapshot source) {
+    static FacultyCreatorAggregate from(EducationalInstitutionSnapshot source) {
         return builder()
                 .source(source)
                 .id(source.id())
@@ -28,7 +25,7 @@ class FacultyCreatorModel implements FacultyCreator {
 
     @Override
     public EducationalInstitutionSnapshot createSnapshot() {
-        return source.toBuilder()
+        return source().toBuilder()
                 .faculties(faculties)
                 .build();
     }

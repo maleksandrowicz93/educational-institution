@@ -7,23 +7,21 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentEnrollmentThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
-import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static lombok.AccessLevel.PRIVATE;
 
-@Builder(access = PRIVATE)
-class DeanOfficeModel implements DeanOffice {
+@SuperBuilder
+class DeanOfficeModel extends DeanOfficeAggregate {
 
-    final FacultySnapshot source;
     final FacultyId id;
     final StudentEnrollmentThresholds thresholds;
 
     Set<Student> students;
 
-    static DeanOffice from(FacultySnapshot source) {
+    static DeanOfficeAggregate from(FacultySnapshot source) {
         return builder()
                 .source(source)
                 .id(source.id())
@@ -36,7 +34,7 @@ class DeanOfficeModel implements DeanOffice {
 
     @Override
     public FacultySnapshot createSnapshot() {
-        return source.toBuilder()
+        return source().toBuilder()
                 .students(students.stream()
                         .map(Student::createSnapshot)
                         .collect(toSet()))

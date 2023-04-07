@@ -6,24 +6,22 @@ import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
-import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static lombok.AccessLevel.PRIVATE;
 
-@Builder(access = PRIVATE)
-class CourseCreatorModel implements CourseCreator {
+@SuperBuilder
+class CourseCreatorModel extends CourseCreatorAggregate {
 
-    final FacultySnapshot source;
     final FacultyId id;
     final CourseCreationThresholds thresholds;
 
     Set<Professor> professors;
     Set<CourseId> courses;
 
-    static CourseCreator from(FacultySnapshot source) {
+    static CourseCreatorAggregate from(FacultySnapshot source) {
         return builder()
                 .source(source)
                 .id(source.id())
@@ -37,7 +35,7 @@ class CourseCreatorModel implements CourseCreator {
 
     @Override
     public FacultySnapshot createSnapshot() {
-        return source.toBuilder()
+        return source().toBuilder()
                 .professors(professors.stream()
                         .map(Professor::createSnapshot)
                         .collect(toSet()))
