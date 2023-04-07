@@ -2,7 +2,7 @@ package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.FacultyManagementService
 import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher
-import com.github.maleksandrowicz93.educational.institution.common.SimpleEventsPublisher
+import com.github.maleksandrowicz93.educational.institution.evetns.publisher.SimpleEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.events.ProfessorHiringResignationEvent
 import com.github.maleksandrowicz93.educational.institution.events.StudentEnrollmentResignationEvent
 import com.github.maleksandrowicz93.educational.institution.reposiotry.FacultySimpleRepository
