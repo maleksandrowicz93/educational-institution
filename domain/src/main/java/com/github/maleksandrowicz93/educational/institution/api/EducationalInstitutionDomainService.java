@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution;
+package com.github.maleksandrowicz93.educational.institution.api;
 
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResult;
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
@@ -12,7 +12,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 
-interface EducationalInstitutionDomainService {
+public interface EducationalInstitutionDomainService {
 
     FacultyCreationResult createFaculty(FacultySetup facultySetup);
 

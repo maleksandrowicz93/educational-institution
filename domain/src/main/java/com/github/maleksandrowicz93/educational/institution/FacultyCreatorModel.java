@@ -1,5 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
+import com.github.maleksandrowicz93.educational.institution.api.FacultyCreatorAggregate;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionId;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;

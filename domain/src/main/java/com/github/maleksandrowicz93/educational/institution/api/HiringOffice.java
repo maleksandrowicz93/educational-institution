@@ -1,11 +1,11 @@
-package com.github.maleksandrowicz93.educational.institution;
+package com.github.maleksandrowicz93.educational.institution.api;
 
 import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.results.HiringResult;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 
-interface HiringOffice {
+public interface HiringOffice {
 
     HiringResult considerHiring(ProfessorApplication professorApplication);
 

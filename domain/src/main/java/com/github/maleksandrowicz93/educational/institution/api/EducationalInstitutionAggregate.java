@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution;
+package com.github.maleksandrowicz93.educational.institution.api;
 
 import com.github.maleksandrowicz93.educational.institution.common.BaseAggregate;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionId;
@@ -6,5 +6,6 @@ import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstit
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-abstract class EducationalInstitutionAggregate extends BaseAggregate<EducationalInstitutionSnapshot, EducationalInstitutionId> {
+public abstract class EducationalInstitutionAggregate
+        extends BaseAggregate<EducationalInstitutionSnapshot, EducationalInstitutionId> {
 }

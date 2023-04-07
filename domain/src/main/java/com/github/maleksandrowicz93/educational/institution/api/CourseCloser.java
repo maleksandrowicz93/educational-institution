@@ -1,8 +1,8 @@
-package com.github.maleksandrowicz93.educational.institution;
+package com.github.maleksandrowicz93.educational.institution.api;
 
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResult;
 
-interface CourseCloser {
+public interface CourseCloser {
 
     CourseClosingResult considerClosingCourse();
 }

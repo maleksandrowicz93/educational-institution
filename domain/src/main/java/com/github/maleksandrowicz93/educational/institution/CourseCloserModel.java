@@ -1,5 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
+import com.github.maleksandrowicz93.educational.institution.api.CourseCloserAggregate;
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;

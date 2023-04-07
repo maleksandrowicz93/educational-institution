@@ -1,9 +1,9 @@
-package com.github.maleksandrowicz93.educational.institution;
+package com.github.maleksandrowicz93.educational.institution.api;
 
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 
-interface FacultyCreator {
+public interface FacultyCreator {
 
     FacultySnapshot createFaculty(FacultySetup facultySetup);
 }

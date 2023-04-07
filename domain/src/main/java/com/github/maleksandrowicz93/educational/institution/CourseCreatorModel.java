@@ -1,5 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
+import com.github.maleksandrowicz93.educational.institution.api.CourseCreatorAggregate;
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseCreationThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;

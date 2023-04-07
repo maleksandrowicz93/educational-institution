@@ -1,5 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
+import com.github.maleksandrowicz93.educational.institution.api.DeanOfficeAggregate;
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResult;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;

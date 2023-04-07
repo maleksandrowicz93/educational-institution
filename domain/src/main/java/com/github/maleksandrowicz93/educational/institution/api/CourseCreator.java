@@ -1,9 +1,9 @@
-package com.github.maleksandrowicz93.educational.institution;
+package com.github.maleksandrowicz93.educational.institution.api;
 
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;
 
-interface CourseCreator {
+public interface CourseCreator {
 
     CourseCreationResult considerCourseCreation(CourseProposition courseProposition);
 }
