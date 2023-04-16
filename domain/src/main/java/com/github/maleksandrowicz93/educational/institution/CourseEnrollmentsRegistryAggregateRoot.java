@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.infrastructure.CourseEnrollmentsRegistryAggregate;
+import com.github.maleksandrowicz93.educational.institution.api.aggregates.CourseEnrollmentsRegistryAggregate;
 import com.github.maleksandrowicz93.educational.institution.results.CourseEnrollmentResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
@@ -13,7 +13,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 @SuperBuilder
-class CourseEnrollmentsRegistryModel extends CourseEnrollmentsRegistryAggregate {
+class CourseEnrollmentsRegistryAggregateRoot extends CourseEnrollmentsRegistryAggregate {
 
     final CourseId courseId;
     final Threshold maximumNumberOfEnrolledStudents;

@@ -15,7 +15,7 @@ class CourseEnrollmentsRegistrySpec extends Specification {
         given: "vacated course"
         def facultyId = new FacultyId(UUID.randomUUID())
         def snapshot = newCourse()
-        def courseEnrollmentsRegistry = CourseEnrollmentsRegistryModel.from(snapshot)
+        def courseEnrollmentsRegistry = CourseEnrollmentsRegistryAggregateRoot.from(snapshot)
 
         and: "new student's to be enrolled for the course"
         def newStudent = newStudent(snapshot.facultyId())
@@ -46,7 +46,7 @@ class CourseEnrollmentsRegistrySpec extends Specification {
                 .student(enrolled1)
                 .student(enrolled2)
                 .build()
-        def courseEnrollmentsRegistry = CourseEnrollmentsRegistryModel.from(snapshot)
+        def courseEnrollmentsRegistry = CourseEnrollmentsRegistryAggregateRoot.from(snapshot)
 
         and: "new student's to be enrolled for the course"
         def newStudent = newStudent(newCourse.facultyId())
@@ -64,7 +64,7 @@ class CourseEnrollmentsRegistrySpec extends Specification {
     def "student should not be enrolled for the vacated course from other faculty"() {
         given: "vacated course"
         def snapshot = newCourse()
-        def courseEnrollmentsRegistry = CourseEnrollmentsRegistryModel.from(snapshot)
+        def courseEnrollmentsRegistry = CourseEnrollmentsRegistryAggregateRoot.from(snapshot)
 
         and: "new student from other faculty to be enrolled"
         def newStudent = newStudent(new FacultyId(UUID.randomUUID()))

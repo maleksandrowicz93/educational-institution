@@ -23,7 +23,7 @@ class HiringOfficeSpec extends Specification {
     def "professor matching all requirements may be employed"() {
         given: "faculty with a vacancy"
         def snapshot = newFaculty()
-        def hiringOffice = HiringOfficeModel.from(snapshot)
+        def hiringOffice = HiringOfficeAggregateRoot.from(snapshot)
 
         and: "professor's application matching all requirements"
         def application = basicProfessorApplication(snapshot.id())
@@ -50,7 +50,7 @@ class HiringOfficeSpec extends Specification {
     def "professor not matching requirements should not be employed"() {
         given: "faculty with a vacancy"
         def snapshot = newFaculty()
-        def hiringOffice = HiringOfficeModel.from(snapshot)
+        def hiringOffice = HiringOfficeAggregateRoot.from(snapshot)
 
         and: "professor's application with too little experience or too little fields of study number"
         def fieldsOfStudy = fieldsOfStudyFromNames(fieldsOfStudyNames, snapshot.id())
@@ -79,7 +79,7 @@ class HiringOfficeSpec extends Specification {
                 .professor(newProfessor(newFaculty.id()))
                 .professor(newProfessor(newFaculty.id()))
                 .build()
-        def hiringOffice = HiringOfficeModel.from(snapshot)
+        def hiringOffice = HiringOfficeAggregateRoot.from(snapshot)
 
         and: "professor's application matching all requirements"
         def application = basicProfessorApplication(snapshot.id())
@@ -103,7 +103,7 @@ class HiringOfficeSpec extends Specification {
                 .professor(hired)
                 .courses(courses)
                 .build()
-        def hiringOffice = HiringOfficeModel.from(snapshot)
+        def hiringOffice = HiringOfficeAggregateRoot.from(snapshot)
 
         when: "professor resigns from employment"
         def employmentResignationResult = hiringOffice.receiveHiringResignation(hired.id())
@@ -133,7 +133,7 @@ class HiringOfficeSpec extends Specification {
                 .professor(hired)
                 .courses(courses)
                 .build()
-        def hiringOffice = HiringOfficeModel.from(snapshot)
+        def hiringOffice = HiringOfficeAggregateRoot.from(snapshot)
 
         and: "professor employed at other faculty"
         def otherProfessor = newProfessor(new FacultyId(UUID.randomUUID()))

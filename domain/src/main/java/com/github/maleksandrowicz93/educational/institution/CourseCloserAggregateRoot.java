@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.infrastructure.CourseCloserAggregate;
+import com.github.maleksandrowicz93.educational.institution.api.aggregates.CourseCloserAggregate;
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
@@ -9,7 +9,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.Threshold;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-class CourseCloserModel extends CourseCloserAggregate {
+class CourseCloserAggregateRoot extends CourseCloserAggregate {
 
     final CourseId courseId;
     final Threshold minimumEnrollmentsCourseCannotBeClosed;

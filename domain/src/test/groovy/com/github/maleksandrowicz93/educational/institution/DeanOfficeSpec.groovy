@@ -19,7 +19,7 @@ class DeanOfficeSpec extends Specification {
     def "student matching all requirements may be enrolled"() {
         given: "faculty with a vacancy"
         def snapshot = newFaculty()
-        def deanOffice = DeanOfficeModel.from(snapshot)
+        def deanOffice = DeanOfficeAggregateRoot.from(snapshot)
 
         and: "student's application matching all requirements"
         def application = basicStudentApplication(snapshot)
@@ -44,7 +44,7 @@ class DeanOfficeSpec extends Specification {
     def "student not matching requirements should not be enrolled"() {
         given: "faculty with a vacancy"
         def snapshot = newFaculty()
-        def deanOffice = DeanOfficeModel.from(snapshot)
+        def deanOffice = DeanOfficeAggregateRoot.from(snapshot)
 
         and: "student's application not matching requirements"
         def application = studentApplication(snapshot, mainTestResult, secondaryTestResult)
@@ -72,7 +72,7 @@ class DeanOfficeSpec extends Specification {
                 .student(newStudent(newFaculty.id()))
                 .student(newStudent(newFaculty.id()))
                 .build()
-        def deanOffice = DeanOfficeModel.from(snapshot)
+        def deanOffice = DeanOfficeAggregateRoot.from(snapshot)
 
         and: "student's application matching all requirements"
         def application = basicStudentApplication(snapshot)
@@ -96,7 +96,7 @@ class DeanOfficeSpec extends Specification {
                 .student(student)
                 .courses(courses)
                 .build()
-        def deanOffice = DeanOfficeModel.from(snapshot)
+        def deanOffice = DeanOfficeAggregateRoot.from(snapshot)
 
         when: "student resigns from enrollment"
         def enrollmentResignationResult = deanOffice.receiveEnrollmentResignation(student.id())
@@ -126,7 +126,7 @@ class DeanOfficeSpec extends Specification {
                 .student(student)
                 .courses(courses)
                 .build()
-        def deanOffice = DeanOfficeModel.from(snapshot)
+        def deanOffice = DeanOfficeAggregateRoot.from(snapshot)
 
         and: "student enrolled at other faculty"
         def otherStudent = newStudent(new FacultyId(UUID.randomUUID()))

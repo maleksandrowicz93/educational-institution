@@ -22,7 +22,7 @@ class CourseLeadershipSpec extends Specification {
         def snapshot = newCourse.toBuilder()
                 .professor(hired)
                 .build()
-        def courseLeadership = CourseLeadershipModel.from(snapshot)
+        def courseLeadership = CourseLeadershipAggregateRoot.from(snapshot)
 
         when: "professor resigns from leading the course"
         def vacated = courseLeadership.receiveCourseLeadingResignation()
@@ -37,7 +37,7 @@ class CourseLeadershipSpec extends Specification {
         def snapshot = newCourse().toBuilder()
                 .state(CourseState.FREE)
                 .build()
-        def courseLeadership = CourseLeadershipModel.from(snapshot)
+        def courseLeadership = CourseLeadershipAggregateRoot.from(snapshot)
 
         and: "new professor matching all course requirements"
         def overtaking = newProfessor(snapshot.facultyId())
@@ -61,7 +61,7 @@ class CourseLeadershipSpec extends Specification {
         def snapshot = newCourse().toBuilder()
                 .state(CourseState.FREE)
                 .build()
-        def courseLeadership = CourseLeadershipModel.from(snapshot)
+        def courseLeadership = CourseLeadershipAggregateRoot.from(snapshot)
 
         and: "new professor not matching course requirements"
         def overtaking = newProfessor(snapshot.facultyId()).toBuilder()
@@ -84,7 +84,7 @@ class CourseLeadershipSpec extends Specification {
         def snapshot = newCourse(new Threshold(1)).toBuilder()
                 .state(CourseState.FREE)
                 .build()
-        def courseLeadership = CourseLeadershipModel.from(snapshot)
+        def courseLeadership = CourseLeadershipAggregateRoot.from(snapshot)
 
         and: "professor with no capacity matching all course requirements"
         def overtaking = newProfessor(snapshot.facultyId()).toBuilder()
@@ -107,7 +107,7 @@ class CourseLeadershipSpec extends Specification {
         def snapshot = newCourse().toBuilder()
                 .state(CourseState.FREE)
                 .build()
-        def courseLeadership = CourseLeadershipModel.from(snapshot)
+        def courseLeadership = CourseLeadershipAggregateRoot.from(snapshot)
 
         and: "new professor matching all course requirements hired at another faculty"
         def overtaking = newProfessor(new FacultyId(UUID.randomUUID()))

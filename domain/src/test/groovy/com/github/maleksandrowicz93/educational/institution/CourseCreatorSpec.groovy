@@ -27,7 +27,7 @@ class CourseCreatorSpec extends Specification {
         def snapshot = newFaculty.toBuilder()
                 .professor(hired)
                 .build()
-        def courseCreator = CourseCreatorModel.from(snapshot)
+        def courseCreator = CourseCreatorAggregateRoot.from(snapshot)
 
         and: "course matching all requirements to be created"
         def courseProposition = basicCourseProposition(hired, snapshot.id())
@@ -59,7 +59,7 @@ class CourseCreatorSpec extends Specification {
         def snapshot = newFaculty.toBuilder()
                 .professor(hired)
                 .build()
-        def courseCreator = CourseCreatorModel.from(snapshot)
+        def courseCreator = CourseCreatorAggregateRoot.from(snapshot)
 
         and: "course not matching requirements to be created"
         def fieldsOfStudy = fieldsOfStudyFromNames(fieldsOfStudyNames, snapshot.id())
@@ -95,7 +95,7 @@ class CourseCreatorSpec extends Specification {
         def snapshot = snapshotBuilder
                 .professor(freeProfessor)
                 .build()
-        def courseCreator = CourseCreatorModel.from(snapshot)
+        def courseCreator = CourseCreatorAggregateRoot.from(snapshot)
 
         and: "new course to be created"
         def courseProposition = basicCourseProposition(freeProfessor, snapshot.id())
@@ -123,7 +123,7 @@ class CourseCreatorSpec extends Specification {
                 .professor(hired)
                 .courses(courses)
                 .build()
-        def courseCreator = CourseCreatorModel.from(snapshot)
+        def courseCreator = CourseCreatorAggregateRoot.from(snapshot)
 
         and: "course matching all requirements to be created"
         def newCourseProposition = basicCourseProposition(hired, snapshot.id())
@@ -141,7 +141,7 @@ class CourseCreatorSpec extends Specification {
     def "professor with should not create a course within faculty he is not hired at"() {
         given: "faculty with no professor"
         def snapshot = newFaculty()
-        def courseCreator = CourseCreatorModel.from(snapshot)
+        def courseCreator = CourseCreatorAggregateRoot.from(snapshot)
 
         and: "professor hired at other faculty"
         def professor = newProfessor(new FacultyId(UUID.randomUUID()))

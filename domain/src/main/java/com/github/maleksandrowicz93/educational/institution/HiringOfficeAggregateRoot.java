@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.infrastructure.HiringOfficeAggregate;
+import com.github.maleksandrowicz93.educational.institution.api.aggregates.HiringOfficeAggregate;
 import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.results.HiringResult;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
@@ -15,7 +15,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 @SuperBuilder
-class HiringOfficeModel extends HiringOfficeAggregate {
+class HiringOfficeAggregateRoot extends HiringOfficeAggregate {
 
     final FacultyId facultyId;
     final ProfessorHiringThresholds thresholds;

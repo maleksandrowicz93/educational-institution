@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.infrastructure.FacultyCreatorAggregate;
+import com.github.maleksandrowicz93.educational.institution.api.aggregates.FacultyCreatorAggregate;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionId;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.Set;
 
 @SuperBuilder
-class FacultyCreatorModel extends FacultyCreatorAggregate {
+class FacultyCreatorAggregateRoot extends FacultyCreatorAggregate {
 
     final EducationalInstitutionId id;
     Set<FacultyId> faculties;

@@ -16,7 +16,7 @@ class FacultyCreatorSpec extends Specification {
     def "faculty may be created"() {
         given: "Educational Institution without any faculty"
         def snapshot = newEducationalInstitution()
-        def facultyCreator = FacultyCreatorModel.from(snapshot)
+        def facultyCreator = FacultyCreatorAggregateRoot.from(snapshot)
 
         and: "faculty to be created"
         def facultySetup = facultySetup(snapshot.id())

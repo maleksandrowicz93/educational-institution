@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.api.infrastructure;
+package com.github.maleksandrowicz93.educational.institution.api.aggregates;
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.core.DeanOffice;
 import lombok.experimental.SuperBuilder;

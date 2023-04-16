@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.infrastructure.CourseCreatorAggregate;
+import com.github.maleksandrowicz93.educational.institution.api.aggregates.CourseCreatorAggregate;
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseCreationThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
@@ -14,7 +14,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 @SuperBuilder
-class CourseCreatorModel extends CourseCreatorAggregate {
+class CourseCreatorAggregateRoot extends CourseCreatorAggregate {
 
     final FacultyId id;
     final CourseCreationThresholds thresholds;

@@ -19,7 +19,7 @@ class CourseCloserSpec extends Specification {
                 .professor(hired)
                 .student(enrolled)
                 .build()
-        def courseCloser = CourseCloserModel.from(snapshot)
+        def courseCloser = CourseCloserAggregateRoot.from(snapshot)
 
         when: "professor closes the course"
         def courseClosingResult = courseCloser.considerClosingCourse()
@@ -47,7 +47,7 @@ class CourseCloserSpec extends Specification {
                 .student(enrolled1)
                 .student(enrolled2)
                 .build()
-        def courseCloser = CourseCloserModel.from(snapshot)
+        def courseCloser = CourseCloserAggregateRoot.from(snapshot)
 
         when: "professor closes the course"
         def courseClosingResult = courseCloser.considerClosingCourse()

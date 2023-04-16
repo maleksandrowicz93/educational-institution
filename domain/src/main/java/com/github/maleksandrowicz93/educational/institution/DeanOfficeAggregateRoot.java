@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.api.infrastructure.DeanOfficeAggregate;
+import com.github.maleksandrowicz93.educational.institution.api.aggregates.DeanOfficeAggregate;
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResult;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
@@ -15,7 +15,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 @SuperBuilder
-class DeanOfficeModel extends DeanOfficeAggregate {
+class DeanOfficeAggregateRoot extends DeanOfficeAggregate {
 
     final FacultyId id;
     final StudentEnrollmentThresholds thresholds;
