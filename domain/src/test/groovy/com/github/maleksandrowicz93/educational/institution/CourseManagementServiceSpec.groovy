@@ -2,10 +2,10 @@ package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.CourseManagementService
 import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher
-import com.github.maleksandrowicz93.educational.institution.evetns.publisher.SimpleEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState
 import com.github.maleksandrowicz93.educational.institution.events.CourseClosingEvent
 import com.github.maleksandrowicz93.educational.institution.events.LeadingCourseResignationEvent
+import com.github.maleksandrowicz93.educational.institution.evetns.publisher.SimpleEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryCourseRepository
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResultReason
