@@ -1,8 +1,8 @@
 package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.CourseCreationService
-import com.github.maleksandrowicz93.educational.institution.reposiotry.CourseSimpleRepository
-import com.github.maleksandrowicz93.educational.institution.reposiotry.FacultySimpleRepository
+import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryCourseRepository
+import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryFacultyRepository
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository
 import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResultReason
@@ -20,8 +20,8 @@ class CourseCreationServiceSpec extends Specification {
     CourseCreationService service
 
     def setup() {
-        facultyRepository = new FacultySimpleRepository()
-        courseRepository = new CourseSimpleRepository()
+        facultyRepository = new InMemoryFacultyRepository()
+        courseRepository = new InMemoryCourseRepository()
         service = new DomainCourseCreationService(facultyRepository, courseRepository)
     }
 

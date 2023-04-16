@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @FieldDefaults(makeFinal = true)
-public abstract class SimpleRepository<S extends Snapshot<ID>, ID> implements DomainRepository<S, ID> {
+public abstract class InMemoryRepository<S extends Snapshot<ID>, ID> implements DomainRepository<S, ID> {
 
     Map<ID, S> repository = new HashMap<>();
 

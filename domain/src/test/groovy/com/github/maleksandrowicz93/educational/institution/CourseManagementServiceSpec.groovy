@@ -6,7 +6,7 @@ import com.github.maleksandrowicz93.educational.institution.evetns.publisher.Sim
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState
 import com.github.maleksandrowicz93.educational.institution.events.CourseClosingEvent
 import com.github.maleksandrowicz93.educational.institution.events.LeadingCourseResignationEvent
-import com.github.maleksandrowicz93.educational.institution.reposiotry.CourseSimpleRepository
+import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryCourseRepository
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResultReason
 import com.github.maleksandrowicz93.educational.institution.results.CourseLeadingResignationResultReason
@@ -25,7 +25,7 @@ class CourseManagementServiceSpec extends Specification {
     CourseManagementService service
 
     def setup() {
-        courseRepository = new CourseSimpleRepository()
+        courseRepository = new InMemoryCourseRepository()
         eventsPublisher = new SimpleEventsPublisher()
         service = new DomainCourseManagementService(courseRepository, eventsPublisher)
     }
