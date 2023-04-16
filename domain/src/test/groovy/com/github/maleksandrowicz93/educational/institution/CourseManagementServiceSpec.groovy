@@ -1,11 +1,10 @@
 package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.CourseManagementService
-import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState
 import com.github.maleksandrowicz93.educational.institution.events.CourseClosingEvent
 import com.github.maleksandrowicz93.educational.institution.events.LeadingCourseResignationEvent
-import com.github.maleksandrowicz93.educational.institution.evetns.publisher.SimpleEventsPublisher
+import com.github.maleksandrowicz93.educational.institution.evetns.publisher.InMemoryEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryCourseRepository
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository
 import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResultReason
@@ -21,12 +20,12 @@ import static com.github.maleksandrowicz93.educational.institution.utils.CourseU
 class CourseManagementServiceSpec extends Specification {
 
     CourseRepository courseRepository
-    EventsPublisher eventsPublisher
+    InMemoryEventsPublisher eventsPublisher
     CourseManagementService service
 
     def setup() {
         courseRepository = new InMemoryCourseRepository()
-        eventsPublisher = new SimpleEventsPublisher()
+        eventsPublisher = new InMemoryEventsPublisher()
         service = new DomainCourseManagementService(courseRepository, eventsPublisher)
     }
 

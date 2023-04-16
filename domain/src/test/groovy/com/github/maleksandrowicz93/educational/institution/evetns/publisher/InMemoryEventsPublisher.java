@@ -6,7 +6,7 @@ import com.github.maleksandrowicz93.educational.institution.common.EventsPublish
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleEventsPublisher implements EventsPublisher {
+public class InMemoryEventsPublisher implements EventsPublisher {
 
     private final List<DomainEvent> events = new ArrayList<>();
 
@@ -15,7 +15,6 @@ public class SimpleEventsPublisher implements EventsPublisher {
         events.add(event);
     }
 
-    @Override
     public List<DomainEvent> events() {
         return List.copyOf(events);
     }

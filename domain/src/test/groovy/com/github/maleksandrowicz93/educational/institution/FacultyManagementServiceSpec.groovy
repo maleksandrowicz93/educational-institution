@@ -1,10 +1,9 @@
 package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.FacultyManagementService
-import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher
 import com.github.maleksandrowicz93.educational.institution.events.ProfessorHiringResignationEvent
 import com.github.maleksandrowicz93.educational.institution.events.StudentEnrollmentResignationEvent
-import com.github.maleksandrowicz93.educational.institution.evetns.publisher.SimpleEventsPublisher
+import com.github.maleksandrowicz93.educational.institution.evetns.publisher.InMemoryEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryFacultyRepository
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository
 import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResultReason
@@ -19,12 +18,12 @@ import static com.github.maleksandrowicz93.educational.institution.utils.Faculty
 class FacultyManagementServiceSpec extends Specification {
 
     FacultyRepository facultyRepository
-    EventsPublisher eventsPublisher
+    InMemoryEventsPublisher eventsPublisher
     FacultyManagementService service
 
     def setup() {
         facultyRepository = new InMemoryFacultyRepository()
-        eventsPublisher = new SimpleEventsPublisher()
+        eventsPublisher = new InMemoryEventsPublisher()
         service = new DomainFacultyManagementService(facultyRepository, eventsPublisher)
     }
 
