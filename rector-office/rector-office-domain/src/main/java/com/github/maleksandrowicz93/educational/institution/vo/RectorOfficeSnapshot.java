@@ -11,6 +11,6 @@ public record RectorOfficeSnapshot(
         RectorOfficeId id,
         String name,
         FacultyManagementThresholds facultyManagementThresholds,
-        @Singular(ignoreNullCollections = true) Set<FacultyId> faculties
+        @Singular(ignoreNullCollections = true) Set<Faculty> faculties
 ) implements Snapshot<RectorOfficeId> {
 }

@@ -1,8 +1,9 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.RectorOfficeAggregate;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.events.FacultyCreatedEvent;
-import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
+import com.github.maleksandrowicz93.educational.institution.vo.Faculty;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeId;
 import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeSnapshot;
@@ -19,7 +20,7 @@ class RectorOfficeAggregateRoot implements RectorOfficeAggregate {
     final RectorOfficeSnapshot source;
     @Getter
     final RectorOfficeId id;
-    final Set<FacultyId> faculties;
+    final Set<Faculty> faculties;
 
     static RectorOfficeAggregate from(RectorOfficeSnapshot source) {
         return builder()
@@ -37,7 +38,7 @@ class RectorOfficeAggregateRoot implements RectorOfficeAggregate {
     }
 
     @Override
-    public FacultyCreatedEvent createFaculty(FacultySetup facultySetup) {
+    public Result<FacultyCreatedEvent> createFaculty(FacultySetup facultySetup) {
         return null;
     }
 }
