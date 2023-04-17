@@ -7,16 +7,21 @@ import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
+import static lombok.AccessLevel.PRIVATE;
 
 @SuperBuilder
-class CourseLeadershipAggregateRoot extends CourseLeadershipAggregate {
+class CourseLeadershipAggregateRoot implements CourseLeadershipAggregate {
 
-    final CourseId courseId;
+    @Getter(PRIVATE)
+    final CourseSnapshot source;
+    @Getter
+    final CourseId id;
     final Threshold maximumProfessorCourses;
     final Set<FieldOfStudy> fieldsOfStudy;
 
@@ -26,7 +31,7 @@ class CourseLeadershipAggregateRoot extends CourseLeadershipAggregate {
     static CourseLeadershipAggregate from(CourseSnapshot source) {
         return builder()
                 .source(source)
-                .courseId(source.id())
+                .id(source.id())
                 .maximumProfessorCourses(source.courseManagementThresholds().maximumProfessorCourses())
                 .fieldsOfStudy(source.fieldsOfStudy().stream()
                         .map(FieldOfStudy::from)

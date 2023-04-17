@@ -6,16 +6,21 @@ import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
+import static lombok.AccessLevel.PRIVATE;
 
 @SuperBuilder
-class CourseEnrollmentsRegistryAggregateRoot extends CourseEnrollmentsRegistryAggregate {
+class CourseEnrollmentsRegistryAggregateRoot implements CourseEnrollmentsRegistryAggregate {
 
-    final CourseId courseId;
+    @Getter(PRIVATE)
+    final CourseSnapshot source;
+    @Getter
+    final CourseId id;
     final Threshold maximumNumberOfEnrolledStudents;
 
     Set<Student> students;
@@ -23,7 +28,7 @@ class CourseEnrollmentsRegistryAggregateRoot extends CourseEnrollmentsRegistryAg
     static CourseEnrollmentsRegistryAggregate from(CourseSnapshot source) {
         return builder()
                 .source(source)
-                .courseId(source.id())
+                .id(source.id())
                 .maximumNumberOfEnrolledStudents(source.courseManagementThresholds().maximumNumberOfEnrolledStudents())
                 .students(source.students().stream()
                         .map(Student::from)

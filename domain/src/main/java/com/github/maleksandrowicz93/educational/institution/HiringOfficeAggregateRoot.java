@@ -8,16 +8,21 @@ import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplicat
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHiringThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
+import static lombok.AccessLevel.PRIVATE;
 
 @SuperBuilder
-class HiringOfficeAggregateRoot extends HiringOfficeAggregate {
+class HiringOfficeAggregateRoot implements HiringOfficeAggregate {
 
-    final FacultyId facultyId;
+    @Getter(PRIVATE)
+    final FacultySnapshot source;
+    @Getter
+    final FacultyId id;
     final ProfessorHiringThresholds thresholds;
 
     Set<Professor> professors;
@@ -25,7 +30,7 @@ class HiringOfficeAggregateRoot extends HiringOfficeAggregate {
     static HiringOfficeAggregate from(FacultySnapshot source) {
         return builder()
                 .source(source)
-                .facultyId(source.id())
+                .id(source.id())
                 .thresholds(source.facultyManagementThresholds().professorHiringThresholds())
                 .professors(source.professors().stream()
                         .map(Professor::from)

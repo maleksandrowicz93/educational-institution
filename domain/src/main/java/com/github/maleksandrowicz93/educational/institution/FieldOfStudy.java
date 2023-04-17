@@ -5,12 +5,14 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot;
 import lombok.Builder;
+import lombok.Getter;
 
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
 class FieldOfStudy implements Entity<FieldOfStudySnapshot, FieldOfStudyId> {
 
+    @Getter
     FieldOfStudyId id;
     String name;
     FacultyId facultyId;

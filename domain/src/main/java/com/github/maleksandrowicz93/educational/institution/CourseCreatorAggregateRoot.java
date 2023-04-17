@@ -8,15 +8,20 @@ import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
+import static lombok.AccessLevel.PRIVATE;
 
 @SuperBuilder
-class CourseCreatorAggregateRoot extends CourseCreatorAggregate {
+class CourseCreatorAggregateRoot implements CourseCreatorAggregate {
 
+    @Getter(PRIVATE)
+    final FacultySnapshot source;
+    @Getter
     final FacultyId id;
     final CourseCreationThresholds thresholds;
 

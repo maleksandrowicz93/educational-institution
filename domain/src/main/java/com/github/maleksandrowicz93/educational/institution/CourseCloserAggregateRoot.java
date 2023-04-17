@@ -6,12 +6,18 @@ import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
-class CourseCloserAggregateRoot extends CourseCloserAggregate {
+import static lombok.AccessLevel.PRIVATE;
 
-    final CourseId courseId;
+@SuperBuilder
+class CourseCloserAggregateRoot implements CourseCloserAggregate {
+
+    @Getter(PRIVATE)
+    final CourseSnapshot source;
+    @Getter
+    final CourseId id;
     final Threshold minimumEnrollmentsCourseCannotBeClosed;
 
     Professor professor;
@@ -20,7 +26,7 @@ class CourseCloserAggregateRoot extends CourseCloserAggregate {
     static CourseCloserAggregate from(CourseSnapshot source) {
         return builder()
                 .source(source)
-                .courseId(source.id())
+                .id(source.id())
                 .minimumEnrollmentsCourseCannotBeClosed(source.courseManagementThresholds()
                         .minimumEnrollmentsCourseCannotBeClosed())
                 .professor(Professor.from(source.professor()))

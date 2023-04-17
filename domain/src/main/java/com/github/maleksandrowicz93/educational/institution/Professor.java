@@ -8,6 +8,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.PersonalData;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder(access = PRIVATE)
 class Professor implements Entity<ProfessorSnapshot, ProfessorId> {
 
+    @Getter
     ProfessorId id;
     PersonalData personalData;
     FacultyId facultyId;

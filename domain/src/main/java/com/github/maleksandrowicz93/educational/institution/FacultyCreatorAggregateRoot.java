@@ -6,13 +6,19 @@ import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstit
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
-@SuperBuilder
-class FacultyCreatorAggregateRoot extends FacultyCreatorAggregate {
+import static lombok.AccessLevel.PRIVATE;
 
+@SuperBuilder
+class FacultyCreatorAggregateRoot implements FacultyCreatorAggregate {
+
+    @Getter(PRIVATE)
+    final EducationalInstitutionSnapshot source;
+    @Getter
     final EducationalInstitutionId id;
     Set<FacultyId> faculties;
 
