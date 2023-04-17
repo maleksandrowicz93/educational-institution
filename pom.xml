@@ -25,6 +25,7 @@
         <module>domain</module>
         <module>bom</module>
         <module>commons</module>
+        <module>rector-office</module>
     </modules>
 
     <dependencyManagement>
