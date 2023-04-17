@@ -2,14 +2,14 @@ package com.github.maleksandrowicz93.educational.institution.common;
 
 import lombok.experimental.FieldDefaults;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @FieldDefaults(makeFinal = true)
 public abstract class InMemoryRepository<S extends Snapshot<ID>, ID> implements DomainRepository<S, ID> {
 
-    Map<ID, S> repository = new HashMap<>();
+    Map<ID, S> repository = new ConcurrentHashMap<>();
 
     @Override
     public boolean existsById(ID id) {
