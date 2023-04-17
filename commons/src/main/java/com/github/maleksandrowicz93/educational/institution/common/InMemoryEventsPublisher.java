@@ -1,7 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.evetns.publisher;
-
-import com.github.maleksandrowicz93.educational.institution.common.DomainEvent;
-import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
+package com.github.maleksandrowicz93.educational.institution.common;
 
 import java.util.ArrayList;
 import java.util.List;

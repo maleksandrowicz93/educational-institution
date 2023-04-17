@@ -3,7 +3,7 @@ package com.github.maleksandrowicz93.educational.institution
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.FacultyManagementService
 import com.github.maleksandrowicz93.educational.institution.events.ProfessorHiringResignationEvent
 import com.github.maleksandrowicz93.educational.institution.events.StudentEnrollmentResignationEvent
-import com.github.maleksandrowicz93.educational.institution.evetns.publisher.InMemoryEventsPublisher
+import com.github.maleksandrowicz93.educational.institution.common.InMemoryEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryFacultyRepository
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository
 import com.github.maleksandrowicz93.educational.institution.result.reasons.EmploymentResignationResultReason
