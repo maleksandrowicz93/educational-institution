@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.results;
+package com.github.maleksandrowicz93.educational.institution.result.reasons;
 
 import com.github.maleksandrowicz93.educational.institution.common.ResultReason;
 import lombok.RequiredArgsConstructor;

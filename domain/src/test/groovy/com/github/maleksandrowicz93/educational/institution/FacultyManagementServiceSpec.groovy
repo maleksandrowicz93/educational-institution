@@ -6,8 +6,8 @@ import com.github.maleksandrowicz93.educational.institution.events.StudentEnroll
 import com.github.maleksandrowicz93.educational.institution.evetns.publisher.InMemoryEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryFacultyRepository
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository
-import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResultReason
-import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResultReason
+import com.github.maleksandrowicz93.educational.institution.result.reasons.EmploymentResignationResultReason
+import com.github.maleksandrowicz93.educational.institution.result.reasons.EnrollmentResignationResultReason
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import spock.lang.Specification
 

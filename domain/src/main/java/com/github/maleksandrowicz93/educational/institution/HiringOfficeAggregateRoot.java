@@ -1,13 +1,13 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.aggregates.HiringOfficeAggregate;
-import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
-import com.github.maleksandrowicz93.educational.institution.results.HiringResult;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHiringThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
+import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
@@ -43,12 +43,12 @@ class HiringOfficeAggregateRoot extends HiringOfficeAggregate {
     }
 
     @Override
-    public HiringResult considerHiring(ProfessorApplication professorApplication) {
+    public Result<ProfessorSnapshot> considerHiring(ProfessorApplication professorApplication) {
         return null;
     }
 
     @Override
-    public EmploymentResignationResult receiveHiringResignation(ProfessorId professorId) {
+    public Result<ProfessorSnapshot> receiveHiringResignation(ProfessorId professorId) {
         return null;
     }
 }

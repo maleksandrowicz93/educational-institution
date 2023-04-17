@@ -1,7 +1,7 @@
 package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState
-import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResultReason
+import com.github.maleksandrowicz93.educational.institution.result.reasons.CourseClosingResultReason
 import spock.lang.Specification
 
 import static com.github.maleksandrowicz93.educational.institution.utils.CandidatesUtils.professorLeadingCourse

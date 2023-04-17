@@ -1,9 +1,10 @@
 package com.github.maleksandrowicz93.educational.institution.api.domain.service;
 
-import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;
+import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 
 public interface CourseCreationService {
 
-    CourseCreationResult createCourse(CourseProposition courseProposition);
+    Result<CourseSnapshot> createCourse(CourseProposition courseProposition);
 }

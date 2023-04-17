@@ -1,10 +1,11 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.CourseCreationService;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository;
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository;
-import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;
+import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +17,7 @@ class DomainCourseCreationService implements CourseCreationService {
     CourseRepository courseRepository;
 
     @Override
-    public CourseCreationResult createCourse(CourseProposition courseProposition) {
+    public Result<CourseSnapshot> createCourse(CourseProposition courseProposition) {
         return null;
     }
 }

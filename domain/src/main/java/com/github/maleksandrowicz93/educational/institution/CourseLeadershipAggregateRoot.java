@@ -1,8 +1,8 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.aggregates.CourseLeadershipAggregate;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
-import com.github.maleksandrowicz93.educational.institution.results.CourseOvertakingResult;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
@@ -50,7 +50,7 @@ class CourseLeadershipAggregateRoot extends CourseLeadershipAggregate {
     }
 
     @Override
-    public CourseOvertakingResult considerCourseOvertaking(ProfessorSnapshot professor) {
+    public Result<CourseSnapshot> considerCourseOvertaking(ProfessorSnapshot professor) {
         return null;
     }
 }

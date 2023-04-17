@@ -1,8 +1,8 @@
 package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.enums.EnrollmentState
-import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResultReason
-import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResultReason
+import com.github.maleksandrowicz93.educational.institution.result.reasons.EnrollmentResignationResultReason
+import com.github.maleksandrowicz93.educational.institution.result.reasons.EnrollmentResultReason
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import spock.lang.Specification

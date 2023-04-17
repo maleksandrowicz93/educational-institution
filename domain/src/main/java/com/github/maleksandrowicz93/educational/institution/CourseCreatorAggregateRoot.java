@@ -1,10 +1,11 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.aggregates.CourseCreatorAggregate;
-import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResult;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseCreationThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;
+import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import lombok.experimental.SuperBuilder;
@@ -45,7 +46,7 @@ class CourseCreatorAggregateRoot extends CourseCreatorAggregate {
     }
 
     @Override
-    public CourseCreationResult considerCourseCreation(CourseProposition courseProposition) {
+    public Result<CourseSnapshot> considerCourseCreation(CourseProposition courseProposition) {
         return null;
     }
 }

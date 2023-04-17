@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.results;
+package com.github.maleksandrowicz93.educational.institution.result.reasons;
 
 import com.github.maleksandrowicz93.educational.institution.common.ResultReason;
 import lombok.RequiredArgsConstructor;
@@ -6,10 +6,10 @@ import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
-public enum CourseClosingResultReason implements ResultReason {
+public enum CourseEnrollmentResultReason implements ResultReason {
 
-    TOO_MANY_STUDENTS("Too many students to close the course."),
-    INCORRECT_COURSE_ID("Incorrect course id");
+    NO_VACANCY("No vacancy at the course."),
+    INVALID_FACULTY("The course is from other faculty.");
 
     String text;
 
@@ -17,4 +17,5 @@ public enum CourseClosingResultReason implements ResultReason {
     public String text() {
         return text;
     }
+
 }

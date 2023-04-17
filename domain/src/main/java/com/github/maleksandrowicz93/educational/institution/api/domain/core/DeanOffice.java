@@ -1,13 +1,13 @@
 package com.github.maleksandrowicz93.educational.institution.api.domain.core;
 
-import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;
-import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResult;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
+import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 
 public interface DeanOffice {
 
-    EnrollmentResult considerEnrollment(StudentApplication studentApplication);
+    Result<StudentSnapshot> considerEnrollment(StudentApplication studentApplication);
 
-    EnrollmentResignationResult receiveEnrollmentResignation(StudentId studentId);
+    Result<StudentSnapshot> receiveEnrollmentResignation(StudentId studentId);
 }

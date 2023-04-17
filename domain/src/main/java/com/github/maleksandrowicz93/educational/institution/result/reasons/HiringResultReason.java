@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.results;
+package com.github.maleksandrowicz93.educational.institution.result.reasons;
 
 import com.github.maleksandrowicz93.educational.institution.common.ResultReason;
 import lombok.RequiredArgsConstructor;
@@ -6,9 +6,11 @@ import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
-public enum FacultyCreationResultReason implements ResultReason {
+public enum HiringResultReason implements ResultReason {
 
-    INCORRECT_EDUCATIONAL_INSTITUTION_ID("Invalid educational institution id.");
+    FIELDS_OF_STUDY_NOT_MATCHED("Field of study not matched."),
+    TOO_LITTLE_EXPERIENCE("Too little experience."),
+    NO_VACANCY("No vacancy at faculty.");
 
     String text;
 

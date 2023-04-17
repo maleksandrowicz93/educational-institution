@@ -1,7 +1,7 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.aggregates.CourseEnrollmentsRegistryAggregate;
-import com.github.maleksandrowicz93.educational.institution.results.CourseEnrollmentResult;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
@@ -41,7 +41,7 @@ class CourseEnrollmentsRegistryAggregateRoot extends CourseEnrollmentsRegistryAg
     }
 
     @Override
-    public CourseEnrollmentResult considerCourseEnrollment(StudentSnapshot student) {
+    public Result<StudentSnapshot> considerCourseEnrollment(StudentSnapshot student) {
         return null;
     }
 }

@@ -5,7 +5,7 @@ import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryC
 import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryFacultyRepository
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository
-import com.github.maleksandrowicz93.educational.institution.results.CourseCreationResultReason
+import com.github.maleksandrowicz93.educational.institution.result.reasons.CourseCreationResultReason
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import spock.lang.Specification
 

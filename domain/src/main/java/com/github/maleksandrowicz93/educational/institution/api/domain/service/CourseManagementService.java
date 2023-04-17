@@ -1,12 +1,12 @@
 package com.github.maleksandrowicz93.educational.institution.api.domain.service;
 
-import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResult;
-import com.github.maleksandrowicz93.educational.institution.results.CourseLeadingResignationResult;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
+import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 
 public interface CourseManagementService {
 
-    CourseLeadingResignationResult resignFromLeadingCourse(CourseId courseId);
+    Result<CourseSnapshot> resignFromLeadingCourse(CourseId courseId);
 
-    CourseClosingResult closeCourse(CourseId courseId);
+    Result<CourseSnapshot> closeCourse(CourseId courseId);
 }

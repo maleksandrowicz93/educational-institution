@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.results;
+package com.github.maleksandrowicz93.educational.institution.result.reasons;
 
 import com.github.maleksandrowicz93.educational.institution.common.ResultReason;
 import lombok.RequiredArgsConstructor;
@@ -6,10 +6,10 @@ import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
-public enum CourseEnrollmentResultReason implements ResultReason {
+public enum EmploymentResignationResultReason implements ResultReason {
 
-    NO_VACANCY("No vacancy at the course."),
-    INVALID_FACULTY("The course is from other faculty.");
+    INCORRECT_PROFESSOR_ID("Incorrect professor id."),
+    INCORRECT_FACULTY_ID("Incorrect faculty id.");
 
     String text;
 
@@ -17,5 +17,4 @@ public enum CourseEnrollmentResultReason implements ResultReason {
     public String text() {
         return text;
     }
-
 }

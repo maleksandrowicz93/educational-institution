@@ -1,13 +1,13 @@
 package com.github.maleksandrowicz93.educational.institution.api.domain.core;
 
-import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
-import com.github.maleksandrowicz93.educational.institution.results.HiringResult;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
+import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 
 public interface HiringOffice {
 
-    HiringResult considerHiring(ProfessorApplication professorApplication);
+    Result<ProfessorSnapshot> considerHiring(ProfessorApplication professorApplication);
 
-    EmploymentResignationResult receiveHiringResignation(ProfessorId professorId);
+    Result<ProfessorSnapshot> receiveHiringResignation(ProfessorId professorId);
 }

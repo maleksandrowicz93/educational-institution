@@ -7,8 +7,8 @@ import com.github.maleksandrowicz93.educational.institution.events.LeadingCourse
 import com.github.maleksandrowicz93.educational.institution.evetns.publisher.InMemoryEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryCourseRepository
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository
-import com.github.maleksandrowicz93.educational.institution.results.CourseClosingResultReason
-import com.github.maleksandrowicz93.educational.institution.results.CourseLeadingResignationResultReason
+import com.github.maleksandrowicz93.educational.institution.result.reasons.CourseClosingResultReason
+import com.github.maleksandrowicz93.educational.institution.result.reasons.CourseLeadingResignationResultReason
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId
 import spock.lang.Specification
 

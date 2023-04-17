@@ -2,9 +2,8 @@ package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.FacultyManagementService;
 import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
+import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository;
-import com.github.maleksandrowicz93.educational.institution.results.EmploymentResignationResult;
-import com.github.maleksandrowicz93.educational.institution.results.EnrollmentResignationResult;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +17,12 @@ class DomainFacultyManagementService implements FacultyManagementService {
     EventsPublisher eventsPublisher;
 
     @Override
-    public EmploymentResignationResult resignFromEmployment(ProfessorSnapshot professorSnapshot) {
+    public Result<ProfessorSnapshot> resignFromEmployment(ProfessorSnapshot professorSnapshot) {
         return null;
     }
 
     @Override
-    public EnrollmentResignationResult resignFromEnrollment(StudentSnapshot studentSnapshot) {
+    public Result<StudentSnapshot> resignFromEnrollment(StudentSnapshot studentSnapshot) {
         return null;
     }
 }
