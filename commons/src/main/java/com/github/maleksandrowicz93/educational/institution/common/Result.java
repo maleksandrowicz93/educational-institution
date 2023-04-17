@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.github.maleksandrowicz93.educational.institution.common.DefaultResultReason.SUCCESS;
+import static com.github.maleksandrowicz93.educational.institution.common.DefaultResultReason.UNKNOWN_ERROR;
+
 @FieldDefaults(makeFinal = true)
 public class Result<T> {
 
@@ -17,19 +20,19 @@ public class Result<T> {
 
     protected Result(T value) {
         this.value = value;
-        this.resultReason = DefaultResultReason.SUCCESS;
+        this.resultReason = SUCCESS;
     }
 
     protected Result(ResultReason resultReason) {
         this.value = null;
         this.resultReason = Optional.ofNullable(resultReason)
-                .orElse(DefaultResultReason.UNKNOWN_ERROR);
+                .orElse(UNKNOWN_ERROR);
     }
 
     protected Result(ResultReason resultReason, Map<String, String> additionalProperties) {
         this.value = null;
         this.resultReason = Optional.ofNullable(resultReason)
-                .orElse(DefaultResultReason.UNKNOWN_ERROR);
+                .orElse(UNKNOWN_ERROR);
         Optional.ofNullable(additionalProperties)
                 .ifPresent(this.additionalProperties::putAll);
     }
