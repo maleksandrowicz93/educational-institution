@@ -7,9 +7,10 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @FieldDefaults(makeFinal = true)
-public abstract class InMemoryRepository<S extends Snapshot<ID>, ID> implements DomainRepository<S, ID> {
+public abstract class InMemoryRepository<T extends Aggregate<S, ID>, S extends Snapshot<ID>, ID>
+        implements DomainRepository<T, S, ID> {
 
-    Map<ID, S> repository = new ConcurrentHashMap<>();
+    Map<ID, T> repository = new ConcurrentHashMap<>();
 
     @Override
     public boolean existsById(ID id) {
@@ -17,14 +18,14 @@ public abstract class InMemoryRepository<S extends Snapshot<ID>, ID> implements 
     }
 
     @Override
-    public Optional<S> findById(ID id) {
+    public Optional<T> findById(ID id) {
         return Optional.ofNullable(repository.get(id));
     }
 
     @Override
-    public void save(S s) {
-        Optional.ofNullable(s)
-                .filter(snapshot -> snapshot.id() != null)
-                .ifPresent(snapshot -> repository.put(s.id(), s));
+    public void save(T t) {
+        Optional.ofNullable(t)
+                .filter(aggregate -> aggregate.id() != null)
+                .ifPresent(aggregate -> repository.put(aggregate.id(), aggregate));
     }
 }

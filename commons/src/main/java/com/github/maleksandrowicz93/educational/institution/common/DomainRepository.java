@@ -2,11 +2,11 @@ package com.github.maleksandrowicz93.educational.institution.common;
 
 import java.util.Optional;
 
-public interface DomainRepository<S extends Snapshot<ID>, ID> {
+public interface DomainRepository<T extends Aggregate<S, ID>, S extends Snapshot<ID>, ID> {
 
     boolean existsById(ID id);
 
-    Optional<S> findById(ID id);
+    Optional<T> findById(ID id);
 
-    void save(S s);
+    void save(T s);
 }
