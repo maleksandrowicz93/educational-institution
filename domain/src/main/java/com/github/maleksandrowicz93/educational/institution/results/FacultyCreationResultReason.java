@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public enum FacultyCreationResultReason implements ResultReason {
 
-    SUCCESS("Success."),
     INCORRECT_EDUCATIONAL_INSTITUTION_ID("Invalid educational institution id.");
 
     String text;

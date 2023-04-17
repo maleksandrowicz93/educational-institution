@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public enum CourseClosingResultReason implements ResultReason {
 
-    SUCCESS("Success,"),
     TOO_MANY_STUDENTS("Too many students to close the course."),
     INCORRECT_COURSE_ID("Incorrect course id");
 

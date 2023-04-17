@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public enum CourseLeadingResignationResultReason implements ResultReason {
 
-    SUCCESS("Success."),
     INCORRECT_COURSE_ID("Incorrect course id.");
 
     String text;

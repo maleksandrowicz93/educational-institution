@@ -8,27 +8,46 @@ import java.util.Map;
 import java.util.Optional;
 
 @FieldDefaults(makeFinal = true)
-public abstract class Result<T, R extends ResultReason> {
+public class Result<T> {
 
     T value;
     @Getter
-    R resultReason;
+    ResultReason resultReason;
     Map<String, String> additionalProperties = new HashMap<>();
 
-    public Result(T value) {
+    protected Result(T value) {
         this.value = value;
-        this.resultReason = defaultResultReason();
+        this.resultReason = DefaultResultReason.SUCCESS;
     }
 
-    public Result(R resultReason) {
+    protected Result(ResultReason resultReason) {
         this.value = null;
-        this.resultReason = resultReason;
+        this.resultReason = Optional.ofNullable(resultReason)
+                .orElse(DefaultResultReason.UNKNOWN_ERROR);
     }
 
-    public Result(R resultReason, Map<String, String> additionalProperties) {
+    protected Result(ResultReason resultReason, Map<String, String> additionalProperties) {
         this.value = null;
-        this.resultReason = resultReason;
-        this.additionalProperties.putAll(additionalProperties);
+        this.resultReason = Optional.ofNullable(resultReason)
+                .orElse(DefaultResultReason.UNKNOWN_ERROR);
+        Optional.ofNullable(additionalProperties)
+                .ifPresent(this.additionalProperties::putAll);
+    }
+
+    public static <T> Result<T> success(T value) {
+        return new Result<>(value);
+    }
+
+    public static <T> Result<T> failure(ResultReason resultReason) {
+        return new Result<>(resultReason);
+    }
+
+    public static <T> Result<T> failure(ResultReason resultReason, Map<String, String> additionalProperties) {
+        return new Result<>(resultReason, additionalProperties);
+    }
+
+    public static FailureBuilder failureReason(ResultReason reason) {
+        return new FailureBuilder(reason);
     }
 
     public Optional<T> value() {
@@ -39,5 +58,23 @@ public abstract class Result<T, R extends ResultReason> {
         return Map.copyOf(additionalProperties);
     }
 
-    protected abstract R defaultResultReason();
+    @FieldDefaults(makeFinal = true)
+    public static class FailureBuilder {
+
+        ResultReason reason;
+        Map<String, String> properties = new HashMap<>();
+
+        public FailureBuilder(ResultReason reason) {
+            this.reason = reason;
+        }
+
+        public FailureBuilder property(String name, String value) {
+            properties.put(name, value);
+            return this;
+        }
+
+        public <T> Result<T> build() {
+            return new Result<>(reason, properties);
+        }
+    }
 }
