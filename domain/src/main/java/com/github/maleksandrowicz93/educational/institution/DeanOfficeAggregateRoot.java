@@ -8,15 +8,15 @@ import com.github.maleksandrowicz93.educational.institution.vo.StudentApplicatio
 import com.github.maleksandrowicz93.educational.institution.vo.StudentEnrollmentThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
-@SuperBuilder
+@Builder(access = PRIVATE)
 class DeanOfficeAggregateRoot implements DeanOfficeAggregate {
 
     @Getter(PRIVATE)

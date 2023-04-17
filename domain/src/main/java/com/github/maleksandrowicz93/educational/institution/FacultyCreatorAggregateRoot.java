@@ -6,14 +6,14 @@ import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstit
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@SuperBuilder
+@Builder(access = PRIVATE)
 class FacultyCreatorAggregateRoot implements FacultyCreatorAggregate {
 
     @Getter(PRIVATE)

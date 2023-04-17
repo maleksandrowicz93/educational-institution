@@ -8,15 +8,15 @@ import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplicat
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHiringThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
-@SuperBuilder
+@Builder(access = PRIVATE)
 class HiringOfficeAggregateRoot implements HiringOfficeAggregate {
 
     @Getter(PRIVATE)

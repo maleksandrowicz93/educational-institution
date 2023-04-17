@@ -6,12 +6,12 @@ import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@SuperBuilder
+@Builder(access = PRIVATE)
 class CourseCloserAggregateRoot implements CourseCloserAggregate {
 
     @Getter(PRIVATE)
