@@ -8,5 +8,5 @@ public interface HumanResources<T extends Application, E extends InclusionEvent,
 
     Result<E> considerApplication(T t);
 
-    R receiveResignation(ID id);
+    Result<R> receiveResignation(ID id);
 }

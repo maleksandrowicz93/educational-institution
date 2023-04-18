@@ -58,7 +58,7 @@ class StudentHumanResourcesAggregateRoot implements StudentHumanResourcesAggrega
     }
 
     @Override
-    public StudentResignedEvent receiveResignation(StudentId studentId) {
+    public Result<StudentResignedEvent> receiveResignation(StudentId studentId) {
         return null;
     }
 }

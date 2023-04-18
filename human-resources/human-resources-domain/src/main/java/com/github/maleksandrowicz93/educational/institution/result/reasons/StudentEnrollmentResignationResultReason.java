@@ -6,11 +6,9 @@ import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
-public enum StudentEnrollmentFailureReason implements ResultReason {
+public enum StudentEnrollmentResignationResultReason implements ResultReason {
 
-    NO_VACANCY("No vacancy at faculty."),
-    MAIN_FIELD_OF_STUDY_TEST_NOT_PASSED("Main field of study test not passed."),
-    SECONDARY_FIELDS_OF_STUDY_TESTS_NOT_PASSED("Secondary fields of study tests not passed.");
+    STUDENT_NOT_ENROLLED("Student not enrolled at the faculty.");
 
     String text;
 
