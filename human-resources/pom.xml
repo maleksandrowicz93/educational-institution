@@ -9,12 +9,11 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rector-office</artifactId>
-    <name>rector-office</name>
-    <description>Module representing Rector Office functionalities</description>
-    <packaging>pom</packaging>
-
+    <artifactId>human-resources</artifactId>
+    <name>human-resources</name>
+    <description>Module representing Human Resources functionalities</description>
     <modules>
-        <module>rector-office-domain</module>
+        <module>human-resources-domain</module>
     </modules>
+    <packaging>pom</packaging>
 </project>
