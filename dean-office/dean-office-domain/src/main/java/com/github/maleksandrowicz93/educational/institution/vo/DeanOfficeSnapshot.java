@@ -11,6 +11,6 @@ public record DeanOfficeSnapshot(
         FacultyId id,
         CourseCreationThresholds thresholds,
         @Singular(ignoreNullCollections = true) Set<Professor> professors,
-        @Singular(ignoreNullCollections = true) Set<Course> courses
+        @Singular(ignoreNullCollections = true) Set<CourseSnapshot> courses
 ) implements Snapshot<FacultyId> {
 }

@@ -1,11 +1,14 @@
 package com.github.maleksandrowicz93.educational.institution.vo;
 
+import lombok.Builder;
+import lombok.NonNull;
 import lombok.Singular;
 
 import java.util.Set;
 
+@Builder
 public record Professor(
-        ProfessorId id,
-        @Singular(ignoreNullCollections = true) Set<CourseId> courses
+        @NonNull ProfessorId id,
+        @Singular(value = "fieldOfStudy", ignoreNullCollections = true) Set<FieldOfStudyId> fieldsOfStudy
 ) {
 }
