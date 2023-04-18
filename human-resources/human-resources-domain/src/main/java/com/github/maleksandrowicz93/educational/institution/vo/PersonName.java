@@ -8,7 +8,7 @@ public record PersonName(
         @NonNull BasicPersonName basicPersonName,
         String secondName
 ) {
-    PersonName(@NonNull BasicPersonName basicPersonName) {
+    public PersonName(@NonNull BasicPersonName basicPersonName) {
         this(basicPersonName, null);
     }
 }

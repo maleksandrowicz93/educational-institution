@@ -3,6 +3,7 @@ package com.github.maleksandrowicz93.educational.institution.vo;
 import com.github.maleksandrowicz93.educational.institution.api.Application;
 import lombok.Builder;
 import lombok.NonNull;
+import lombok.Singular;
 
 import java.util.Set;
 
@@ -10,6 +11,6 @@ import java.util.Set;
 public record ProfessorApplication(
         @NonNull PersonalData personalData,
         @NonNull YearsOfExperience yearsOfExperience,
-        @NonNull Set<FieldOfStudyId> fieldsOfStudy
+        @Singular(value = "fieldOfStudy", ignoreNullCollections = true) Set<FieldOfStudyId> fieldsOfStudy
 ) implements Application {
 }
