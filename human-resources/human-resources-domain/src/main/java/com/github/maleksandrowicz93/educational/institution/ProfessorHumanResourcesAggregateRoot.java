@@ -5,6 +5,7 @@ import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.events.ProfessorEmployedEvent;
 import com.github.maleksandrowicz93.educational.institution.events.ProfessorResignedEvent;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
+import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHiringThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHumanResourcesSnapshot;
@@ -25,6 +26,8 @@ class ProfessorHumanResourcesAggregateRoot implements ProfessorHumanResourcesAgg
     @Getter
     final FacultyId id;
     final ProfessorHiringThresholds thresholds;
+    final FieldOfStudyId mainFieldOfStudy;
+    final Set<FieldOfStudyId> secondaryFieldsOfStudy;
 
     Set<Professor> professors;
 
@@ -33,6 +36,8 @@ class ProfessorHumanResourcesAggregateRoot implements ProfessorHumanResourcesAgg
                 .source(source)
                 .id(source.id())
                 .thresholds(source.thresholds())
+                .mainFieldOfStudy(source.mainFieldOfStudy())
+                .secondaryFieldsOfStudy(source.secondaryFieldsOfStudy())
                 .professors(source.professors().stream()
                         .map(Professor::from)
                         .collect(toSet()))

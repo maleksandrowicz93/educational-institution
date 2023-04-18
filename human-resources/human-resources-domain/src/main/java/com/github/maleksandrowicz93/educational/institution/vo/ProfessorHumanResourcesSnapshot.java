@@ -10,6 +10,9 @@ import java.util.Set;
 public record ProfessorHumanResourcesSnapshot(
         FacultyId id,
         ProfessorHiringThresholds thresholds,
+        FieldOfStudyId mainFieldOfStudy,
+        @Singular(value = "secondaryFieldOfStudy", ignoreNullCollections = true)
+        Set<FieldOfStudyId> secondaryFieldsOfStudy,
         @Singular(ignoreNullCollections = true) Set<ProfessorSnapshot> professors
 ) implements Snapshot<FacultyId> {
 }

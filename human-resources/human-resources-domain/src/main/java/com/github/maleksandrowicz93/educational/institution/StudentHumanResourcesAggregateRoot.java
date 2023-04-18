@@ -5,6 +5,7 @@ import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.events.StudentEnrolledEvent;
 import com.github.maleksandrowicz93.educational.institution.events.StudentResignedEvent;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
+import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentApplication;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentEnrollmentThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentHumanResourcesSnapshot;
@@ -24,6 +25,8 @@ class StudentHumanResourcesAggregateRoot implements StudentHumanResourcesAggrega
     @Getter
     final FacultyId id;
     final StudentEnrollmentThresholds thresholds;
+    final FieldOfStudyId mainFieldOfStudy;
+    final Set<FieldOfStudyId> secondaryFieldsOfStudy;
 
     Set<Student> students;
 
@@ -32,6 +35,8 @@ class StudentHumanResourcesAggregateRoot implements StudentHumanResourcesAggrega
                 .source(source)
                 .id(source.id())
                 .thresholds(source.thresholds())
+                .mainFieldOfStudy(source.mainFieldOfStudy())
+                .secondaryFieldsOfStudy(source.secondaryFieldsOfStudy())
                 .students(source.students().stream()
                         .map(Student::from)
                         .collect(toSet()))
