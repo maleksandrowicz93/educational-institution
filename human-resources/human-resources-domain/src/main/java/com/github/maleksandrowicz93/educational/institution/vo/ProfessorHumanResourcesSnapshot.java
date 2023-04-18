@@ -6,7 +6,7 @@ import lombok.Singular;
 
 import java.util.Set;
 
-@Builder
+@Builder(toBuilder = true)
 public record ProfessorHumanResourcesSnapshot(
         FacultyId id,
         ProfessorHiringThresholds thresholds,
