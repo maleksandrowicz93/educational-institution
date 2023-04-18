@@ -6,7 +6,7 @@ import com.github.maleksandrowicz93.educational.institution.events.ResignationEv
 
 public interface HumanResources<T extends Application, E extends InclusionEvent, R extends ResignationEvent, ID> {
 
-    Result<E> apply(T t);
+    Result<E> considerApplication(T t);
 
-    R resign(ID id);
+    R receiveResignation(ID id);
 }

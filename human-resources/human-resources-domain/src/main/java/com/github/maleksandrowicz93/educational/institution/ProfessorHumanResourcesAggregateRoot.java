@@ -54,12 +54,12 @@ class ProfessorHumanResourcesAggregateRoot implements ProfessorHumanResourcesAgg
     }
 
     @Override
-    public Result<ProfessorEmployedEvent> apply(ProfessorApplication professorApplication) {
+    public Result<ProfessorEmployedEvent> considerApplication(ProfessorApplication professorApplication) {
         return null;
     }
 
     @Override
-    public ProfessorResignedEvent resign(ProfessorId professorId) {
+    public ProfessorResignedEvent receiveResignation(ProfessorId professorId) {
         return null;
     }
 }

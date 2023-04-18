@@ -53,12 +53,12 @@ class StudentHumanResourcesAggregateRoot implements StudentHumanResourcesAggrega
     }
 
     @Override
-    public Result<StudentEnrolledEvent> apply(StudentApplication studentApplication) {
+    public Result<StudentEnrolledEvent> considerApplication(StudentApplication studentApplication) {
         return null;
     }
 
     @Override
-    public StudentResignedEvent resign(StudentId studentId) {
+    public StudentResignedEvent receiveResignation(StudentId studentId) {
         return null;
     }
 }
