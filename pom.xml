@@ -28,6 +28,7 @@
         <module>commons</module>
         <module>rector-office</module>
         <module>human-resources</module>
+        <module>dean-office</module>
     </modules>
 
     <dependencyManagement>
