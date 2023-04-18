@@ -12,8 +12,9 @@
     <artifactId>human-resources</artifactId>
     <name>human-resources</name>
     <description>Module representing Human Resources functionalities</description>
+    <packaging>pom</packaging>
+
     <modules>
         <module>human-resources-domain</module>
     </modules>
-    <packaging>pom</packaging>
 </project>
