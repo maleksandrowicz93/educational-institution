@@ -10,16 +10,16 @@ import lombok.Getter;
 
 import java.util.Set;
 
-import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PACKAGE;
 
-@Builder(access = PRIVATE)
+@Builder(access = PACKAGE)
 class CourseEntity implements Entity<CourseSnapshot, CourseId> {
 
     @Getter
-    CourseId id;
-    String name;
-    ProfessorId leadingProfessor;
-    Set<FieldOfStudyId> fieldsOfStudy;
+    final CourseId id;
+    final String name;
+    final ProfessorId leadingProfessor;
+    final Set<FieldOfStudyId> fieldsOfStudy;
 
     static CourseEntity from(CourseSnapshot source) {
         return builder()

@@ -6,14 +6,14 @@ import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnaps
 import lombok.Builder;
 import lombok.Getter;
 
-import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PACKAGE;
 
-@Builder(access = PRIVATE)
+@Builder(access = PACKAGE)
 class FieldOfStudyEntity implements Entity<FieldOfStudySnapshot, FieldOfStudyId> {
 
     @Getter
-    FieldOfStudyId id;
-    String name;
+    final FieldOfStudyId id;
+    final String name;
 
     static FieldOfStudyEntity from(FieldOfStudySnapshot source) {
         return builder()
