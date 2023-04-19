@@ -38,8 +38,12 @@ class ProfessorHumanResourcesSpec extends Specification {
         currentSnapshot.id() == event.facultyId()
         def professors = currentSnapshot.professors()
         professors.size() == 1
-        professors.any { it.id() == event.professorId() }
         professors.any { it.employmentState() == EMPLOYED }
+        with(event.professorSnapshot()) {
+            professors.any { it.id() == id() }
+            personalData() == application.personalData()
+            employmentState() == EMPLOYED
+        }
     }
 
     @Unroll("years of experience: #yearsOfExperience, fields of study: #fieldsOfStudy, failure reason: #resultReason.text()")

@@ -35,8 +35,12 @@ class StudentHumanResourcesSpec extends Specification {
         currentSnapshot.id() == event.facultyId()
         def professors = currentSnapshot.students()
         professors.size() == 1
-        professors.any { it.id() == event.studentId() }
         professors.any { it.enrollmentState() == ENROLLED }
+        with(event.studentSnapshot()) {
+            professors.any { it.id() == id() }
+            personalData() == application.personalData()
+            enrollmentState() == ENROLLED
+        }
     }
 
     @Unroll("main test result: #mainTestResult, secondary tests result: #secondaryTestResult, failure reason: #resultReason.text()")
