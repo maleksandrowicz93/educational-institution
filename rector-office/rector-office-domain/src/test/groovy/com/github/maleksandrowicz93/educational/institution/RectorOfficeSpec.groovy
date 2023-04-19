@@ -1,10 +1,10 @@
 package com.github.maleksandrowicz93.educational.institution
 
 import com.github.maleksandrowicz93.educational.institution.events.FacultyCreatedEvent
-import com.github.maleksandrowicz93.educational.institution.vo.Faculty
+import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup
-import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudy
+import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeId
 import spock.lang.Specification
 
@@ -63,7 +63,7 @@ class RectorOfficeSpec extends Specification {
     }
 
     private void validateSecondaryFieldOfStudy(
-            FieldOfStudy fieldOfStudySnapshot,
+            FieldOfStudySnapshot fieldOfStudySnapshot,
             FacultyId facultyId,
             FacultySetup facultySetup
     ) {
@@ -76,7 +76,7 @@ class RectorOfficeSpec extends Specification {
     def "faculty should not be created if its name is already taken"() {
         given: "Educational Institution with a faculty"
         def snapshot = newRectorOffice().toBuilder()
-                .faculty(Faculty.builder()
+                .faculty(FacultySnapshot.builder()
                         .id(new FacultyId(UUID.randomUUID()))
                         .name(FACULTY_NAME)
                         .build())
