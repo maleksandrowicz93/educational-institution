@@ -6,7 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
-public enum FacultyCreationResultReason implements ResultReason {
+public enum FacultyCreationFailureReason implements ResultReason {
 
     FACULTY_ALREADY_EXISTS("Faculty already exists within the educational institution.");
 

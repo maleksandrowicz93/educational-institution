@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
-@FieldDefaults
+@FieldDefaults(makeFinal = true)
 class RectorOfficeAggregateRoot implements RectorOfficeAggregate {
 
     @Getter
