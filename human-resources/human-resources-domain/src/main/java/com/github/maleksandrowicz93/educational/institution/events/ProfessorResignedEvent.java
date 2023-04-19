@@ -7,7 +7,7 @@ import lombok.NonNull;
 
 @Builder
 public record ProfessorResignedEvent(
-        @NonNull ProfessorId professorId,
-        @NonNull FacultyId facultyId
+        @NonNull FacultyId facultyId,
+        @NonNull ProfessorId professorId
 ) implements ResignationEvent {
 }

@@ -7,10 +7,12 @@ import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
-import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PACKAGE;
 
-@Builder(access = PRIVATE)
+@Builder(access = PACKAGE)
+@FieldDefaults(makeFinal = true)
 class Professor implements Entity<ProfessorSnapshot, ProfessorId> {
 
     @Getter

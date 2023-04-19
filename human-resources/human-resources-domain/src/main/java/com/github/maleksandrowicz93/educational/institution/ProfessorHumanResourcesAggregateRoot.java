@@ -12,6 +12,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHumanRes
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
@@ -19,21 +20,18 @@ import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
+@FieldDefaults(makeFinal = true)
 class ProfessorHumanResourcesAggregateRoot implements ProfessorHumanResourcesAggregate {
 
-
-    final ProfessorHumanResourcesSnapshot source;
     @Getter
-    final FacultyId id;
-    final ProfessorHiringThresholds thresholds;
-    final FieldOfStudyId mainFieldOfStudy;
-    final Set<FieldOfStudyId> secondaryFieldsOfStudy;
-
+    FacultyId id;
+    ProfessorHiringThresholds thresholds;
+    FieldOfStudyId mainFieldOfStudy;
+    Set<FieldOfStudyId> secondaryFieldsOfStudy;
     Set<Professor> professors;
 
     static ProfessorHumanResourcesAggregateRoot from(ProfessorHumanResourcesSnapshot source) {
         return builder()
-                .source(source)
                 .id(source.id())
                 .thresholds(source.thresholds())
                 .mainFieldOfStudy(source.mainFieldOfStudy())
@@ -46,7 +44,11 @@ class ProfessorHumanResourcesAggregateRoot implements ProfessorHumanResourcesAgg
 
     @Override
     public ProfessorHumanResourcesSnapshot createSnapshot() {
-        return source.toBuilder()
+        return ProfessorHumanResourcesSnapshot.builder()
+                .id(id)
+                .thresholds(thresholds)
+                .mainFieldOfStudy(mainFieldOfStudy)
+                .secondaryFieldsOfStudy(secondaryFieldsOfStudy)
                 .professors(professors.stream()
                         .map(Professor::createSnapshot)
                         .collect(toSet()))

@@ -12,6 +12,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.StudentHumanResou
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
@@ -19,20 +20,18 @@ import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
+@FieldDefaults(makeFinal = true)
 class StudentHumanResourcesAggregateRoot implements StudentHumanResourcesAggregate {
 
-    final StudentHumanResourcesSnapshot source;
     @Getter
-    final FacultyId id;
-    final StudentEnrollmentThresholds thresholds;
-    final FieldOfStudyId mainFieldOfStudy;
-    final Set<FieldOfStudyId> secondaryFieldsOfStudy;
-
+    FacultyId id;
+    StudentEnrollmentThresholds thresholds;
+    FieldOfStudyId mainFieldOfStudy;
+    Set<FieldOfStudyId> secondaryFieldsOfStudy;
     Set<Student> students;
 
     static StudentHumanResourcesAggregateRoot from(StudentHumanResourcesSnapshot source) {
         return builder()
-                .source(source)
                 .id(source.id())
                 .thresholds(source.thresholds())
                 .mainFieldOfStudy(source.mainFieldOfStudy())
@@ -45,7 +44,11 @@ class StudentHumanResourcesAggregateRoot implements StudentHumanResourcesAggrega
 
     @Override
     public StudentHumanResourcesSnapshot createSnapshot() {
-        return source.toBuilder()
+        return StudentHumanResourcesSnapshot.builder()
+                .id(id)
+                .thresholds(thresholds)
+                .mainFieldOfStudy(mainFieldOfStudy)
+                .secondaryFieldsOfStudy(secondaryFieldsOfStudy)
                 .students(students.stream()
                         .map(Student::createSnapshot)
                         .collect(toSet()))
