@@ -1,17 +1,15 @@
 package com.github.maleksandrowicz93.educational.institution
 
-import com.github.maleksandrowicz93.educational.institution.events.FacultyCreatedEvent
-import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup
+import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot
-import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeId
+import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeSnapshot
 import spock.lang.Specification
 
+import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.FACULTY_NAME
 import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.facultySetup
-import static com.github.maleksandrowicz93.educational.institution.utils.FacultyUtils.getFACULTY_NAME
 import static com.github.maleksandrowicz93.educational.institution.utils.RectorOfficeUtils.newRectorOffice
-import static java.util.stream.Collectors.toSet
 
 class RectorOfficeSpec extends Specification {
 
@@ -30,45 +28,32 @@ class RectorOfficeSpec extends Specification {
         result.value().isPresent()
         def event = result.value().get()
         def currentSnapshot = rectorOffice.createSnapshot()
-        def existingFacultiesIds = currentSnapshot.faculties().stream()
-                .map { it.id() }
-                .collect(toSet())
-        existingFacultiesIds.contains(event.facultyId())
-        validateEvent(event, facultySetup, currentSnapshot.id())
+        event.rectorOfficeId() == currentSnapshot.id()
+        event.facultyManagementThresholds() == snapshot.thresholds()
+        validateFaculty(event.facultySnapshot(), currentSnapshot, facultySetup)
     }
 
-    private void validateEvent(
-            FacultyCreatedEvent event,
-            FacultySetup facultySetup,
-            RectorOfficeId rectorOfficeId
+    private void validateFaculty(
+            FacultySnapshot facultySnapshot,
+            RectorOfficeSnapshot rectorOfficeSnapshot,
+            FacultySetup facultySetup
     ) {
-        assert event.facultyId().value() != null
-        assert event.facultyName() == facultySetup.name()
-        assert event.rectorOfficeId() == rectorOfficeId
-        validateMainFieldOfStudy(event, facultySetup)
-        validateSecondaryFieldsOfStudy(event, facultySetup)
-    }
-
-    private void validateMainFieldOfStudy(FacultyCreatedEvent event, FacultySetup facultySetup) {
-        def mainFieldOfStudy = event.mainFieldOfStudy()
-        assert mainFieldOfStudy.id().value() != null
-        assert mainFieldOfStudy.facultyId() == event.facultyId()
-        assert mainFieldOfStudy.name() == facultySetup.mainFieldOfStudyName().value()
-    }
-
-    private void validateSecondaryFieldsOfStudy(FacultyCreatedEvent event, FacultySetup facultySetup) {
-        event.secondaryFieldsOfStudy().forEach {
-            validateSecondaryFieldOfStudy(it, event.facultyId(), facultySetup)
+        assert facultySnapshot.id().value() != null
+        assert rectorOfficeSnapshot.faculties().any { it.id() == facultySnapshot.id() }
+        assert facultySnapshot.name() == facultySetup.name()
+        validateMainFieldOfStudy(facultySnapshot.mainFieldOfStudy(), facultySetup)
+        facultySnapshot.secondaryFieldsOfStudy().forEach {
+            validateSecondaryFieldOfStudy(it, facultySetup)
         }
     }
 
-    private void validateSecondaryFieldOfStudy(
-            FieldOfStudySnapshot fieldOfStudySnapshot,
-            FacultyId facultyId,
-            FacultySetup facultySetup
-    ) {
+    private void validateMainFieldOfStudy(FieldOfStudySnapshot mainFieldOfStudy, FacultySetup facultySetup) {
+        assert mainFieldOfStudy.id().value() != null
+        assert mainFieldOfStudy.name() == facultySetup.mainFieldOfStudyName().value()
+    }
+
+    private void validateSecondaryFieldOfStudy(FieldOfStudySnapshot fieldOfStudySnapshot, FacultySetup facultySetup) {
         assert fieldOfStudySnapshot.id().value() != null
-        assert fieldOfStudySnapshot.facultyId() == facultyId
         assert facultySetup.secondaryFieldsOfStudyNames()
                 .any { it.value() == fieldOfStudySnapshot.name() }
     }

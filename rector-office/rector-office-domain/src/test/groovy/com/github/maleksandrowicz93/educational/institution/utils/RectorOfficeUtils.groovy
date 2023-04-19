@@ -13,7 +13,7 @@ class RectorOfficeUtils {
         RectorOfficeSnapshot.builder()
                 .id(new RectorOfficeId(UUID.randomUUID()))
                 .name("Wroclaw University of Technology")
-                .facultyManagementThresholds(facultyManagementThresholds())
+                .thresholds(facultyManagementThresholds())
                 .faculties(Set.of())
                 .build()
     }
