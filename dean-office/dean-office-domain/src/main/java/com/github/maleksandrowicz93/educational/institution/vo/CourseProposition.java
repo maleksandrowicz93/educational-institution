@@ -10,7 +10,7 @@ import java.util.Set;
 @Builder
 public record CourseProposition(
         @NonNull String name,
-        @NonNull ProfessorId professorId,
+        @NonNull ProfessorId leadingProfessor,
         @Singular(value = "fieldOfStudy", ignoreNullCollections = true) Set<FieldOfStudyId> fieldsOfStudy,
         @NonNull Threshold maximumNumberOfStudents
 ) {

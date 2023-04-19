@@ -18,14 +18,14 @@ class CourseEntity implements Entity<CourseSnapshot, CourseId> {
     @Getter
     CourseId id;
     String name;
-    ProfessorId professorId;
+    ProfessorId leadingProfessor;
     Set<FieldOfStudyId> fieldsOfStudy;
 
     static CourseEntity from(CourseSnapshot source) {
         return builder()
                 .id(source.id())
                 .name(source.name())
-                .professorId(source.professorId())
+                .leadingProfessor(source.leadingProfessor())
                 .fieldsOfStudy(source.fieldsOfStudy())
                 .build();
     }
@@ -35,7 +35,7 @@ class CourseEntity implements Entity<CourseSnapshot, CourseId> {
         return CourseSnapshot.builder()
                 .id(id)
                 .name(name)
-                .professorId(professorId)
+                .leadingProfessor(leadingProfessor)
                 .fieldsOfStudy(fieldsOfStudy)
                 .build();
     }
