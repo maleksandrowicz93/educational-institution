@@ -9,6 +9,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeId;
 import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeSnapshot;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
@@ -16,13 +17,14 @@ import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
+@FieldDefaults
 class RectorOfficeAggregateRoot implements RectorOfficeAggregate {
 
     @Getter
-    final RectorOfficeId id;
-    final String name;
-    final FacultyManagementThresholds thresholds;
-    final Set<FacultyEntity> faculties;
+    RectorOfficeId id;
+    String name;
+    FacultyManagementThresholds thresholds;
+    Set<FacultyEntity> faculties;
 
     static RectorOfficeAggregate from(RectorOfficeSnapshot source) {
         return builder()

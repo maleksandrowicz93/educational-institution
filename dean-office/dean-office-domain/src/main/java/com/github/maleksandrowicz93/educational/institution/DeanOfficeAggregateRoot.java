@@ -10,6 +10,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.Professor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
@@ -17,14 +18,15 @@ import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
+@FieldDefaults(makeFinal = true)
 class DeanOfficeAggregateRoot implements DeanOfficeAggregate {
 
-    final DeanOfficeSnapshot source;
+    DeanOfficeSnapshot source;
     @Getter
-    final FacultyId id;
-    final CourseCreationThresholds thresholds;
-    final Set<Professor> professors;
-    final Set<CourseEntity> courses;
+    FacultyId id;
+    CourseCreationThresholds thresholds;
+    Set<Professor> professors;
+    Set<CourseEntity> courses;
 
     static DeanOfficeAggregateRoot from(DeanOfficeSnapshot source) {
         return builder()

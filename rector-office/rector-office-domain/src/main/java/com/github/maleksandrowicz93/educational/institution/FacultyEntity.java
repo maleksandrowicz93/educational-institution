@@ -6,6 +6,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
@@ -13,13 +14,14 @@ import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PACKAGE;
 
 @Builder(access = PACKAGE)
+@FieldDefaults(makeFinal = true)
 class FacultyEntity implements Entity<FacultySnapshot, FacultyId> {
 
     @Getter
-    final FacultyId id;
-    final String name;
-    final FieldOfStudySnapshot mainFieldOfStudy;
-    final Set<FieldOfStudyEntity> secondaryFieldsOfStudy;
+    FacultyId id;
+    String name;
+    FieldOfStudySnapshot mainFieldOfStudy;
+    Set<FieldOfStudyEntity> secondaryFieldsOfStudy;
 
     static FacultyEntity from(FacultySnapshot source) {
         return builder()

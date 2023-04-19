@@ -7,19 +7,21 @@ import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
 import static lombok.AccessLevel.PACKAGE;
 
 @Builder(access = PACKAGE)
+@FieldDefaults(makeFinal = true)
 class CourseEntity implements Entity<CourseSnapshot, CourseId> {
 
     @Getter
-    final CourseId id;
-    final String name;
-    final ProfessorId leadingProfessor;
-    final Set<FieldOfStudyId> fieldsOfStudy;
+    CourseId id;
+    String name;
+    ProfessorId leadingProfessor;
+    Set<FieldOfStudyId> fieldsOfStudy;
 
     static CourseEntity from(CourseSnapshot source) {
         return builder()

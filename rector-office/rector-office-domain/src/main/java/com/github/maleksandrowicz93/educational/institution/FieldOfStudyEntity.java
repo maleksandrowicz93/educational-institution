@@ -5,15 +5,17 @@ import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudySnapshot;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import static lombok.AccessLevel.PACKAGE;
 
 @Builder(access = PACKAGE)
+@FieldDefaults(makeFinal = true)
 class FieldOfStudyEntity implements Entity<FieldOfStudySnapshot, FieldOfStudyId> {
 
     @Getter
-    final FieldOfStudyId id;
-    final String name;
+    FieldOfStudyId id;
+    String name;
 
     static FieldOfStudyEntity from(FieldOfStudySnapshot source) {
         return builder()
