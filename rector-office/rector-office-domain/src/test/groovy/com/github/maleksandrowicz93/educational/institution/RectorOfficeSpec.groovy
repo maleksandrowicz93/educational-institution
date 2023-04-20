@@ -34,7 +34,7 @@ class RectorOfficeSpec extends Specification {
         result.value().isPresent()
         def event = result.value().get()
         event.rectorOfficeId() == currentSnapshot.id()
-        event.facultyManagementThresholds() == snapshot.thresholds()
+        event.educationalInstitutionThresholds() == snapshot.thresholds()
         validateFaculty(event.facultySnapshot(), faculties, facultySetup)
     }
 

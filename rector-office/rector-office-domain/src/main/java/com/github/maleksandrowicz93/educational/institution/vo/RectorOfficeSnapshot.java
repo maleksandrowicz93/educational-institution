@@ -10,7 +10,7 @@ import java.util.Set;
 public record RectorOfficeSnapshot(
         RectorOfficeId id,
         String name,
-        FacultyManagementThresholds thresholds,
+        EducationalInstitutionThresholds thresholds,
         @Singular(ignoreNullCollections = true) Set<FacultySnapshot> faculties
 ) implements Snapshot<RectorOfficeId> {
 }

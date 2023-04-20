@@ -3,7 +3,7 @@ package com.github.maleksandrowicz93.educational.institution;
 import com.github.maleksandrowicz93.educational.institution.api.RectorOfficeAggregate;
 import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.events.FacultyCreatedEvent;
-import com.github.maleksandrowicz93.educational.institution.vo.FacultyManagementThresholds;
+import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;
 import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeId;
 import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeSnapshot;
@@ -21,10 +21,10 @@ import static lombok.AccessLevel.PRIVATE;
 class RectorOfficeAggregateRoot implements RectorOfficeAggregate {
 
     @Getter
-    RectorOfficeId id;
-    String name;
-    FacultyManagementThresholds thresholds;
-    Set<FacultyEntity> faculties;
+    final RectorOfficeId id;
+    final String name;
+    final EducationalInstitutionThresholds thresholds;
+    final Set<FacultyEntity> faculties;
 
     static RectorOfficeAggregate from(RectorOfficeSnapshot source) {
         return builder()
