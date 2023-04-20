@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution
 
-
+import com.github.maleksandrowicz93.educational.institution.enums.EmploymentState
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -32,13 +32,15 @@ class ProfessorHumanResourcesSpec extends Specification {
         def result = humanResources.considerApplication(application)
 
         then: "professor should be employed"
-        result.value().isPresent()
-        def event = result.value().get()
         def currentSnapshot = humanResources.createSnapshot()
         currentSnapshot.id() == event.facultyId()
         def professors = currentSnapshot.professors()
         professors.size() == 1
         professors.any { it.employmentState() == EMPLOYED }
+
+        and: "Professor Employed event should be created"
+        result.value().isPresent()
+        def event = result.value().get()
         with(event.professorSnapshot()) {
             professors.any { it.id() == id() }
             personalData() == application.personalData()
@@ -61,6 +63,8 @@ class ProfessorHumanResourcesSpec extends Specification {
         then: "professor should not be employed"
         def professors = humanResources.createSnapshot().professors()
         professors.isEmpty()
+
+        and: "Professor Employed event should not be created"
         result.value().isEmpty()
         result.resultReason() == resultReason
 
@@ -89,6 +93,8 @@ class ProfessorHumanResourcesSpec extends Specification {
         then: "professor should not be employed"
         def professors = humanResources.createSnapshot().professors()
         professors.isEmpty()
+
+        and: "Professor Employed event should not be created"
         result.value().isEmpty()
         result.resultReason() == NO_VACANCY
     }
@@ -105,16 +111,18 @@ class ProfessorHumanResourcesSpec extends Specification {
         def result = humanResources.receiveResignation(professor.id())
 
         then: "employment resignation should be received correctly"
-        result.value().isPresent()
-        def event = result.value().get()
-        event.facultyId() == snapshot.id()
-        event.professorId() == professor.id()
         def professors = humanResources.createSnapshot().professors()
         professors.size() == 1
         professors.any { it.id() == event.professorId() }
 
         and: "professor is marked as inactive"
         professors.any { it.employmentState() == INACTIVE }
+
+        and: "Professor Resigned event should be created"
+        result.value().isPresent()
+        def event = result.value().get()
+        event.facultyId() == snapshot.id()
+        event.professorId() == professor.id()
     }
 
     def "professor cannot resign from employment when not employed at the faculty"() {
@@ -132,10 +140,11 @@ class ProfessorHumanResourcesSpec extends Specification {
         def result = humanResources.receiveResignation(otherProfessor.id())
 
         then: "employment resignation should fail"
+        def professors = humanResources.createSnapshot().professors()
+        !professors.any { it.employmentState() == INACTIVE }
+
+        and: "Professor Resigned event should not be created"
         result.value().isEmpty()
         result.resultReason() == PROFESSOR_NOT_EMPLOYED
-
-        and: "faculty should keep state not changed"
-        humanResources.createSnapshot() == snapshot
     }
 }

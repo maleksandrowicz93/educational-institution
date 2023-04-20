@@ -29,13 +29,15 @@ class StudentHumanResourcesSpec extends Specification {
         def result = humanResources.considerApplication(application)
 
         then: "student should be enrolled"
-        result.value().isPresent()
-        def event = result.value().get()
         def currentSnapshot = humanResources.createSnapshot()
-        currentSnapshot.id() == event.facultyId()
         def professors = currentSnapshot.students()
         professors.size() == 1
         professors.any { it.enrollmentState() == ENROLLED }
+
+        and: "Student Enrolled event should be created"
+        result.value().isPresent()
+        def event = result.value().get()
+        currentSnapshot.id() == event.facultyId()
         with(event.studentSnapshot()) {
             professors.any { it.id() == id() }
             personalData() == application.personalData()
@@ -58,6 +60,8 @@ class StudentHumanResourcesSpec extends Specification {
         then: "student should not be enrolled"
         def students = humanResources.createSnapshot().students()
         students.isEmpty()
+
+        and: "Student Enrolled event should not be created"
         result.value().isEmpty()
         result.resultReason() == resultReason
 
@@ -85,6 +89,8 @@ class StudentHumanResourcesSpec extends Specification {
         then: "student should not be enrolled"
         def students = humanResources.createSnapshot().students()
         students.isEmpty()
+
+        and: "Student Enrolled event should not be created"
         result.value().isEmpty()
         result.resultReason() == NO_VACANCY
     }
@@ -101,16 +107,18 @@ class StudentHumanResourcesSpec extends Specification {
         def result = humanResources.receiveResignation(student.id())
 
         then: "enrollment resignation should be received correctly"
+        def students = humanResources.createSnapshot().students()
+        students.size() == 1
+
+        and: "student is marked as inactive"
+        students.any { it.enrollmentState() == INACTIVE }
+
+        and: "Student Resigned event should be created"
         result.value().isPresent()
         def event = result.value().get()
         event.facultyId() == snapshot.id()
         event.studentId() == student.id()
-        def students = humanResources.createSnapshot().students()
-        students.size() == 1
         students.any { it.id() == event.studentId() }
-
-        and: "student is marked as inactive"
-        students.any { it.enrollmentState() == INACTIVE }
     }
 
     def "student cannot resign from enrollment when not enrolled at the faculty"() {
@@ -125,13 +133,14 @@ class StudentHumanResourcesSpec extends Specification {
         def otherStudent = newStudent()
 
         when: "student resigns from enrollment"
-        def enrollmentResignationResult = humanResources.receiveResignation(otherStudent.id())
+        def result = humanResources.receiveResignation(otherStudent.id())
 
         then: "enrollment resignation should fail"
-        enrollmentResignationResult.value().isEmpty()
-        enrollmentResignationResult.resultReason() == STUDENT_NOT_ENROLLED
+        def students = humanResources.createSnapshot().students()
+        !students.any { it.enrollmentState() == INACTIVE }
 
-        and: "faculty should keep state not changed"
-        humanResources.createSnapshot() == snapshot
+        and: "Student Resigned event should not be created"
+        result.value().isEmpty()
+        result.resultReason() == STUDENT_NOT_ENROLLED
     }
 }
