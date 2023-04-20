@@ -29,6 +29,7 @@
         <module>rector-office</module>
         <module>human-resources</module>
         <module>dean-office</module>
+        <module>course-leadership</module>
     </modules>
 
     <dependencyManagement>
