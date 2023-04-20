@@ -10,6 +10,7 @@ import java.util.Set;
 @Builder(toBuilder = true)
 public record CourseLeadershipSnapshot(
         CourseId id,
+        CourseOvertakingThresholds thresholds,
         @Singular(value = "fieldOfStudy", ignoreNullCollections = true) Set<FieldOfStudyId> fieldsOfStudy,
         ProfessorId leadingProfessor,
         CourseState courseState
