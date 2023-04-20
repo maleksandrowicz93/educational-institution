@@ -41,7 +41,7 @@ class DeanOfficeSpec extends Specification {
         courses.size() == 1
         result.value().isPresent()
 
-        and: "course created event should be xreated"
+        and: "course created event should be created"
         def event = result.value().get()
         event.facultyId() == currentSnapshot.id()
         with(event.courseSnapshot()) {
