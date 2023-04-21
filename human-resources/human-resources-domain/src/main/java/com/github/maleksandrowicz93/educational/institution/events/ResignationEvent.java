@@ -1,4 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.events;
 
-public interface ResignationEvent {
+import com.github.maleksandrowicz93.educational.institution.api.DomainEvent;
+
+public interface ResignationEvent extends DomainEvent {
 }
