@@ -1,11 +1,11 @@
 package com.github.maleksandrowicz93.educational.institution.utils
 
 import com.github.maleksandrowicz93.educational.institution.vo.CourseCreationThresholds
+import com.github.maleksandrowicz93.educational.institution.vo.CourseEnrollmentThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.CourseManagementThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.CourseOvertakingThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyManagementThresholds
-import com.github.maleksandrowicz93.educational.institution.vo.ForCourseEnrollmentThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorHiringThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.StudentEnrollmentThresholds
 import com.github.maleksandrowicz93.educational.institution.vo.Threshold
@@ -49,7 +49,7 @@ class ThresholdsUtils {
                 .courseOvertakingThresholds(CourseOvertakingThresholds.builder()
                         .maximumProfessorCourses(BASIC_THRESHOLD)
                         .build())
-                .forCourseEnrollmentThresholds(ForCourseEnrollmentThresholds.builder()
+                .courseEnrollmentThresholds(CourseEnrollmentThresholds.builder()
                         .maximumNumberOfEnrolledStudents(BASIC_THRESHOLD)
                         .minimumEnrollmentsCourseCannotBeClosed(BASIC_THRESHOLD)
                         .build())

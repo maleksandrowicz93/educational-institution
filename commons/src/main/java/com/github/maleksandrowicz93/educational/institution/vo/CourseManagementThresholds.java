@@ -6,6 +6,6 @@ import lombok.NonNull;
 @Builder
 public record CourseManagementThresholds(
         @NonNull CourseOvertakingThresholds courseOvertakingThresholds,
-        @NonNull ForCourseEnrollmentThresholds forCourseEnrollmentThresholds
+        @NonNull CourseEnrollmentThresholds courseEnrollmentThresholds
 ) {
 }

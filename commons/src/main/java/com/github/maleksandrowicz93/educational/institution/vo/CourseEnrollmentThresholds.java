@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-public record ForCourseEnrollmentThresholds(
+public record CourseEnrollmentThresholds(
         @NonNull Threshold maximumNumberOfEnrolledStudents,
         @NonNull Threshold minimumEnrollmentsCourseCannotBeClosed
 ) {
