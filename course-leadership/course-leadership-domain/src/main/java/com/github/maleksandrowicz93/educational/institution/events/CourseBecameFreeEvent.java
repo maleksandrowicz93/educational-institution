@@ -6,5 +6,5 @@ import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-public record CourseBecomeFreeEvent(@NonNull CourseId courseId) implements DomainEvent {
+public record CourseBecameFreeEvent(@NonNull CourseId courseId) implements DomainEvent {
 }

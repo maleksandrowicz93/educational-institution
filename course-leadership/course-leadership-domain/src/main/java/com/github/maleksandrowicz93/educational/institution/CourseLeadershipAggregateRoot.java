@@ -3,7 +3,7 @@ package com.github.maleksandrowicz93.educational.institution;
 import com.github.maleksandrowicz93.educational.institution.api.CourseLeadershipAggregate;
 import com.github.maleksandrowicz93.educational.institution.api.Result;
 import com.github.maleksandrowicz93.educational.institution.enums.LeadershipState;
-import com.github.maleksandrowicz93.educational.institution.events.CourseBecomeFreeEvent;
+import com.github.maleksandrowicz93.educational.institution.events.CourseBecameFreeEvent;
 import com.github.maleksandrowicz93.educational.institution.events.CourseOvertakenEvent;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseLeadershipSnapshot;
@@ -51,7 +51,7 @@ class CourseLeadershipAggregateRoot implements CourseLeadershipAggregate {
     }
 
     @Override
-    public Result<CourseBecomeFreeEvent> receiveCourseLeadingResignation() {
+    public Result<CourseBecameFreeEvent> receiveCourseLeadingResignation() {
         return null;
     }
 
