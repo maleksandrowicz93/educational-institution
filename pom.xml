@@ -30,6 +30,7 @@
         <module>human-resources</module>
         <module>dean-office</module>
         <module>course-leadership</module>
+        <module>course-enrollment-registry</module>
     </modules>
 
     <dependencyManagement>
