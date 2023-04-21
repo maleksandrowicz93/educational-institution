@@ -1,6 +1,5 @@
 package com.github.maleksandrowicz93.educational.institution
 
-import com.github.maleksandrowicz93.educational.institution.enums.EmploymentState
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -110,12 +109,9 @@ class ProfessorHumanResourcesSpec extends Specification {
         when: "professor resigns from employment"
         def result = humanResources.receiveResignation(professor.id())
 
-        then: "employment resignation should be received correctly"
+        then: "professor is marked as inactive"
         def professors = humanResources.createSnapshot().professors()
         professors.size() == 1
-        professors.any { it.id() == event.professorId() }
-
-        and: "professor is marked as inactive"
         professors.any { it.employmentState() == INACTIVE }
 
         and: "Professor Resigned event should be created"
@@ -123,6 +119,7 @@ class ProfessorHumanResourcesSpec extends Specification {
         def event = result.value().get()
         event.facultyId() == snapshot.id()
         event.professorId() == professor.id()
+        professors.any { it.id() == event.professorId() }
     }
 
     def "professor cannot resign from employment when not employed at the faculty"() {
@@ -136,7 +133,7 @@ class ProfessorHumanResourcesSpec extends Specification {
         and: "other professor not employed at the faculty"
         def otherProfessor = newProfessor()
 
-        when: "professor resigns from employment foreign faculty"
+        when: "not employed professor resigns from employment"
         def result = humanResources.receiveResignation(otherProfessor.id())
 
         then: "employment resignation should fail"

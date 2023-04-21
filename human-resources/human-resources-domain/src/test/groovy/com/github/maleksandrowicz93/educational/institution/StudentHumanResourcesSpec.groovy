@@ -1,6 +1,5 @@
 package com.github.maleksandrowicz93.educational.institution
 
-
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -88,7 +87,7 @@ class StudentHumanResourcesSpec extends Specification {
 
         then: "student should not be enrolled"
         def students = humanResources.createSnapshot().students()
-        students.isEmpty()
+        students.size() == snapshot.students().size()
 
         and: "Student Enrolled event should not be created"
         result.value().isEmpty()
@@ -106,11 +105,9 @@ class StudentHumanResourcesSpec extends Specification {
         when: "student resigns from enrollment"
         def result = humanResources.receiveResignation(student.id())
 
-        then: "enrollment resignation should be received correctly"
+        then: "student is marked as inactive"
         def students = humanResources.createSnapshot().students()
         students.size() == 1
-
-        and: "student is marked as inactive"
         students.any { it.enrollmentState() == INACTIVE }
 
         and: "Student Resigned event should be created"
@@ -132,7 +129,7 @@ class StudentHumanResourcesSpec extends Specification {
         and: "other student not enrolled at the faculty"
         def otherStudent = newStudent()
 
-        when: "student resigns from enrollment"
+        when: "not enrolled student resigns from enrollment"
         def result = humanResources.receiveResignation(otherStudent.id())
 
         then: "enrollment resignation should fail"

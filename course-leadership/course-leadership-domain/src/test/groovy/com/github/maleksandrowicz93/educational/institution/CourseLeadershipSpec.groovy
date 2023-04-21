@@ -1,6 +1,5 @@
 package com.github.maleksandrowicz93.educational.institution
 
-
 import com.github.maleksandrowicz93.educational.institution.vo.FieldOfStudyId
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId
 import spock.lang.Specification
@@ -35,14 +34,14 @@ class CourseLeadershipSpec extends Specification {
         currentSnapshot.leadingProfessor() == null
         currentSnapshot.leadershipState() == FREE
 
-        and: "Course Become Free event should be created"
+        and: "Course Became Free event should be created"
         result.value().isPresent()
         def event = result.value().get()
         event.courseId() == currentSnapshot.id()
     }
 
     def "professor should not resign from leading the course which is not led"() {
-        given: "course lead by professor"
+        given: "free course"
         def snapshot = freeCourse()
         def courseLeadership = CourseLeadershipAggregateRoot.from(snapshot)
 
@@ -54,7 +53,7 @@ class CourseLeadershipSpec extends Specification {
         currentSnapshot.leadingProfessor() == null
         currentSnapshot.leadershipState() == FREE
 
-        and: "Course Become Free event should not be created"
+        and: "Course Became Free event should not be created"
         result.value().isEmpty()
         result.resultReason() == COURSE_ALREADY_FREE
     }
@@ -89,7 +88,7 @@ class CourseLeadershipSpec extends Specification {
         def snapshot = freeCourse()
         def courseLeadership = CourseLeadershipAggregateRoot.from(snapshot)
 
-        and: "professor's application for course overtaking not matching requirements"
+        and: "professor's application for course overtaking not matching the course's fields of study"
         def professorId = new ProfessorId(UUID.randomUUID())
         def application = courseOvertakingApplication(professorId, fieldsOfStudy)
 
@@ -101,7 +100,7 @@ class CourseLeadershipSpec extends Specification {
         currentSnapshot.leadingProfessor() == null
         currentSnapshot.leadershipState() == FREE
 
-        and: "Course Overtaken event should be created"
+        and: "Course Overtaken event should not be created"
         result.value().isEmpty()
         result.resultReason() == PROFESSOR_FIELDS_OF_STUDY_NOT_MATCHED
 
@@ -115,7 +114,7 @@ class CourseLeadershipSpec extends Specification {
         def snapshot = freeCourse()
         def courseLeadership = CourseLeadershipAggregateRoot.from(snapshot)
 
-        and: "professor's application for course overtaking not matching requirements"
+        and: "application for course overtaking of professor with no capacity"
         def professorId = new ProfessorId(UUID.randomUUID())
         def application = courseOvertakingApplicationWithNoCapacity(professorId)
 
@@ -127,12 +126,12 @@ class CourseLeadershipSpec extends Specification {
         currentSnapshot.leadingProfessor() == null
         currentSnapshot.leadershipState() == FREE
 
-        and: "Course Overtaken event should be created"
+        and: "Course Overtaken event should not be created"
         result.value().isEmpty()
         result.resultReason() == NO_PROFESSOR_CAPACITY
     }
 
-    def "vacated course should not be overtaken by a professor from other faculty"() {
+    def "already led course should not be overtaken"() {
         given: "course led by professor"
         def leadingProfessor = new ProfessorId(UUID.randomUUID())
         def snapshot = ledCourse(leadingProfessor)
@@ -142,7 +141,7 @@ class CourseLeadershipSpec extends Specification {
         def otherProfessor = new ProfessorId(UUID.randomUUID())
         def application = courseOvertakingApplication(otherProfessor)
 
-        when: "professor overtakes the curse"
+        when: "other professor overtakes the curse"
         def result = courseLeadership.considerCourseOvertaking(application)
 
         then: "course should not be overtaken"
@@ -150,7 +149,7 @@ class CourseLeadershipSpec extends Specification {
         currentSnapshot.leadingProfessor() == leadingProfessor
         currentSnapshot.leadershipState() == LED
 
-        and: "Course Overtaken event should be created"
+        and: "Course Overtaken event should not be created"
         result.value().isEmpty()
         result.resultReason() == LEAD_BY_OTHER_PROFESSOR
     }

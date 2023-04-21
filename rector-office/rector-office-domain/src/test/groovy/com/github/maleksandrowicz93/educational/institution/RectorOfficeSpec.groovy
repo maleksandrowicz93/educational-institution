@@ -1,6 +1,5 @@
 package com.github.maleksandrowicz93.educational.institution
 
-
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot
@@ -63,7 +62,7 @@ class RectorOfficeSpec extends Specification {
                 .any { it.value() == fieldOfStudySnapshot.name() }
     }
 
-    def "faculty should not be created if its name is already taken"() {
+    def "faculty should not be created when its name is already taken"() {
         given: "Educational Institution with a faculty"
         def snapshot = newRectorOffice().toBuilder()
                 .faculty(FacultySnapshot.builder()

@@ -1,6 +1,5 @@
 package com.github.maleksandrowicz93.educational.institution
 
-
 import com.github.maleksandrowicz93.educational.institution.vo.StudentId
 import spock.lang.Specification
 
@@ -71,12 +70,12 @@ class CourseEnrollmentRegistrySpec extends Specification {
         when: "student enrolls for the course second time"
         def result = enrollmentsRegistry.considerCourseEnrollment(studentId)
 
-        then: "student should be still enrolled"
+        then: "student should remains enrolled"
         def currentSnapshot = enrollmentsRegistry.createSnapshot()
         def students = currentSnapshot.students()
         students.contains(studentId)
 
-        and: "students number should remains the same"
+        and: "students number within the course should remains equals"
         students.size() == snapshot.students().size()
 
         and: "Student Enrolled For Course event should not be created"
@@ -102,8 +101,8 @@ class CourseEnrollmentRegistrySpec extends Specification {
         event.courseId() == currentSnapshot.id()
     }
 
-    def "course with enough number of enrolled students should not be closed"() {
-        given: "course with too many vacancies"
+    def "course with minimum required number of enrolled students should not be closed"() {
+        given: "course with minimum required number of students"
         def snapshot = fullCourseRegistry()
         def enrollmentsRegistry = CourseEnrollmentRegistryAggregateRoot.from(snapshot)
 
@@ -124,7 +123,7 @@ class CourseEnrollmentRegistrySpec extends Specification {
         def snapshot = closedCourse()
         def enrollmentsRegistry = CourseEnrollmentRegistryAggregateRoot.from(snapshot)
 
-        when: "professor closes the course"
+        when: "professor closes the course second time"
         def result = enrollmentsRegistry.considerClosingCourse()
 
         then: "course should remains closed"
