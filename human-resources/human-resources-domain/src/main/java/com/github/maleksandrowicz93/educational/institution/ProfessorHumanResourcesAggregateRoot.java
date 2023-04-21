@@ -1,7 +1,7 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.ProfessorHumanResourcesAggregate;
-import com.github.maleksandrowicz93.educational.institution.common.Result;
+import com.github.maleksandrowicz93.educational.institution.api.Result;
 import com.github.maleksandrowicz93.educational.institution.events.ProfessorEmployedEvent;
 import com.github.maleksandrowicz93.educational.institution.events.ProfessorResignedEvent;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;

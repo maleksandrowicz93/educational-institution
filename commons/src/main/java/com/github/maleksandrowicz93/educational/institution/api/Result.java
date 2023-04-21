@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.common;
+package com.github.maleksandrowicz93.educational.institution.api;
 
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.github.maleksandrowicz93.educational.institution.common.DefaultResultReason.SUCCESS;
-import static com.github.maleksandrowicz93.educational.institution.common.DefaultResultReason.UNKNOWN_ERROR;
+import static com.github.maleksandrowicz93.educational.institution.api.DefaultResultReason.SUCCESS;
+import static com.github.maleksandrowicz93.educational.institution.api.DefaultResultReason.UNKNOWN_ERROR;
 
 @FieldDefaults(makeFinal = true)
 public class Result<T> {

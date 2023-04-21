@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.vo;
 
-import com.github.maleksandrowicz93.educational.institution.common.Snapshot;
+import com.github.maleksandrowicz93.educational.institution.api.Snapshot;
 import lombok.Builder;
 import lombok.Singular;
 

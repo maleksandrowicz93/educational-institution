@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.api.aggregates;
 
-import com.github.maleksandrowicz93.educational.institution.common.Aggregate;
+import com.github.maleksandrowicz93.educational.institution.api.Aggregate;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySnapshot;
 

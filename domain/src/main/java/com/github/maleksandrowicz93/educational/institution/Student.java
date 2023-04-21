@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution;
 
-import com.github.maleksandrowicz93.educational.institution.common.Entity;
+import com.github.maleksandrowicz93.educational.institution.api.Entity;
 import com.github.maleksandrowicz93.educational.institution.enums.EnrollmentState;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;

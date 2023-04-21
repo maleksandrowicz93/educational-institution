@@ -1,7 +1,7 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.CourseLeadershipAggregate;
-import com.github.maleksandrowicz93.educational.institution.common.Result;
+import com.github.maleksandrowicz93.educational.institution.api.Result;
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
 import com.github.maleksandrowicz93.educational.institution.events.CourseBecomeFreeEvent;
 import com.github.maleksandrowicz93.educational.institution.events.CourseOvertakenEvent;

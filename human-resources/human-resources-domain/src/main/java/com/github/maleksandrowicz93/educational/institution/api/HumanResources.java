@@ -1,6 +1,5 @@
 package com.github.maleksandrowicz93.educational.institution.api;
 
-import com.github.maleksandrowicz93.educational.institution.common.Result;
 import com.github.maleksandrowicz93.educational.institution.events.InclusionEvent;
 import com.github.maleksandrowicz93.educational.institution.events.ResignationEvent;
 

@@ -1,8 +1,8 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.domain.service.FacultyManagementService;
-import com.github.maleksandrowicz93.educational.institution.common.EventsPublisher;
-import com.github.maleksandrowicz93.educational.institution.common.Result;
+import com.github.maleksandrowicz93.educational.institution.api.EventsPublisher;
+import com.github.maleksandrowicz93.educational.institution.api.Result;
 import com.github.maleksandrowicz93.educational.institution.repository.FacultyRepository;
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.StudentSnapshot;

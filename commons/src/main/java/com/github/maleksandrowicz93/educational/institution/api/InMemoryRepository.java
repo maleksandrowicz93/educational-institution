@@ -1,4 +1,4 @@
-package com.github.maleksandrowicz93.educational.institution.common;
+package com.github.maleksandrowicz93.educational.institution.api;
 
 import lombok.experimental.FieldDefaults;
 

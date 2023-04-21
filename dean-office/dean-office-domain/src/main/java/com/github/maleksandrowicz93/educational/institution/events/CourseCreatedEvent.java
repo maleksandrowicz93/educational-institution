@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.events;
 
-import com.github.maleksandrowicz93.educational.institution.common.DomainEvent;
+import com.github.maleksandrowicz93.educational.institution.api.DomainEvent;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseSnapshot;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultyId;
 import lombok.Builder;

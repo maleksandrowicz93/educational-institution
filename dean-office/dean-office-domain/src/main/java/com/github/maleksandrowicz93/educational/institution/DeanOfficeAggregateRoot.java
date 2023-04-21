@@ -1,7 +1,7 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.DeanOfficeAggregate;
-import com.github.maleksandrowicz93.educational.institution.common.Result;
+import com.github.maleksandrowicz93.educational.institution.api.Result;
 import com.github.maleksandrowicz93.educational.institution.events.CourseCreatedEvent;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseCreationThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseProposition;

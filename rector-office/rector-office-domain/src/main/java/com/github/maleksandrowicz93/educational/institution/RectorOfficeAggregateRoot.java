@@ -1,7 +1,7 @@
 package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.RectorOfficeAggregate;
-import com.github.maleksandrowicz93.educational.institution.common.Result;
+import com.github.maleksandrowicz93.educational.institution.api.Result;
 import com.github.maleksandrowicz93.educational.institution.events.FacultyCreatedEvent;
 import com.github.maleksandrowicz93.educational.institution.vo.EducationalInstitutionThresholds;
 import com.github.maleksandrowicz93.educational.institution.vo.FacultySetup;

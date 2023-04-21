@@ -1,6 +1,6 @@
 package com.github.maleksandrowicz93.educational.institution.result.reasons;
 
-import com.github.maleksandrowicz93.educational.institution.common.ResultReason;
+import com.github.maleksandrowicz93.educational.institution.api.ResultReason;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 

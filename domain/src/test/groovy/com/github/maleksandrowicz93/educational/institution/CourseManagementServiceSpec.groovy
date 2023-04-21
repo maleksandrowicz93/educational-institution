@@ -4,7 +4,7 @@ import com.github.maleksandrowicz93.educational.institution.api.domain.service.C
 import com.github.maleksandrowicz93.educational.institution.enums.CourseState
 import com.github.maleksandrowicz93.educational.institution.events.CourseClosingEvent
 import com.github.maleksandrowicz93.educational.institution.events.LeadingCourseResignationEvent
-import com.github.maleksandrowicz93.educational.institution.common.InMemoryEventsPublisher
+import com.github.maleksandrowicz93.educational.institution.api.InMemoryEventsPublisher
 import com.github.maleksandrowicz93.educational.institution.reposiotry.InMemoryCourseRepository
 import com.github.maleksandrowicz93.educational.institution.repository.CourseRepository
 import com.github.maleksandrowicz93.educational.institution.result.reasons.CourseClosingResultReason
