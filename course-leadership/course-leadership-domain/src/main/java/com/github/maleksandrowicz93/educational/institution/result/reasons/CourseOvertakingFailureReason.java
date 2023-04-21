@@ -10,7 +10,7 @@ public enum CourseOvertakingFailureReason implements ResultReason {
 
     PROFESSOR_FIELDS_OF_STUDY_NOT_MATCHED("Professor's fields of study not matched."),
     NO_PROFESSOR_CAPACITY("Professor does not have capacity for overtaking the course."),
-    INVALID_FACULTY("The course is from other faculty.");
+    LEAD_BY_OTHER_PROFESSOR("The course is already led by other professor.");
 
     String text;
 
