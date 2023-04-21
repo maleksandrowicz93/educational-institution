@@ -6,8 +6,8 @@ import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static com.github.maleksandrowicz93.educational.institution.enums.CourseState.FREE
-import static com.github.maleksandrowicz93.educational.institution.enums.CourseState.LED
+import static com.github.maleksandrowicz93.educational.institution.enums.LeadershipState.FREE
+import static com.github.maleksandrowicz93.educational.institution.enums.LeadershipState.LED
 import static com.github.maleksandrowicz93.educational.institution.result.reasons.CourseLeadingResignationFailureReason.COURSE_ALREADY_FREE
 import static com.github.maleksandrowicz93.educational.institution.result.reasons.CourseOvertakingFailureReason.LEAD_BY_OTHER_PROFESSOR
 import static com.github.maleksandrowicz93.educational.institution.result.reasons.CourseOvertakingFailureReason.NO_PROFESSOR_CAPACITY
@@ -33,7 +33,7 @@ class CourseLeadershipSpec extends Specification {
         then: "the course becomes vacated"
         def currentSnapshot = courseLeadership.createSnapshot()
         currentSnapshot.leadingProfessor() == null
-        currentSnapshot.courseState() == FREE
+        currentSnapshot.leadershipState() == FREE
 
         and: "Course Become Free event should be created"
         result.value().isPresent()
@@ -52,7 +52,7 @@ class CourseLeadershipSpec extends Specification {
         then: "the course remains free"
         def currentSnapshot = courseLeadership.createSnapshot()
         currentSnapshot.leadingProfessor() == null
-        currentSnapshot.courseState() == FREE
+        currentSnapshot.leadershipState() == FREE
 
         and: "Course Become Free event should not be created"
         result.value().isEmpty()
@@ -74,7 +74,7 @@ class CourseLeadershipSpec extends Specification {
         then: "course should be overtaken"
         def currentSnapshot = courseLeadership.createSnapshot()
         currentSnapshot.leadingProfessor() == professorId
-        currentSnapshot.courseState() == LED
+        currentSnapshot.leadershipState() == LED
 
         and: "Course Overtaken event should be created"
         result.value().ifPresent {}
@@ -99,7 +99,7 @@ class CourseLeadershipSpec extends Specification {
         then: "course should not be overtaken"
         def currentSnapshot = courseLeadership.createSnapshot()
         currentSnapshot.leadingProfessor() == null
-        currentSnapshot.courseState() == FREE
+        currentSnapshot.leadershipState() == FREE
 
         and: "Course Overtaken event should be created"
         result.value().isEmpty()
@@ -125,7 +125,7 @@ class CourseLeadershipSpec extends Specification {
         then: "course should not be overtaken"
         def currentSnapshot = courseLeadership.createSnapshot()
         currentSnapshot.leadingProfessor() == null
-        currentSnapshot.courseState() == FREE
+        currentSnapshot.leadershipState() == FREE
 
         and: "Course Overtaken event should be created"
         result.value().isEmpty()
@@ -148,7 +148,7 @@ class CourseLeadershipSpec extends Specification {
         then: "course should not be overtaken"
         def currentSnapshot = courseLeadership.createSnapshot()
         currentSnapshot.leadingProfessor() == leadingProfessor
-        currentSnapshot.courseState() == LED
+        currentSnapshot.leadershipState() == LED
 
         and: "Course Overtaken event should be created"
         result.value().isEmpty()

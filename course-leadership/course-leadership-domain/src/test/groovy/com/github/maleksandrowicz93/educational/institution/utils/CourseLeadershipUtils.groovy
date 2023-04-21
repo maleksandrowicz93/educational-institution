@@ -4,7 +4,7 @@ import com.github.maleksandrowicz93.educational.institution.vo.CourseId
 import com.github.maleksandrowicz93.educational.institution.vo.CourseLeadershipSnapshot
 import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId
 
-import static com.github.maleksandrowicz93.educational.institution.enums.CourseState.LED
+import static com.github.maleksandrowicz93.educational.institution.enums.LeadershipState.LED
 import static com.github.maleksandrowicz93.educational.institution.utils.FieldOfStudyUtils.FIELDS_OF_STUDY
 import static com.github.maleksandrowicz93.educational.institution.utils.ThresholdsUtils.courseOvertakingThresholds
 
@@ -22,7 +22,7 @@ class CourseLeadershipUtils {
                 .thresholds(courseOvertakingThresholds())
                 .fieldsOfStudy(FIELDS_OF_STUDY)
                 .leadingProfessor(professorId)
-                .courseState(LED)
+                .leadershipState(LED)
                 .build()
     }
 

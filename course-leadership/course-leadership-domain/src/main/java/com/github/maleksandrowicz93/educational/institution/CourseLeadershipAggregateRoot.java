@@ -2,7 +2,7 @@ package com.github.maleksandrowicz93.educational.institution;
 
 import com.github.maleksandrowicz93.educational.institution.api.CourseLeadershipAggregate;
 import com.github.maleksandrowicz93.educational.institution.api.Result;
-import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
+import com.github.maleksandrowicz93.educational.institution.enums.LeadershipState;
 import com.github.maleksandrowicz93.educational.institution.events.CourseBecomeFreeEvent;
 import com.github.maleksandrowicz93.educational.institution.events.CourseOvertakenEvent;
 import com.github.maleksandrowicz93.educational.institution.vo.CourseId;
@@ -27,7 +27,7 @@ class CourseLeadershipAggregateRoot implements CourseLeadershipAggregate {
     final Set<FieldOfStudyId> fieldsOfStudy;
 
     ProfessorId leadingProfessor;
-    CourseState courseState;
+    LeadershipState leadershipState;
 
     static CourseLeadershipAggregateRoot from(CourseLeadershipSnapshot source) {
         return builder()
@@ -35,7 +35,7 @@ class CourseLeadershipAggregateRoot implements CourseLeadershipAggregate {
                 .thresholds(source.thresholds())
                 .fieldsOfStudy(source.fieldsOfStudy())
                 .leadingProfessor(source.leadingProfessor())
-                .courseState(source.courseState())
+                .leadershipState(source.leadershipState())
                 .build();
     }
 
@@ -46,7 +46,7 @@ class CourseLeadershipAggregateRoot implements CourseLeadershipAggregate {
                 .thresholds(thresholds)
                 .fieldsOfStudy(fieldsOfStudy)
                 .leadingProfessor(leadingProfessor)
-                .courseState(courseState)
+                .leadershipState(leadershipState)
                 .build();
     }
 

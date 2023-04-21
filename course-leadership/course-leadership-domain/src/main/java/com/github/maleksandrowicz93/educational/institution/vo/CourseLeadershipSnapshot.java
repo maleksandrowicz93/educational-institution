@@ -1,7 +1,7 @@
 package com.github.maleksandrowicz93.educational.institution.vo;
 
 import com.github.maleksandrowicz93.educational.institution.api.Snapshot;
-import com.github.maleksandrowicz93.educational.institution.enums.CourseState;
+import com.github.maleksandrowicz93.educational.institution.enums.LeadershipState;
 import lombok.Builder;
 import lombok.Singular;
 
@@ -13,6 +13,6 @@ public record CourseLeadershipSnapshot(
         CourseOvertakingThresholds thresholds,
         @Singular(value = "fieldOfStudy", ignoreNullCollections = true) Set<FieldOfStudyId> fieldsOfStudy,
         ProfessorId leadingProfessor,
-        CourseState courseState
+        LeadershipState leadershipState
 ) implements Snapshot<CourseId> {
 }
