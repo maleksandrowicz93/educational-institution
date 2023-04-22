@@ -13,8 +13,6 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Optional;
 
-import static com.github.maleksandrowicz93.educational.institution.api.DefaultResultReason.NOT_FOUND;
-
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true)
 class RectorOfficeDomainService implements RectorOfficeService {
@@ -27,7 +25,7 @@ class RectorOfficeDomainService implements RectorOfficeService {
         Optional<RectorOfficeAggregate> maybeRectorOffice = rectorOfficeRepository.findById(rectorOfficeId);
         Result<FacultyCreatedEvent> result = maybeRectorOffice
                 .map(rectorOffice -> rectorOffice.createFaculty(facultySetup))
-                .orElseGet(() -> Result.failure(NOT_FOUND));
+                .orElseGet(Result::notFound);
         maybeRectorOffice.ifPresent(rectorOffice -> result.value()
                 .ifPresent(event -> {
                     rectorOfficeRepository.save(rectorOffice);
