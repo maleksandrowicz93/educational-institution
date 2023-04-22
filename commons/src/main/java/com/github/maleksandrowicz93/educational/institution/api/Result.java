@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.github.maleksandrowicz93.educational.institution.api.DefaultResultReason.*;
 import static com.github.maleksandrowicz93.educational.institution.api.DefaultResultReason.SUCCESS;
 import static com.github.maleksandrowicz93.educational.institution.api.DefaultResultReason.UNKNOWN_ERROR;
 
@@ -48,6 +49,11 @@ public class Result<T> {
     public static <T> Result<T> failure(ResultReason resultReason, Map<String, String> additionalProperties) {
         return new Result<>(resultReason, additionalProperties);
     }
+
+    public static <T> Result<T> notFound() {
+        return new Result<>(NOT_FOUND);
+    }
+
 
     public static FailureBuilder failureReason(ResultReason reason) {
         return new FailureBuilder(reason);
