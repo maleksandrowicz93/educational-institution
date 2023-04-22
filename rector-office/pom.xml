@@ -15,6 +15,29 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>rector-office-domain</module>
+        <module>rector-office-domain-core</module>
+        <module>rector-office-domain-service</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.maleksandrowicz93.educational.institution</groupId>
+                <artifactId>rector-office-domain-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.maleksandrowicz93.educational.institution</groupId>
+                <artifactId>rector-office-domain-core</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.maleksandrowicz93.educational.institution</groupId>
+                <artifactId>rector-office-domain-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

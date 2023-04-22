@@ -1,7 +1,5 @@
-package com.github.maleksandrowicz93.educational.institution.repository;
+package com.github.maleksandrowicz93.educational.institution.api;
 
-import com.github.maleksandrowicz93.educational.institution.api.RectorOfficeAggregate;
-import com.github.maleksandrowicz93.educational.institution.api.DomainRepository;
 import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeId;
 import com.github.maleksandrowicz93.educational.institution.vo.RectorOfficeSnapshot;
 

@@ -8,7 +8,8 @@ import lombok.experimental.FieldDefaults;
 public enum DefaultResultReason implements ResultReason {
 
     SUCCESS("Success."),
-    UNKNOWN_ERROR("Unknown error.");
+    UNKNOWN_ERROR("Unknown error."),
+    NOT_FOUND("Entity not found.");
 
     String text;
 
