@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <educational.institution.version>0.0.1-SNAPSHOT</educational.institution.version>
         <commonsvalidator.version>1.7</commonsvalidator.version>
         <groovy.version>4.0.8</groovy.version>
         <spockframework.version>2.3-groovy-4.0</spockframework.version>
@@ -19,6 +20,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.github.maleksandrowicz93.educational.institution</groupId>
+                <artifactId>commons</artifactId>
+                <version>${educational.institution.version}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>

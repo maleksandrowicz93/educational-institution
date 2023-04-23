@@ -1,0 +1,39 @@
+package com.github.maleksandrowicz93.educational.institution;
+
+import com.github.maleksandrowicz93.educational.institution.api.Entity;
+import com.github.maleksandrowicz93.educational.institution.enums.EmploymentState;
+import com.github.maleksandrowicz93.educational.institution.vo.PersonalData;
+import com.github.maleksandrowicz93.educational.institution.vo.ProfessorId;
+import com.github.maleksandrowicz93.educational.institution.vo.ProfessorSnapshot;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
+
+import static lombok.AccessLevel.PACKAGE;
+
+@Builder(access = PACKAGE)
+@FieldDefaults(makeFinal = true)
+class Professor implements Entity<ProfessorSnapshot, ProfessorId> {
+
+    @Getter
+    ProfessorId id;
+    PersonalData personalData;
+    EmploymentState employmentState;
+
+    static Professor from(ProfessorSnapshot snapshot) {
+        return builder()
+                .id(snapshot.id())
+                .personalData(snapshot.personalData())
+                .employmentState(snapshot.employmentState())
+                .build();
+    }
+
+    @Override
+    public ProfessorSnapshot createSnapshot() {
+        return ProfessorSnapshot.builder()
+                .id(id)
+                .personalData(personalData)
+                .employmentState(employmentState)
+                .build();
+    }
+}
